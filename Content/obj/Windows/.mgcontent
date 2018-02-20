@@ -5,5 +5,6 @@
   <Config />
   <SourceFiles>
     <File>D:/Programing/Csharp/MonoContra/Start/Content/Tree.png</File>
+    <File>D:/Programing/Csharp/MonoContra/Start/Content/Debug.spritefont</File>
   </SourceFiles>
 </SourceFileCollection>

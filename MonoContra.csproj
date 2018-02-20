@@ -9,8 +9,8 @@
     <ProjectGuid>{4E2C8334-101E-4EA9-9851-EE1C55C401B8}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Start</RootNamespace>
-    <AssemblyName>Start</AssemblyName>
+    <RootNamespace>MonoContra</RootNamespace>
+    <AssemblyName>MonoContra</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MonoGamePlatform>Windows</MonoGamePlatform>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
@@ -44,8 +44,8 @@
   <ItemGroup>
     <Compile Include="BackgroundItems\StaticItem.cs" />
     <Compile Include="EntryPoint.cs" />
-    <Compile Include="Run.cs" />
     <Compile Include="Levels\Level1.cs" />
+    <Compile Include="Run.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

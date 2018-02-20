@@ -1,6 +1,5 @@
 ﻿namespace Start
 {
-    using System;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
@@ -14,6 +13,9 @@
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
 
+        private SpriteFont debugFont;
+        private bool tildePressed = false;
+
         private StaticItem topTree;
         private StaticItem rightTree;
 
@@ -21,6 +23,10 @@
         {
             this.graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
+            ////this.graphics.IsFullScreen = true;
+            this.graphics.PreferredBackBufferWidth = 1280;
+            this.graphics.PreferredBackBufferHeight = 720;
         }
 
         /// <summary>
@@ -44,9 +50,8 @@
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             this.spriteBatch = new SpriteBatch(GraphicsDevice);
+            this.debugFont = this.Content.Load<SpriteFont>("Debug");
             this.LoadLevelOne();
-
-            // TODO: use this.Content to load your game content here
         }
 
         /// <summary>
@@ -70,33 +75,25 @@
                 this.Exit();
             }
 
+            if (Keyboard.GetState().IsKeyDown(Keys.OemTilde))
+            {
+                if (!this.tildePressed)
+                {
+                    this.tildePressed = true;
+                }
+                else
+                {
+                    this.tildePressed = false;
+                }
+            }
+
             // testing moving sprites
-            // UpdateSprite(gameTime);
+            this.UpdateSprite(gameTime);
+
             // TODO: Add your update logic here
             base.Update(gameTime);
         }
-
-        private void UpdateSprite(GameTime gameTime)
-        {
-            // topTree.SpritePosition += topTree.SpriteSpeed 
-
-            // direction velociti etc.
-            this.topTree.SpritePosition += new Vector2(100f, 0f) * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                        
-            // Check for bounce.
-            int MaxX =
-                this.graphics.GraphicsDevice.Viewport.Width - topTree.BackgrItemTexture.Width;
-            // int MinX = 0;
-            int MaxY =
-                this.graphics.GraphicsDevice.Viewport.Height - topTree.BackgrItemTexture.Height;
-            // int MinY = 0;
-
-            if (topTree.SpritePosition.X > MaxX)
-            {
-                topTree.SpritePosition -= new Vector2(100f, 0f);
-            }
-        }
-
+        
         /// <summary>
         /// This is called when the game should draw itself.
         /// </summary>
@@ -106,15 +103,38 @@
             GraphicsDevice.Clear(Color.DarkRed);
 
             this.spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
+
+            // Manage Fonts
+            if (this.tildePressed)
+            {
+                this.DebugInformation();
+            }
+
+            // Level one
             this.spriteBatch.Draw(this.topTree.BackgrItemTexture, this.topTree.SpritePosition, Color.White);
             this.spriteBatch.Draw(this.rightTree.BackgrItemTexture, this.rightTree.SpritePosition, Color.White);
-
             this.spriteBatch.End();
 
             // TODO: Add your drawing code here
             base.Draw(gameTime);
         }
 
+        // Replace Console WriteLine
+        private void DebugInformation()
+        {
+            this.spriteBatch.DrawString(
+                this.debugFont,
+                "\n Debug info:" +
+                "\n Buffer Width: " + this.graphics.PreferredBackBufferWidth +
+                "\n Buffer Height: " + this.graphics.PreferredBackBufferHeight +
+                ////"\n Gametime elasped: " + gameTime.ElapsedGameTime.TotalSeconds +
+                "\n Tree Width: " + this.topTree.BackgrItemTexture.Width +
+                "\n Tree Height: " + this.topTree.BackgrItemTexture.Height +
+                "\n Tree position: " + this.topTree.SpritePosition,
+                new Vector2(100, 100), Color.DarkGray);
+        }
+
+        // Load textures and objects for level one
         private void LoadLevelOne()
         {
             this.topTree = new StaticItem(new Vector2(100f, 250f), new Vector2(50f, 50f));
@@ -122,6 +142,24 @@
 
             this.rightTree = new StaticItem(new Vector2(300f, 250f), new Vector2(50f, 50f));
             this.rightTree.BackgrItemTexture = Content.Load<Texture2D>("Tree");
+        }
+
+        // Just testing moving sprites
+        private void UpdateSprite(GameTime gameTime)
+        {
+            // direction velociti etc.
+            this.topTree.SpritePosition += new Vector2(100f, 0f) * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            // Check for bounce.
+            int maxX =
+                this.graphics.GraphicsDevice.Viewport.Width - this.topTree.BackgrItemTexture.Width;
+            int maxY =
+                this.graphics.GraphicsDevice.Viewport.Height - this.topTree.BackgrItemTexture.Height;
+
+            if (this.topTree.SpritePosition.X > maxX)
+            {
+                this.topTree.SpritePosition = new Vector2(250f, 100f);
+            }
         }
     }
 }

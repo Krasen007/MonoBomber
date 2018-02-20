@@ -1,6 +1,3 @@
-D:\Programing\Csharp\MonoContra\Start\bin\Windows\x86\Debug\Start.exe.config
-D:\Programing\Csharp\MonoContra\Start\bin\Windows\x86\Debug\Start.exe
-D:\Programing\Csharp\MonoContra\Start\bin\Windows\x86\Debug\Start.pdb
 D:\Programing\Csharp\MonoContra\Start\bin\Windows\x86\Debug\MonoGame.Framework.dll
 D:\Programing\Csharp\MonoContra\Start\bin\Windows\x86\Debug\SharpDX.MediaFoundation.dll
 D:\Programing\Csharp\MonoContra\Start\bin\Windows\x86\Debug\SharpDX.dll
@@ -21,6 +18,10 @@ D:\Programing\Csharp\MonoContra\Start\bin\Windows\x86\Debug\SharpDX.XInput.xml
 D:\Programing\Csharp\MonoContra\Start\bin\Windows\x86\Debug\SharpDX.Direct3D9.xml
 D:\Programing\Csharp\MonoContra\Start\obj\x86\Debug\MonoContra.csprojResolveAssemblyReference.cache
 D:\Programing\Csharp\MonoContra\Start\obj\x86\Debug\MonoContra.csproj.CoreCompileInputs.cache
-D:\Programing\Csharp\MonoContra\Start\obj\x86\Debug\Start.exe
-D:\Programing\Csharp\MonoContra\Start\obj\x86\Debug\Start.pdb
 D:\Programing\Csharp\MonoContra\Start\bin\Windows\x86\Debug\Content\Tree.xnb
+D:\Programing\Csharp\MonoContra\Start\bin\Windows\x86\Debug\MonoContra.exe.config
+D:\Programing\Csharp\MonoContra\Start\bin\Windows\x86\Debug\MonoContra.exe
+D:\Programing\Csharp\MonoContra\Start\bin\Windows\x86\Debug\MonoContra.pdb
+D:\Programing\Csharp\MonoContra\Start\obj\x86\Debug\MonoContra.exe
+D:\Programing\Csharp\MonoContra\Start\obj\x86\Debug\MonoContra.pdb
+D:\Programing\Csharp\MonoContra\Start\bin\Windows\x86\Debug\Content\Debug.xnb
