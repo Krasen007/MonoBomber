@@ -5,7 +5,7 @@
     /// <summary>
     /// The main class.
     /// </summary>
-    public static class FirstRun
+    public static class Run
     {
         /// <summary>
         /// The main entry point for the application.
@@ -13,7 +13,7 @@
         [STAThread]
         public static void Main()
         {
-            using (var game = new Start())
+            using (var game = new EntryPoint())
             {
                 game.Run();
             }
