@@ -1,5 +1,6 @@
 ﻿namespace Start
 {
+    using System;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
@@ -13,6 +14,8 @@
     {
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
+
+        private KeyboardState oldKeyState;
 
         private SpriteFont debugFont;
         private bool tildePressed = false;
@@ -31,23 +34,12 @@
             this.graphics.PreferredBackBufferHeight = 720;
         }
 
-        /// <summary>
-        /// Allows the game to perform any initialization it needs to before starting to run.
-        /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
-        /// and initialize them as well.
-        /// </summary>
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here    
             base.Initialize();
         }
 
-        /// <summary>
-        /// LoadContent will be called once per game and is the place to load
-        /// all of your content.
-        /// </summary>
-        /// 
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
@@ -56,28 +48,22 @@
             this.LoadLevelOne();
         }
 
-        /// <summary>
-        /// UnloadContent will be called once per game and is the place to unload
-        /// game-specific content.
-        /// </summary>
         protected override void UnloadContent()
         {
             // TODO: Unload any non ContentManager content here
         }
 
-        /// <summary>
-        /// Allows the game to run logic such as updating the world,
-        /// checking for collisions, gathering input, and playing audio.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            // TODO: Add your update logic here
+            KeyboardState keyState = Keyboard.GetState();
+
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || keyState.IsKeyDown(Keys.Escape))
             {
                 this.Exit();
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.OemTilde))
+            if (this.oldKeyState.IsKeyUp(Keys.OemTilde) && keyState.IsKeyDown(Keys.OemTilde))
             {
                 if (!this.tildePressed)
                 {
@@ -89,20 +75,18 @@
                 }
             }
 
+            this.oldKeyState = keyState;
+
             // testing moving sprites
             this.MoveTree(gameTime);
-            this.girlCharacter.Update();
+            this.girlCharacter.Update(keyState);
 
-            // TODO: Add your update logic here
             base.Update(gameTime);
         }
-        
-        /// <summary>
-        /// This is called when the game should draw itself.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
+
         protected override void Draw(GameTime gameTime)
         {
+            // TODO: Add your drawing code here
             GraphicsDevice.Clear(Color.DarkRed);
 
             this.spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
@@ -116,46 +100,56 @@
             // Level one
             this.spriteBatch.Draw(this.topTree.BackgrItemTexture, this.topTree.SpritePosition, Color.White);
             this.spriteBatch.Draw(this.rightTree.BackgrItemTexture, this.rightTree.SpritePosition, Color.White);
-            this.girlCharacter.Draw(this.spriteBatch, new Vector2(4, 2));
+            this.girlCharacter.Draw(this.spriteBatch);
             this.spriteBatch.End();
 
-            // TODO: Add your drawing code here
             base.Draw(gameTime);
         }
 
         // Replace Console WriteLine
         private void DebugInformation()
         {
-            this.spriteBatch.DrawString(
+            this.spriteBatch
+                .DrawString(
                 this.debugFont,
-                "\n Debug info:" +
-                "\n Buffer Width: " + this.graphics.PreferredBackBufferWidth +
-                "\n Buffer Height: " + this.graphics.PreferredBackBufferHeight +
+                "\n Debug info:" + 
+                "\n Buffer Width: " + 
+                this.graphics.PreferredBackBufferWidth + 
+                "\n Buffer Height: " + 
+                this.graphics.PreferredBackBufferHeight +
                 ////"\n Gametime elasped: " + gameTime.ElapsedGameTime.TotalSeconds +
-                "\n Tree Width: " + this.topTree.BackgrItemTexture.Width +
-                "\n Tree Height: " + this.topTree.BackgrItemTexture.Height +
-                "\n Tree position: " + this.topTree.SpritePosition,
-                new Vector2(100, 100), Color.DarkGray);
+                "\n Tree Width: " + 
+                this.topTree.BackgrItemTexture.Width +
+                "\n Tree Height: " + 
+                this.topTree.BackgrItemTexture.Height +
+                "\n Tree position: " + 
+                this.topTree.SpritePosition,
+                new Vector2(10, 10), 
+                Color.DarkGray);
         }
 
         // Load textures and objects for level one
         private void LoadLevelOne()
         {
-            this.topTree = new StaticItem(new Vector2(100f, 250f), new Vector2(50f, 50f));
+            this.topTree = new StaticItem(new Vector2(1300, 400), new Vector2(50f, 50f));
             this.topTree.BackgrItemTexture = Content.Load<Texture2D>("Tree");
 
-            this.rightTree = new StaticItem(new Vector2(300f, 250f), new Vector2(50f, 50f));
+            this.rightTree = new StaticItem(new Vector2(1500, 250), new Vector2(50f, 50f));
             this.rightTree.BackgrItemTexture = Content.Load<Texture2D>("Tree");
 
             Texture2D girlMoveAnim = Content.Load<Texture2D>("girlMove1");
-            this.girlCharacter = new AnimatedSprite(girlMoveAnim, 3, 3);
+            this.girlCharacter = new AnimatedSprite(girlMoveAnim, 3, 3, new Vector2(0, 190), new Vector2(0, 0));
         }
 
         // Just testing moving sprites
         private void MoveTree(GameTime gameTime)
         {
+            Random radomTree = new Random();
+
             // direction velociti etc.
-            this.topTree.SpritePosition += new Vector2(100f, 0f) * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            this.topTree.SpritePosition -= new Vector2(radomTree.Next(150, 300), 0f) * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            this.rightTree.SpritePosition -= new Vector2(radomTree.Next(150, 500), 0f) * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             // Check for bounce.
             int maxX =
@@ -163,9 +157,14 @@
             int maxY =
                 this.graphics.GraphicsDevice.Viewport.Height - this.topTree.BackgrItemTexture.Height;
 
-            if (this.topTree.SpritePosition.X > maxX)
+            if (this.topTree.SpritePosition.X <= 0 - this.topTree.BackgrItemTexture.Width)
             {
-                this.topTree.SpritePosition = new Vector2(250f, 100f);
+                this.topTree.SpritePosition = new Vector2(radomTree.Next(1500, 2500), radomTree.Next(0, 450));
+            }
+
+            if (this.rightTree.SpritePosition.X <= 0 - this.topTree.BackgrItemTexture.Width)
+            {
+                this.rightTree.SpritePosition = new Vector2(radomTree.Next(1500, 2500), radomTree.Next(0, 450));
             }
         }
     }
