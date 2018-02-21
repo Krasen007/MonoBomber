@@ -42,7 +42,8 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="BackgroundItems\StaticItem.cs" />
+    <Compile Include="Items\AnimatedSprite.cs" />
+    <Compile Include="Items\StaticItem.cs" />
     <Compile Include="EntryPoint.cs" />
     <Compile Include="Levels\Level1.cs" />
     <Compile Include="Run.cs" />

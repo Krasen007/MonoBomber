@@ -93,11 +93,40 @@
   <project key="729226828">
     <configuration>DEBUG;TRACE;WINDOWS</configuration>
   </project>
-  <sourcecode name="StaticItem.cs" parser="StyleCop.CSharp.CsParser">
+  <sourcecode name="EntryPoint.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2018.01.13 19:03:35.672</styleCop>
       <settingsFile>2018.02.20 01:16:32.969</settingsFile>
-      <sourceFile>2018.02.20 02:24:10.618</sourceFile>
+      <sourceFile>2018.02.21 00:58:49.816</sourceFile>
+      <parser>2018.01.13 19:03:35.672</parser>
+      <StyleCop.CSharp.DocumentationRules>2018.01.13 19:03:35.672</StyleCop.CSharp.DocumentationRules>
+      <StyleCop.CSharp.DocumentationRules.FilesHashCode>0</StyleCop.CSharp.DocumentationRules.FilesHashCode>
+      <StyleCop.CSharp.LayoutRules>2018.01.13 19:03:35.672</StyleCop.CSharp.LayoutRules>
+      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
+      <StyleCop.CSharp.MaintainabilityRules>2018.01.13 19:03:35.672</StyleCop.CSharp.MaintainabilityRules>
+      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
+      <StyleCop.CSharp.NamingRules>2018.01.13 19:03:35.672</StyleCop.CSharp.NamingRules>
+      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
+      <StyleCop.CSharp.OrderingRules>2018.01.13 19:03:35.672</StyleCop.CSharp.OrderingRules>
+      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
+      <StyleCop.CSharp.ReadabilityRules>2018.01.13 19:03:35.672</StyleCop.CSharp.ReadabilityRules>
+      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
+      <StyleCop.CSharp.SpacingRules>2018.01.13 19:03:35.672</StyleCop.CSharp.SpacingRules>
+      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
+    </timestamps>
+    <violations>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="ParameterMustNotSpanMultipleLines" ruleCheckId="SA1118">
+        <context>The parameter spans multiple lines. If the parameter is short, place the entire parameter on a single line. Otherwise, save the contents of the parameter in a temporary variable and pass the temporary variable as a parameter. </context>
+        <line>131</line>
+        <warning>False</warning>
+      </violation>
+    </violations>
+  </sourcecode>
+  <sourcecode name="AnimatedSprite.cs" parser="StyleCop.CSharp.CsParser">
+    <timestamps>
+      <styleCop>2018.01.13 19:03:35.672</styleCop>
+      <settingsFile>2018.02.20 01:16:32.969</settingsFile>
+      <sourceFile>2018.02.21 00:54:56.332</sourceFile>
       <parser>2018.01.13 19:03:35.672</parser>
       <StyleCop.CSharp.DocumentationRules>2018.01.13 19:03:35.672</StyleCop.CSharp.DocumentationRules>
       <StyleCop.CSharp.DocumentationRules.FilesHashCode>0</StyleCop.CSharp.DocumentationRules.FilesHashCode>
@@ -116,11 +145,11 @@
     </timestamps>
     <violations />
   </sourcecode>
-  <sourcecode name="EntryPoint.cs" parser="StyleCop.CSharp.CsParser">
+  <sourcecode name="StaticItem.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2018.01.13 19:03:35.672</styleCop>
       <settingsFile>2018.02.20 01:16:32.969</settingsFile>
-      <sourceFile>2018.02.20 22:46:56.631</sourceFile>
+      <sourceFile>2018.02.21 00:58:06.458</sourceFile>
       <parser>2018.01.13 19:03:35.672</parser>
       <StyleCop.CSharp.DocumentationRules>2018.01.13 19:03:35.672</StyleCop.CSharp.DocumentationRules>
       <StyleCop.CSharp.DocumentationRules.FilesHashCode>0</StyleCop.CSharp.DocumentationRules.FilesHashCode>
@@ -137,23 +166,7 @@
       <StyleCop.CSharp.SpacingRules>2018.01.13 19:03:35.672</StyleCop.CSharp.SpacingRules>
       <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
     </timestamps>
-    <violations>
-      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="ParametersMustBeOnSameLineOrSeparateLines" ruleCheckId="SA1117">
-        <context>All method parameters must be placed on the same line, or each parameter must be placed on a separate line.</context>
-        <line>125</line>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="ParameterMustNotSpanMultipleLines" ruleCheckId="SA1118">
-        <context>The parameter spans multiple lines. If the parameter is short, place the entire parameter on a single line. Otherwise, save the contents of the parameter in a temporary variable and pass the temporary variable as a parameter. </context>
-        <line>127</line>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="ParameterMustFollowComma" ruleCheckId="SA1115">
-        <context>The parameter must begin on the line after the previous parameter.</context>
-        <line>134</line>
-        <warning>False</warning>
-      </violation>
-    </violations>
+    <violations />
   </sourcecode>
   <sourcecode name="Level1.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>

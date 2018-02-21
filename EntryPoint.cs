@@ -3,6 +3,7 @@
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
+    using MonoContra.Items;
     using Start.BackgroundItems;
 
     /// <summary>
@@ -18,6 +19,7 @@
 
         private StaticItem topTree;
         private StaticItem rightTree;
+        private AnimatedSprite girlCharacter;
 
         public EntryPoint()
         {
@@ -88,7 +90,8 @@
             }
 
             // testing moving sprites
-            this.UpdateSprite(gameTime);
+            this.MoveTree(gameTime);
+            this.girlCharacter.Update();
 
             // TODO: Add your update logic here
             base.Update(gameTime);
@@ -113,6 +116,7 @@
             // Level one
             this.spriteBatch.Draw(this.topTree.BackgrItemTexture, this.topTree.SpritePosition, Color.White);
             this.spriteBatch.Draw(this.rightTree.BackgrItemTexture, this.rightTree.SpritePosition, Color.White);
+            this.girlCharacter.Draw(this.spriteBatch, new Vector2(4, 2));
             this.spriteBatch.End();
 
             // TODO: Add your drawing code here
@@ -142,10 +146,13 @@
 
             this.rightTree = new StaticItem(new Vector2(300f, 250f), new Vector2(50f, 50f));
             this.rightTree.BackgrItemTexture = Content.Load<Texture2D>("Tree");
+
+            Texture2D girlMoveAnim = Content.Load<Texture2D>("girlMove1");
+            this.girlCharacter = new AnimatedSprite(girlMoveAnim, 3, 3);
         }
 
         // Just testing moving sprites
-        private void UpdateSprite(GameTime gameTime)
+        private void MoveTree(GameTime gameTime)
         {
             // direction velociti etc.
             this.topTree.SpritePosition += new Vector2(100f, 0f) * (float)gameTime.ElapsedGameTime.TotalSeconds;
