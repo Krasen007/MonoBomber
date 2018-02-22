@@ -32,6 +32,7 @@
             ////this.graphics.IsFullScreen = true;
             this.graphics.PreferredBackBufferWidth = 1280;
             this.graphics.PreferredBackBufferHeight = 720;
+            this.IsMouseVisible = true;
         }
 
         protected override void Initialize()
@@ -57,6 +58,7 @@
         {
             // TODO: Add your update logic here
             KeyboardState keyState = Keyboard.GetState();
+            MouseState mouseState = Mouse.GetState();
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || keyState.IsKeyDown(Keys.Escape))
             {
@@ -74,12 +76,12 @@
                     this.tildePressed = false;
                 }
             }
-
+            
             this.oldKeyState = keyState;
 
             // testing moving sprites
             this.MoveTree(gameTime);
-            this.girlCharacter.Update(keyState);
+            this.girlCharacter.Update(keyState, mouseState);
 
             base.Update(gameTime);
         }
@@ -109,14 +111,15 @@
         // Replace Console WriteLine
         private void DebugInformation()
         {
+            MouseState mouseState = Mouse.GetState();
             this.spriteBatch
                 .DrawString(
                 this.debugFont,
                 "\n Debug info:" + 
-                "\n Buffer Width: " + 
-                this.graphics.PreferredBackBufferWidth + 
-                "\n Buffer Height: " + 
-                this.graphics.PreferredBackBufferHeight +
+                "\n Mouse to vector: " +
+                mouseState.Position.ToVector2() + 
+                "\n girl sprite: " + 
+                this.girlCharacter.SpritePosition +
                 ////"\n Gametime elasped: " + gameTime.ElapsedGameTime.TotalSeconds +
                 "\n Tree Width: " + 
                 this.topTree.BackgrItemTexture.Width +

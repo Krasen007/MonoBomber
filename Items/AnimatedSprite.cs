@@ -12,6 +12,9 @@
 
         private KeyboardState oldKeyState;
 
+        private SpriteEffects flipSpriteState;
+        ////Vector2 origin; 
+
         public AnimatedSprite(Vector2 spritePos, Vector2 spriteSpd) : base(spritePos, spriteSpd)
         {
             this.SpritePosition = spritePos;
@@ -37,7 +40,7 @@
 
         public int Columns { get; set; }        
 
-        public void Update(KeyboardState keyState)
+        public void Update(KeyboardState keyState, MouseState mouseState)
         {
             this.currentFrame++;
             if (this.currentFrame == this.totalFrames)
@@ -47,12 +50,20 @@
 
             if (keyState.IsKeyDown(Keys.Right))
             {
+                this.flipSpriteState = SpriteEffects.None;
                 this.SpritePosition += new Vector2(10, 0);
             }
 
             if (keyState.IsKeyDown(Keys.Left))
             {
+                this.flipSpriteState = SpriteEffects.FlipHorizontally;
                 this.SpritePosition -= new Vector2(10, 0);
+            }
+
+            if (mouseState.LeftButton == ButtonState.Pressed)
+            {
+                // TODO: fix position with mouse
+                this.SpritePosition = new Vector2(mouseState.Position.X, mouseState.Position.Y);
             }
 
             this.oldKeyState = keyState;
@@ -68,7 +79,7 @@
             Rectangle sourceRectangle = new Rectangle(width * column, height * row, width, height);
             Rectangle destinationRectangle = new Rectangle((int)SpritePosition.X, (int)SpritePosition.Y, width, height);
             
-            spriteBatch.Draw(this.Texture, destinationRectangle, sourceRectangle, Color.White);
+            spriteBatch.Draw(this.Texture, destinationRectangle, sourceRectangle, Color.White, 0, Vector2.Zero, this.flipSpriteState, 0);
         }
     }
 }
