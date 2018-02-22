@@ -102,7 +102,7 @@
             // Level one
             this.spriteBatch.Draw(this.topTree.BackgrItemTexture, this.topTree.SpritePosition, Color.White);
             this.spriteBatch.Draw(this.rightTree.BackgrItemTexture, this.rightTree.SpritePosition, Color.White);
-            this.girlCharacter.Draw(this.spriteBatch);
+            this.girlCharacter.Draw(this.spriteBatch, 0.5, 0.5);
             this.spriteBatch.End();
 
             base.Draw(gameTime);
@@ -141,7 +141,7 @@
             this.rightTree.BackgrItemTexture = Content.Load<Texture2D>("Tree");
 
             Texture2D girlMoveAnim = Content.Load<Texture2D>("girlMove1");
-            this.girlCharacter = new AnimatedSprite(girlMoveAnim, 3, 3, new Vector2(0, 190), new Vector2(0, 0));
+            this.girlCharacter = new AnimatedSprite(girlMoveAnim, 3, 3, new Vector2(0, 330), new Vector2(10, 0));
         }
 
         // Just testing moving sprites
