@@ -15,26 +15,26 @@
         private int row;
         private int column;
 
+        private string direction;
+
         private KeyboardState oldKeyState;
         private MouseState oldMouseState;
 
         private SpriteEffects flipSpriteState;
 
-        public AnimatedSprite(Vector2 spritePos, Vector2 spriteSpd) : base(spritePos, spriteSpd)
+        public AnimatedSprite(Vector2 spritePos, Vector2 spriteSpdX, Vector2 spriteSpdY) : base(spritePos, spriteSpdX, spriteSpdY)
         {
         }
 
-        public AnimatedSprite(Texture2D texture, int rows, int columns, Vector2 spritePos, Vector2 spriteSpd) : base(spritePos, spriteSpd)
+        public AnimatedSprite(Texture2D texture, int rows, int columns, Vector2 spritePos, Vector2 spriteSpdX, Vector2 spriteSpdY) : base(spritePos, spriteSpdX, spriteSpdY)
         {
             // Those are used for drawing of the sprite
-            this.Texture = texture;
+            this.SpriteTexture = texture;
             this.Rows = rows;
             this.Columns = columns;
             this.currentFrame = 0;
             this.totalFrames = this.Rows * this.Columns;
         }
-
-        public Texture2D Texture { get; private set; }
 
         public int Rows { get; private set; }
 
@@ -48,25 +48,57 @@
 
         public int Column { get => this.column; private set => this.column = value; }
 
+        public string Direction { get => this.direction; set => this.direction = value; }
+
         public void Update(KeyboardState keyState, MouseState mouseState)
         {
-            this.currentFrame++;
-            if (this.currentFrame == this.totalFrames)
-            {
-                this.currentFrame = 0;
-            }
-
             if (keyState.IsKeyDown(Keys.Right) || keyState.IsKeyDown(Keys.D))
             {
+                this.currentFrame++;
+                if (this.currentFrame == this.totalFrames - 1)
+                {
+                    this.currentFrame = 0;
+                }
+
+                this.Direction = "right";
                 this.flipSpriteState = SpriteEffects.None;
-                this.SpritePosition += this.SpriteSpeed;
+                this.SpritePosition += this.SpriteSpeedX;
             }
 
             if (keyState.IsKeyDown(Keys.Left) || keyState.IsKeyDown(Keys.A))
             {
+                this.currentFrame++;
+                if (this.currentFrame == this.totalFrames - 1)
+                {
+                    this.currentFrame = 0;
+                }
+
+                this.Direction = "left";
                 this.flipSpriteState = SpriteEffects.FlipHorizontally;
-                this.SpritePosition -= this.SpriteSpeed;
+                this.SpritePosition -= this.SpriteSpeedX;
             }
+
+            if (keyState.IsKeyDown(Keys.Up) || keyState.IsKeyDown(Keys.W))
+            {
+                this.Direction = "up";
+                this.SpritePosition -= this.SpriteSpeedY;
+            }
+
+            if (keyState.IsKeyDown(Keys.Down) || keyState.IsKeyDown(Keys.S))
+            {
+                this.Direction = "down";
+                this.SpritePosition += this.SpriteSpeedY;
+            }
+
+            ////if (true)
+            ////{
+            ////    this.Direction = "idle";
+            ////    this.currentFrame++;
+            ////    if (this.currentFrame == this.totalFrames - 1)
+            ////    {
+            ////        this.currentFrame = 0;
+            ////    }
+            ////}
 
             if (mouseState.LeftButton == ButtonState.Pressed && this.oldMouseState.LeftButton == ButtonState.Released)
             {
@@ -77,20 +109,55 @@
             this.oldMouseState = mouseState;
         }
 
-        public void Draw(SpriteBatch spriteBatch, double scaleX, double scaleY)
+        public void Draw(SpriteBatch spriteBatch, double scaleX, double scaleY, string direct)
         {
-            this.Width = this.Texture.Width / this.Columns;
-            this.Height = this.Texture.Height / this.Rows;
-            this.Row = (int)((float)this.currentFrame / (float)this.Columns);
-            this.Column = this.currentFrame % this.Columns;
+            direct = this.Direction;
 
-            scaleX = scaleX * this.Width;
-            scaleY = scaleY * this.Height;
+            if (direct == "left")
+            {
+                this.Width = this.SpriteTexture.Width / this.Columns;
+                this.Height = this.SpriteTexture.Height / this.Rows;
+                this.Row = (int)((float)this.currentFrame / (float)this.Columns);
+                this.Column = this.currentFrame % this.Columns;
 
-            Rectangle sourceRectangle = new Rectangle(this.Width * this.Column, this.Height * this.Row, this.Width, this.Height); // this is what texture is used
-            Rectangle destinationRectangle = new Rectangle((int)SpritePosition.X, (int)SpritePosition.Y, (int)scaleX, (int)scaleY); // this is how is drawn
+                scaleX = scaleX * this.Width;
+                scaleY = scaleY * this.Height;
 
-            spriteBatch.Draw(this.Texture, destinationRectangle, sourceRectangle, Color.White, 0, Vector2.Zero, this.flipSpriteState, 0);
-        }
+                Rectangle sourceRectangle = new Rectangle(this.Width * this.Column, this.Height * this.Row, this.Width, this.Height); // this is what texture is used
+                Rectangle destinationRectangle = new Rectangle((int)SpritePosition.X, (int)SpritePosition.Y, (int)scaleX, (int)scaleY); // this is how is drawn
+
+                spriteBatch.Draw(this.SpriteTexture, destinationRectangle, sourceRectangle, Color.White, 0, Vector2.Zero, this.flipSpriteState, 0);
+            }
+            else if (direct == "right")
+            {
+                this.Width = this.SpriteTexture.Width / this.Columns;
+                this.Height = this.SpriteTexture.Height / this.Rows;
+                this.Row = (int)((float)this.currentFrame / (float)this.Columns);
+                this.Column = this.currentFrame % this.Columns;
+
+                scaleX = scaleX * this.Width;
+                scaleY = scaleY * this.Height;
+
+                Rectangle sourceRectangle = new Rectangle(this.Width * this.Column, this.Height * this.Row, this.Width, this.Height); // this is what texture is used
+                Rectangle destinationRectangle = new Rectangle((int)SpritePosition.X, (int)SpritePosition.Y, (int)scaleX, (int)scaleY); // this is how is drawn
+
+                spriteBatch.Draw(this.SpriteTexture, destinationRectangle, sourceRectangle, Color.White, 0, Vector2.Zero, this.flipSpriteState, 0);
+            }
+            else if (direct == "idle")
+            {
+                this.Width = this.SpriteTexture.Width / this.Columns;
+                this.Height = this.SpriteTexture.Height / this.Rows;
+                this.Row = (int)((float)this.currentFrame / (float)this.Columns);
+                this.Column = this.currentFrame % this.Columns;
+
+                scaleX = scaleX * this.Width;
+                scaleY = scaleY * this.Height;
+
+                Rectangle sourceRectangle = new Rectangle(this.Width * this.Column, this.Height * this.Row, this.Width, this.Height); // this is what texture is used
+                Rectangle destinationRectangle = new Rectangle((int)SpritePosition.X, (int)SpritePosition.Y, (int)scaleX, (int)scaleY); // this is how is drawn
+
+                spriteBatch.Draw(this.SpriteTexture, destinationRectangle, sourceRectangle, Color.White, 0, Vector2.Zero, this.flipSpriteState, 0);
+            }
+        }                
     }
 }
