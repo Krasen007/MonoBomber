@@ -115,49 +115,32 @@
 
             if (direct == "left")
             {
-                this.Width = this.SpriteTexture.Width / this.Columns;
-                this.Height = this.SpriteTexture.Height / this.Rows;
-                this.Row = (int)((float)this.currentFrame / (float)this.Columns);
-                this.Column = this.currentFrame % this.Columns;
-
-                scaleX = scaleX * this.Width;
-                scaleY = scaleY * this.Height;
-
-                Rectangle sourceRectangle = new Rectangle(this.Width * this.Column, this.Height * this.Row, this.Width, this.Height); // this is what texture is used
-                Rectangle destinationRectangle = new Rectangle((int)SpritePosition.X, (int)SpritePosition.Y, (int)scaleX, (int)scaleY); // this is how is drawn
-
-                spriteBatch.Draw(this.SpriteTexture, destinationRectangle, sourceRectangle, Color.White, 0, Vector2.Zero, this.flipSpriteState, 0);
+                this.Animate(spriteBatch, scaleX, scaleY);
             }
             else if (direct == "right")
             {
-                this.Width = this.SpriteTexture.Width / this.Columns;
-                this.Height = this.SpriteTexture.Height / this.Rows;
-                this.Row = (int)((float)this.currentFrame / (float)this.Columns);
-                this.Column = this.currentFrame % this.Columns;
-
-                scaleX = scaleX * this.Width;
-                scaleY = scaleY * this.Height;
-
-                Rectangle sourceRectangle = new Rectangle(this.Width * this.Column, this.Height * this.Row, this.Width, this.Height); // this is what texture is used
-                Rectangle destinationRectangle = new Rectangle((int)SpritePosition.X, (int)SpritePosition.Y, (int)scaleX, (int)scaleY); // this is how is drawn
-
-                spriteBatch.Draw(this.SpriteTexture, destinationRectangle, sourceRectangle, Color.White, 0, Vector2.Zero, this.flipSpriteState, 0);
+                this.Animate(spriteBatch, scaleX, scaleY);
             }
             else if (direct == "idle")
             {
-                this.Width = this.SpriteTexture.Width / this.Columns;
-                this.Height = this.SpriteTexture.Height / this.Rows;
-                this.Row = (int)((float)this.currentFrame / (float)this.Columns);
-                this.Column = this.currentFrame % this.Columns;
-
-                scaleX = scaleX * this.Width;
-                scaleY = scaleY * this.Height;
-
-                Rectangle sourceRectangle = new Rectangle(this.Width * this.Column, this.Height * this.Row, this.Width, this.Height); // this is what texture is used
-                Rectangle destinationRectangle = new Rectangle((int)SpritePosition.X, (int)SpritePosition.Y, (int)scaleX, (int)scaleY); // this is how is drawn
-
-                spriteBatch.Draw(this.SpriteTexture, destinationRectangle, sourceRectangle, Color.White, 0, Vector2.Zero, this.flipSpriteState, 0);
+                this.Animate(spriteBatch, scaleX, scaleY);
             }
         }                
+
+        private void Animate(SpriteBatch spriteBatch, double scaleX, double scaleY)
+        {
+            this.Width = this.SpriteTexture.Width / this.Columns;
+            this.Height = this.SpriteTexture.Height / this.Rows;
+            this.Row = (int)((float)this.currentFrame / (float)this.Columns);
+            this.Column = this.currentFrame % this.Columns;
+
+            scaleX = scaleX * this.Width;
+            scaleY = scaleY * this.Height;
+
+            Rectangle sourceRectangle = new Rectangle(this.Width * this.Column, this.Height * this.Row, this.Width, this.Height); // this is what texture is used
+            Rectangle destinationRectangle = new Rectangle((int)SpritePosition.X, (int)SpritePosition.Y, (int)scaleX, (int)scaleY); // this is how is drawn
+
+            spriteBatch.Draw(this.SpriteTexture, destinationRectangle, sourceRectangle, Color.White, 0, Vector2.Zero, this.flipSpriteState, 0);
+        }
     }
 }

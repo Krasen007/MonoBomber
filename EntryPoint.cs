@@ -149,6 +149,7 @@
             this.rightTree.SpriteTexture = Content.Load<Texture2D>("Tree");
 
             Texture2D girlMoveAnim = Content.Load<Texture2D>("girlMove1");
+            Texture2D girlMeleAnim = Content.Load<Texture2D>("mele1");
             this.girlCharacter = new AnimatedSprite(girlMoveAnim, 3, 3, new Vector2(0, 330), new Vector2(10, 0), new Vector2(0, 10));
         }
 
