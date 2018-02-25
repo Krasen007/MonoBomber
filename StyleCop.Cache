@@ -97,7 +97,7 @@
     <timestamps>
       <styleCop>2018.01.13 19:03:35.672</styleCop>
       <settingsFile>2018.02.20 01:16:32.969</settingsFile>
-      <sourceFile>2018.02.24 12:23:58.137</sourceFile>
+      <sourceFile>2018.02.25 16:53:36.166</sourceFile>
       <parser>2018.01.13 19:03:35.672</parser>
       <StyleCop.CSharp.DocumentationRules>2018.01.13 19:03:35.672</StyleCop.CSharp.DocumentationRules>
       <StyleCop.CSharp.DocumentationRules.FilesHashCode>0</StyleCop.CSharp.DocumentationRules.FilesHashCode>
@@ -126,7 +126,7 @@
     <timestamps>
       <styleCop>2018.01.13 19:03:35.672</styleCop>
       <settingsFile>2018.02.20 01:16:32.969</settingsFile>
-      <sourceFile>2018.02.24 12:24:49.337</sourceFile>
+      <sourceFile>2018.02.25 16:56:16.856</sourceFile>
       <parser>2018.01.13 19:03:35.672</parser>
       <StyleCop.CSharp.DocumentationRules>2018.01.13 19:03:35.672</StyleCop.CSharp.DocumentationRules>
       <StyleCop.CSharp.DocumentationRules.FilesHashCode>0</StyleCop.CSharp.DocumentationRules.FilesHashCode>
@@ -143,13 +143,19 @@
       <StyleCop.CSharp.SpacingRules>2018.01.13 19:03:35.672</StyleCop.CSharp.SpacingRules>
       <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
     </timestamps>
-    <violations />
+    <violations>
+      <violation namespace="StyleCop.CSharp.LayoutRules" rule="CodeMustNotContainMultipleBlankLinesInARow" ruleCheckId="SA1507">
+        <context>The code must not contain multiple blank lines in a row.</context>
+        <line>56</line>
+        <warning>False</warning>
+      </violation>
+    </violations>
   </sourcecode>
   <sourcecode name="StaticItem.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2018.01.13 19:03:35.672</styleCop>
       <settingsFile>2018.02.20 01:16:32.969</settingsFile>
-      <sourceFile>2018.02.24 01:06:05.092</sourceFile>
+      <sourceFile>2018.02.25 13:29:50.095</sourceFile>
       <parser>2018.01.13 19:03:35.672</parser>
       <StyleCop.CSharp.DocumentationRules>2018.01.13 19:03:35.672</StyleCop.CSharp.DocumentationRules>
       <StyleCop.CSharp.DocumentationRules.FilesHashCode>0</StyleCop.CSharp.DocumentationRules.FilesHashCode>

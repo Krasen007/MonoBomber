@@ -110,7 +110,7 @@
             // Level one
             this.spriteBatch.Draw(this.topTree.SpriteTexture, this.topTree.SpritePosition, Color.White);
             this.spriteBatch.Draw(this.rightTree.SpriteTexture, this.rightTree.SpritePosition, Color.White);
-            this.girlCharacter.Draw(this.spriteBatch, 0.5, 0.5, "idle");
+            this.girlCharacter.Draw(this.spriteBatch, 1.5, 1.5, "up");
             this.spriteBatch.End();
 
             base.Draw(gameTime);
@@ -129,8 +129,8 @@
                 "\n girl sprite: " +
                 this.girlCharacter.SpritePosition +
                 ////"\n Gametime elasped: " + gameTime.ElapsedGameTime.TotalSeconds +
-                "\n FPS: " +
-                frameRate +
+                ////"\n current girl frame: " +
+                ////this.girlCharacter.currentFrame +
                 "\n girl backgr tex: " +
                 this.girlCharacter.SpriteTexture.Width +
                 "\n girl backgr tex width: " +
@@ -148,9 +148,9 @@
             this.rightTree = new StaticItem(new Vector2(1500, 250), new Vector2(50f, 50f), new Vector2(0, 10));
             this.rightTree.SpriteTexture = Content.Load<Texture2D>("Tree");
 
-            Texture2D girlMoveAnim = Content.Load<Texture2D>("girlMove1");
+            Texture2D girlMoveAnim = Content.Load<Texture2D>("bomberman");
             Texture2D girlMeleAnim = Content.Load<Texture2D>("mele1");
-            this.girlCharacter = new AnimatedSprite(girlMoveAnim, 3, 3, new Vector2(0, 330), new Vector2(10, 0), new Vector2(0, 10));
+            this.girlCharacter = new AnimatedSprite(girlMoveAnim, 4, 6, new Vector2(0, 330), new Vector2(10, 0), new Vector2(0, 10));
         }
 
         // Just testing moving sprites

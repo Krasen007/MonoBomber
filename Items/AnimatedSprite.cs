@@ -22,83 +22,94 @@
 
         private SpriteEffects flipSpriteState;
 
-        public AnimatedSprite(Vector2 spritePos, Vector2 spriteSpdX, Vector2 spriteSpdY) : base(spritePos, spriteSpdX, spriteSpdY)
-        {
-        }
-
-        public AnimatedSprite(Texture2D texture, int rows, int columns, Vector2 spritePos, Vector2 spriteSpdX, Vector2 spriteSpdY) : base(spritePos, spriteSpdX, spriteSpdY)
+        /// <param name="texture">Texture/spritesheet for the sprite</param>
+        /// <param name="rows">Rows of the spritesheet</param>
+        /// <param name="cols">Rows of the spritesheet</param>
+        /// <param name="spritePos">Position of the map</param>
+        /// <param name="spriteSpdX">Movement by X</param>
+        /// <param name="spriteSpdY">Movement by Y</param>
+        public AnimatedSprite(Texture2D texture, int rows, int cols, Vector2 spritePos, Vector2 spriteSpdX, Vector2 spriteSpdY) : base(spritePos, spriteSpdX, spriteSpdY)
         {
             // Those are used for drawing of the sprite
             this.SpriteTexture = texture;
             this.Rows = rows;
-            this.Columns = columns;
+            this.Columns = cols;
             this.currentFrame = 0;
             this.totalFrames = this.Rows * this.Columns;
+            this.flipSpriteState = SpriteEffects.None;
         }
-
-        public int Rows { get; private set; }
-
-        public int Columns { get; private set; }
 
         public int Width { get => this.width; private set => this.width = value; }
 
         public int Height { get => this.height; private set => this.height = value; }
 
-        public int Row { get => this.row; private set => this.row = value; }
-
-        public int Column { get => this.column; private set => this.column = value; }
-
         public string Direction { get => this.direction; set => this.direction = value; }
+
+        protected int Rows { get; private set; }
+
+        protected int Columns { get; private set; }
+
+        protected int Row { get => this.row; private set => this.row = value; }
+
+        protected int Column { get => this.column; private set => this.column = value; }
 
         public void Update(KeyboardState keyState, MouseState mouseState)
         {
             if (keyState.IsKeyDown(Keys.Right) || keyState.IsKeyDown(Keys.D))
             {
+                this.Direction = "right";
+
                 this.currentFrame++;
-                if (this.currentFrame == this.totalFrames - 1)
+                if (this.currentFrame >= 12)
                 {
-                    this.currentFrame = 0;
+                    this.currentFrame = 7;
                 }
 
-                this.Direction = "right";
-                this.flipSpriteState = SpriteEffects.None;
+                // this.flipSpriteState = SpriteEffects.None;
                 this.SpritePosition += this.SpriteSpeedX;
             }
 
             if (keyState.IsKeyDown(Keys.Left) || keyState.IsKeyDown(Keys.A))
             {
+                this.Direction = "left";
+
+                // Bug when going from right to left
                 this.currentFrame++;
-                if (this.currentFrame == this.totalFrames - 1)
+
+                if (this.currentFrame >= this.totalFrames)
                 {
-                    this.currentFrame = 0;
+                    this.currentFrame = 19;
                 }
 
-                this.Direction = "left";
-                this.flipSpriteState = SpriteEffects.FlipHorizontally;
+                // this.flipSpriteState = SpriteEffects.FlipHorizontally;
                 this.SpritePosition -= this.SpriteSpeedX;
             }
 
             if (keyState.IsKeyDown(Keys.Up) || keyState.IsKeyDown(Keys.W))
             {
                 this.Direction = "up";
+
+                this.currentFrame++;
+                if (this.currentFrame >= 18)
+                {
+                    this.currentFrame = 13;
+                }
+
                 this.SpritePosition -= this.SpriteSpeedY;
             }
 
             if (keyState.IsKeyDown(Keys.Down) || keyState.IsKeyDown(Keys.S))
             {
                 this.Direction = "down";
+
+                this.currentFrame++;
+                if (this.currentFrame >= 6)
+                {
+                    this.currentFrame = 0;
+                }
+
                 this.SpritePosition += this.SpriteSpeedY;
             }
-
-            ////if (true)
-            ////{
-            ////    this.Direction = "idle";
-            ////    this.currentFrame++;
-            ////    if (this.currentFrame == this.totalFrames - 1)
-            ////    {
-            ////        this.currentFrame = 0;
-            ////    }
-            ////}
 
             if (mouseState.LeftButton == ButtonState.Pressed && this.oldMouseState.LeftButton == ButtonState.Released)
             {
@@ -121,11 +132,15 @@
             {
                 this.Animate(spriteBatch, scaleX, scaleY);
             }
-            else if (direct == "idle")
+            else if (direct == "up")
             {
                 this.Animate(spriteBatch, scaleX, scaleY);
             }
-        }                
+            else if (direct == "down")
+            {
+                this.Animate(spriteBatch, scaleX, scaleY);
+            }
+        }
 
         private void Animate(SpriteBatch spriteBatch, double scaleX, double scaleY)
         {
