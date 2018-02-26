@@ -6,7 +6,7 @@
     using Microsoft.Xna.Framework.Graphics;
     using System.Collections.Generic;
 
-    class Block
+    public abstract class Block
     {
         protected Dictionary<string, Animation> animations;
         protected string currentAnimationKey;
