@@ -7,9 +7,6 @@
     using MonoContra.Items;
     using Start.BackgroundItems;
 
-    /// <summary>
-    /// This is the main type for your game.
-    /// </summary>
     public class EntryPoint : Game
     {
         private GraphicsDeviceManager graphics;
@@ -24,11 +21,17 @@
         private StaticItem rightTree;
         private AnimatedSprite girlCharacter;
 
+        private StaticItem backgrTree;
+
+        private bool loadOnce;
+
+        private GameState gameState;       
+
         public EntryPoint()
         {
             this.Window.Title = "CONTRA";
             this.graphics = new GraphicsDeviceManager(this);
-            Content.RootDirectory = "Content";
+            this.Content.RootDirectory = "Content";
 
             this.graphics.PreferredBackBufferWidth = 1280;
             this.graphics.PreferredBackBufferHeight = 720;
@@ -42,18 +45,24 @@
             this.IsMouseVisible = true;
         }
 
-        protected override void Initialize()
+        private enum GameState
         {
-            // TODO: Add your initialization logic here    
+            MainMenu,
+            LevelOne,
+            EndOfGame,
+        }
+
+        protected override void Initialize()
+        {  
+            this.gameState = GameState.MainMenu;
+            this.loadOnce = true;
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
             this.spriteBatch = new SpriteBatch(GraphicsDevice);
             this.debugFont = this.Content.Load<SpriteFont>("Debug");
-            this.LoadLevelOne();
         }
 
         protected override void UnloadContent()
@@ -63,11 +72,10 @@
 
         protected override void Update(GameTime gameTime)
         {
-            // TODO: Add your update logic here
             KeyboardState keyState = Keyboard.GetState();
             MouseState mouseState = Mouse.GetState();
 
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || keyState.IsKeyDown(Keys.Escape))
+            if (keyState.IsKeyDown(Keys.Escape))
             {
                 this.Exit();
             }
@@ -86,58 +94,141 @@
 
             this.oldKeyState = keyState;
 
-            // testing moving sprites
-            this.MoveTree(gameTime);
-            this.girlCharacter.Update(keyState, mouseState);
+            // Update states
+            switch (this.gameState)
+            {
+                case GameState.MainMenu:
+                    this.UpdateMainMenu(gameTime, keyState);
+                    break;
+                case GameState.LevelOne:
+
+                    this.UpdateGameplay(gameTime, keyState, mouseState);
+                    break;
+                case GameState.EndOfGame:
+                    this.UpdateEndOfGame(gameTime);
+                    break;
+            }
 
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            // TODO: Add your drawing code here
             GraphicsDevice.Clear(Color.DarkRed);
-
             this.spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
 
-            // Manage Fonts
+            // Manage debug font
             if (this.tildePressed)
             {
-                float frameRate = 1 / (float)gameTime.ElapsedGameTime.TotalSeconds;
-                this.DebugInformation(frameRate);
+                this.DebugInformation();
             }
 
-            // Level one
-            this.spriteBatch.Draw(this.topTree.SpriteTexture, this.topTree.SpritePosition, Color.White);
-            this.spriteBatch.Draw(this.rightTree.SpriteTexture, this.rightTree.SpritePosition, Color.White);
-            this.girlCharacter.Draw(this.spriteBatch, 1.5, 1.5, "up");
-            this.spriteBatch.End();
+            // State draws, loading of items
+            switch (this.gameState)
+            {
+                case GameState.MainMenu:
+                    this.DrawMainMenu(gameTime);
+                    break;
+                case GameState.LevelOne:
+                    this.DrawGameplay(gameTime);
+                    break;
+                case GameState.EndOfGame:
+                    this.DrawEndOfGame(gameTime);
+                    break;
+            }
 
+            this.spriteBatch.End();
             base.Draw(gameTime);
         }
 
-        // Replace Console WriteLine
-        private void DebugInformation(float frameRate)
+        #region Update logic and states
+
+        private void UpdateMainMenu(GameTime deltaTime, KeyboardState keyState)
         {
-            MouseState mouseState = Mouse.GetState();
-            this.spriteBatch
-                .DrawString(
-                this.debugFont,
-                "\n Debug info:" +
-                "\n Mouse to vector: " +
-                mouseState.Position.ToVector2() +
-                "\n girl sprite: " +
-                this.girlCharacter.SpritePosition +
-                ////"\n Gametime elasped: " + gameTime.ElapsedGameTime.TotalSeconds +
-                ////"\n current girl frame: " +
-                ////this.girlCharacter.currentFrame +
-                "\n girl backgr tex: " +
-                this.girlCharacter.SpriteTexture.Width +
-                "\n girl backgr tex width: " +
-                this.girlCharacter.Width,
-                new Vector2(10, 10),
-                Color.DarkGray);
+            // Respond to user input for menu selections, etc
+            // if (true)//pushedStartGameButton)
+            //    _state = GameState.Gameplay;
+            if (this.oldKeyState.IsKeyDown(Keys.Enter))
+            {
+                this.gameState = GameState.LevelOne;
+                this.loadOnce = true;
+            }
         }
+
+        private void DrawMainMenu(GameTime deltaTime)
+        {
+            // Draw the main menu, any active selections, etc
+            if (this.loadOnce)
+            {
+                this.LoadMainMenu();
+            }
+
+            this.spriteBatch.DrawString(
+                this.debugFont, 
+                "Press enter to START GAME \n" +
+                "W,A,S,D to move character, Esc for Exit.", 
+                new Vector2(600, 400), 
+                Color.CadetBlue);
+            this.spriteBatch.Draw(this.backgrTree.SpriteTexture, new Vector2(300, 300), Color.White);
+        }
+
+        private void UpdateGameplay(GameTime gameTime, KeyboardState keyState, MouseState mouseState)
+        {
+            // Respond to user actions in the game.
+            // Update enemies
+            // Handle collisions
+            // if (true)//playerDied)
+            //     _state = GameState.EndOfGame;
+            this.girlCharacter.Update(keyState, mouseState);
+
+            // Testing moving sprites
+            this.MoveTree(gameTime);
+
+            // When game over contition is met
+            // this.loadOnce = true;
+        }
+
+        private void DrawGameplay(GameTime deltaTime)
+        {
+            // Draw the background the level
+            // Draw enemies
+            // Draw the player
+            // Draw particle effects, etc
+
+            // Level one
+            if (this.loadOnce)
+            {
+                this.LoadLevelOne();
+            }
+
+            this.spriteBatch.Draw(this.topTree.SpriteTexture, this.topTree.SpritePosition, Color.White);
+            this.spriteBatch.Draw(this.rightTree.SpriteTexture, this.rightTree.SpritePosition, Color.White);
+            this.girlCharacter.Draw(this.spriteBatch, 1.5, 1.5, "up");
+        }
+
+        private void UpdateEndOfGame(GameTime deltaTime)
+        {
+            // Update scores
+            // Do any animations, effects, etc for getting a high score
+            // Respond to user input to restart level, or go back to main menu
+            // if (true)//pushedMainMenuButton)
+            //      _state = GameState.MainMenu;
+            // else if (true)//pushedRestartLevelButton)
+            // {
+            //    //ResetLevel();
+            //    _state = GameState.Gameplay;
+            // }
+        }
+
+        private void DrawEndOfGame(GameTime deltaTime)
+        {
+            // Draw text and scores
+            // Draw menu for restarting level or going back to main menu
+        }
+
+        #endregion
+        
+        #region Loading        
 
         // Load textures and objects for level one
         private void LoadLevelOne()
@@ -149,8 +240,42 @@
             this.rightTree.SpriteTexture = Content.Load<Texture2D>("Tree");
 
             Texture2D girlMoveAnim = Content.Load<Texture2D>("bomberman");
-            Texture2D girlMeleAnim = Content.Load<Texture2D>("mele1");
             this.girlCharacter = new AnimatedSprite(girlMoveAnim, 4, 6, new Vector2(0, 330), new Vector2(10, 0), new Vector2(0, 10));
+
+            this.loadOnce = false;
+        }
+
+        private void LoadMainMenu()
+        {
+            this.backgrTree = new StaticItem(new Vector2(125, 125), new Vector2(50f, 50f), new Vector2(0, 10));
+            this.backgrTree.SpriteTexture = Content.Load<Texture2D>("Tree");
+            this.loadOnce = false;
+        }
+
+        #endregion
+
+        // Replace Console WriteLine
+        private void DebugInformation()
+        {
+            MouseState mouseState = Mouse.GetState();
+            this.spriteBatch
+                .DrawString(
+                this.debugFont,
+                "\n Debug info:" +
+                "\n Mouse to vector: " +
+                mouseState.Position.ToVector2() +
+                "\n girl sprite: " +
+                this.girlCharacter.SpritePosition +
+                "\n Current State: " + 
+                this.gameState +
+                ////"\n current girl frame: " +
+                ////this.girlCharacter.currentFrame +
+                "\n girl backgr tex: " +
+                this.girlCharacter.SpriteTexture.Width +
+                "\n girl backgr tex width: " +
+                this.girlCharacter.Width,
+                new Vector2(10, 10),
+                Color.DarkGray);
         }
 
         // Just testing moving sprites
