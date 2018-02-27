@@ -6,6 +6,7 @@
     using Microsoft.Xna.Framework.Input;
     using MonoContra.Items;
     using Start.BackgroundItems;
+    using static MonoContra.Items.Player;
 
     public class EntryPoint : Game
     {
@@ -19,7 +20,8 @@
 
         private StaticItem topTree;
         private StaticItem rightTree;
-        private AnimatedSprite girlCharacter;
+        private Player player;
+        private Enemy enemy;
 
         private StaticItem backgrTree;
 
@@ -117,12 +119,6 @@
             GraphicsDevice.Clear(Color.DarkRed);
             this.spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
 
-            // Manage debug font
-            if (this.tildePressed)
-            {
-                this.DebugInformation();
-            }
-
             // State draws, loading of items
             switch (this.gameState)
             {
@@ -143,7 +139,7 @@
 
         #region Update logic and states
 
-        private void UpdateMainMenu(GameTime deltaTime, KeyboardState keyState)
+        private void UpdateMainMenu(GameTime gameTime, KeyboardState keyState)
         {
             // Respond to user input for menu selections, etc
             // if (true)//pushedStartGameButton)
@@ -155,7 +151,7 @@
             }
         }
 
-        private void DrawMainMenu(GameTime deltaTime)
+        private void DrawMainMenu(GameTime gameTime)
         {
             // Draw the main menu, any active selections, etc
             if (this.loadOnce)
@@ -179,7 +175,8 @@
             // Handle collisions
             // if (true)//playerDied)
             //     _state = GameState.EndOfGame;
-            this.girlCharacter.Update(keyState, mouseState);
+            this.player.Update(keyState, mouseState);
+            this.enemy.Update(this.player);
 
             // Testing moving sprites
             this.MoveTree(gameTime);
@@ -188,7 +185,7 @@
             // this.loadOnce = true;
         }
 
-        private void DrawGameplay(GameTime deltaTime)
+        private void DrawGameplay(GameTime gameTime)
         {
             // Draw the background the level
             // Draw enemies
@@ -203,10 +200,19 @@
 
             this.spriteBatch.Draw(this.topTree.SpriteTexture, this.topTree.SpritePosition, Color.White);
             this.spriteBatch.Draw(this.rightTree.SpriteTexture, this.rightTree.SpritePosition, Color.White);
-            this.girlCharacter.Draw(this.spriteBatch, 1.5, 1.5, "up");
+            
+            ////player.PlayerSate = AnimatedSprite.SpriteState.MoveRight;
+            this.player.Draw(this.spriteBatch, 1.5, 1.5, this.player.PlayerSate);
+            this.enemy.Draw(this.spriteBatch, 0.25, 0.25);
+
+            // Manage debug font
+            if (this.tildePressed)
+            {
+                this.DebugInformation();
+            }
         }
 
-        private void UpdateEndOfGame(GameTime deltaTime)
+        private void UpdateEndOfGame(GameTime gameTime)
         {
             // Update scores
             // Do any animations, effects, etc for getting a high score
@@ -220,7 +226,7 @@
             // }
         }
 
-        private void DrawEndOfGame(GameTime deltaTime)
+        private void DrawEndOfGame(GameTime gameTime)
         {
             // Draw text and scores
             // Draw menu for restarting level or going back to main menu
@@ -237,13 +243,16 @@
             this.topTree.SpriteTexture = Content.Load<Texture2D>("Tree");
 
             this.rightTree = new StaticItem(new Vector2(1500, 250), new Vector2(50f, 50f), new Vector2(0, 10));
-            this.rightTree.SpriteTexture = Content.Load<Texture2D>("Tree");
+            this.rightTree.SpriteTexture = Content.Load<Texture2D>("Tree");   
 
             Texture2D girlMoveAnim = Content.Load<Texture2D>("bomberman");
-            this.girlCharacter = new AnimatedSprite(girlMoveAnim, 4, 6, new Vector2(0, 330), new Vector2(10, 0), new Vector2(0, 10));
+            this.player = new Player(girlMoveAnim, 4, 6, new Vector2(0, 330), new Vector2(10, 0), new Vector2(0, 10));
+
+            Texture2D badGirl = Content.Load<Texture2D>("mele1");
+            this.enemy = new Enemy(badGirl, 3, 3, new Vector2(500, 500), new Vector2(4, 0), new Vector2(0, 0));
 
             this.loadOnce = false;
-        }
+        }        
 
         private void LoadMainMenu()
         {
@@ -265,15 +274,15 @@
                 "\n Mouse to vector: " +
                 mouseState.Position.ToVector2() +
                 "\n girl sprite: " +
-                this.girlCharacter.SpritePosition +
+                this.player.SpritePosition +
                 "\n Current State: " + 
                 this.gameState +
-                ////"\n current girl frame: " +
-                ////this.girlCharacter.currentFrame +
+                "\n current enemy destination rect: " +
+                this.enemy.DestinationRectangle +
                 "\n girl backgr tex: " +
-                this.girlCharacter.SpriteTexture.Width +
+                this.player.SpriteTexture.Width +
                 "\n girl backgr tex width: " +
-                this.girlCharacter.Width,
+                this.player.Width,
                 new Vector2(10, 10),
                 Color.DarkGray);
         }
