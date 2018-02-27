@@ -15,7 +15,7 @@
         {
         }
 
-        public SpriteState PlayerSate { get => playerSate; set => playerSate = value; }
+        public SpriteState PlayerSate { get => this.playerSate; set => this.playerSate = value; }
 
         public void Update(KeyboardState keyState, MouseState mouseState)
         {

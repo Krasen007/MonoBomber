@@ -12,11 +12,6 @@
         private int currentFrame;
         private int totalFrames;
 
-        private int width1;
-        private int height1;
-        private int row1;
-        private int column1;
-
         private SpriteEffects flipSpriteState;
 
         /// <param name="texture">Texture/spritesheet for the sprite</param>
@@ -42,36 +37,29 @@
             MoveRight,
             MoveUp,
             MoveDown,
-            DropBomb
+            DropBomb,
+            Shoot
         }
 
-        public int Width { get => this.Width1; private set => this.Width1 = value; }
+        public int Width { get; set; }
 
-        public int Height { get => this.Height1; private set => this.Height1 = value; }
+        public int Height { get; set; }
 
-        public Rectangle DestinationRectangle { get => destinationRectangle; set => destinationRectangle = value; }
+        public Rectangle DestinationRectangle { get => this.destinationRectangle; set => this.destinationRectangle = value; }
 
         protected int Rows { get; private set; }
 
         protected int Columns { get; private set; }
 
-        protected int Row { get => this.Row1; private set => this.Row1 = value; }
+        protected int Row { get; set; }
 
-        protected int Column { get => this.Column1; private set => this.Column1 = value; }
+        protected int Column { get; set; }
 
-        protected int CurrentFrame { get => currentFrame; set => currentFrame = value; }
+        protected int CurrentFrame { get => this.currentFrame; set => this.currentFrame = value; }
 
-        protected int TotalFrames { get => totalFrames; set => totalFrames = value; }
+        protected int TotalFrames { get => this.totalFrames; set => this.totalFrames = value; }
 
-        protected int Width1 { get => width1; set => width1 = value; }
-
-        protected int Height1 { get => height1; set => height1 = value; }
-
-        protected int Row1 { get => row1; set => row1 = value; }
-
-        protected int Column1 { get => column1; set => column1 = value; }
-
-        protected SpriteEffects FlipSpriteState { get => flipSpriteState; set => flipSpriteState = value; }
+        protected SpriteEffects FlipSpriteState { get => this.flipSpriteState; set => this.flipSpriteState = value; }
 
         public virtual void Update()
         {
