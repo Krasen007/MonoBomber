@@ -6,7 +6,6 @@
     using Microsoft.Xna.Framework.Input;
     using MonoContra.Items;
     using Start.BackgroundItems;
-    using static MonoContra.Items.Player;
 
     public class EntryPoint : Game
     {
@@ -16,7 +15,7 @@
         private KeyboardState oldKeyState;
 
         private SpriteFont debugFont;
-        private bool tildePressed = false;
+        private bool tildePressed;
 
         private StaticItem topTree;
         private StaticItem rightTree;
@@ -27,7 +26,7 @@
 
         private bool loadOnce;
 
-        private GameState gameState;       
+        private GameState gameState;
 
         public EntryPoint()
         {
@@ -55,7 +54,7 @@
         }
 
         protected override void Initialize()
-        {  
+        {
             this.gameState = GameState.MainMenu;
             this.loadOnce = true;
             base.Initialize();
@@ -103,7 +102,6 @@
                     this.UpdateMainMenu(gameTime, keyState);
                     break;
                 case GameState.LevelOne:
-
                     this.UpdateGameplay(gameTime, keyState, mouseState);
                     break;
                 case GameState.EndOfGame:
@@ -142,9 +140,7 @@
         private void UpdateMainMenu(GameTime gameTime, KeyboardState keyState)
         {
             // Respond to user input for menu selections, etc
-            // if (true)//pushedStartGameButton)
-            //    _state = GameState.Gameplay;
-            if (this.oldKeyState.IsKeyDown(Keys.Enter))
+            if (this.oldKeyState.IsKeyDown(Keys.Enter) || this.oldKeyState.IsKeyDown(Keys.Space))
             {
                 this.gameState = GameState.LevelOne;
                 this.loadOnce = true;
@@ -160,10 +156,10 @@
             }
 
             this.spriteBatch.DrawString(
-                this.debugFont, 
-                "Press enter to START GAME \n" +
-                "W,A,S,D to move character, Esc for Exit.", 
-                new Vector2(600, 400), 
+                this.debugFont,
+                "Press enter or space to START GAME \n" +
+                "W,A,S,D to move character, Esc for Exit.",
+                new Vector2(600, 400),
                 Color.CadetBlue);
             this.spriteBatch.Draw(this.backgrTree.SpriteTexture, new Vector2(300, 300), Color.White);
         }
@@ -200,10 +196,9 @@
 
             this.spriteBatch.Draw(this.topTree.SpriteTexture, this.topTree.SpritePosition, Color.White);
             this.spriteBatch.Draw(this.rightTree.SpriteTexture, this.rightTree.SpritePosition, Color.White);
-            
-            ////player.PlayerSate = AnimatedSprite.SpriteState.MoveRight;
-            this.player.Draw(this.spriteBatch, 1.5, 1.5, this.player.PlayerSate);
-            this.enemy.Draw(this.spriteBatch, 0.25, 0.25);
+
+            this.player.Draw(this.spriteBatch, 1.25, 1.25, this.player.PlayerSate);
+            this.enemy.Draw(this.spriteBatch, 0.25, 0.25, this.enemy.EnemyState);
 
             // Manage debug font
             if (this.tildePressed)
@@ -233,7 +228,7 @@
         }
 
         #endregion
-        
+
         #region Loading        
 
         // Load textures and objects for level one
@@ -243,16 +238,16 @@
             this.topTree.SpriteTexture = Content.Load<Texture2D>("Tree");
 
             this.rightTree = new StaticItem(new Vector2(1500, 250), new Vector2(50f, 50f), new Vector2(0, 10));
-            this.rightTree.SpriteTexture = Content.Load<Texture2D>("Tree");   
+            this.rightTree.SpriteTexture = Content.Load<Texture2D>("Tree");
 
-            Texture2D girlMoveAnim = Content.Load<Texture2D>("bomberman");
-            this.player = new Player(girlMoveAnim, 4, 6, new Vector2(0, 330), new Vector2(10, 0), new Vector2(0, 10));
+            Texture2D playerMoves = Content.Load<Texture2D>("bomberman");
+            this.player = new Player(playerMoves, 4, 6, new Vector2(0, 330), new Vector2(10, 0), new Vector2(0, 10));
 
             Texture2D badGirl = Content.Load<Texture2D>("mele1");
             this.enemy = new Enemy(badGirl, 3, 3, new Vector2(500, 500), new Vector2(4, 0), new Vector2(0, 0));
 
             this.loadOnce = false;
-        }        
+        }
 
         private void LoadMainMenu()
         {
@@ -275,7 +270,7 @@
                 mouseState.Position.ToVector2() +
                 "\n girl sprite: " +
                 this.player.SpritePosition +
-                "\n Current State: " + 
+                "\n Current State: " +
                 this.gameState +
                 "\n current enemy destination rect: " +
                 this.enemy.DestinationRectangle +

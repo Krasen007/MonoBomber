@@ -28,11 +28,12 @@
             this.Columns = cols;
             this.CurrentFrame = 0;
             this.TotalFrames = this.Rows * this.Columns;
-            this.FlipSpriteState = SpriteEffects.None;
+            this.FlipSpriteState = SpriteEffects.None;     
         }
 
         public enum SpriteState
         {
+            Idle,
             MoveLeft,
             MoveRight,
             MoveUp,
@@ -66,7 +67,7 @@
             // Update method for your animated sprite
         }
 
-        public void Draw(SpriteBatch spriteBatch, double scaleX, double scaleY, SpriteState state)
+        public virtual void Draw(SpriteBatch spriteBatch, double scaleX, double scaleY, SpriteState state)
         {
             if (state == SpriteState.MoveLeft)
             {
@@ -81,6 +82,10 @@
                 this.Animate(spriteBatch, scaleX, scaleY);
             }
             else if (state == SpriteState.MoveDown)
+            {
+                this.Animate(spriteBatch, scaleX, scaleY);
+            }
+            else
             {
                 this.Animate(spriteBatch, scaleX, scaleY);
             }

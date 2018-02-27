@@ -31,7 +31,6 @@
 
                 this.SpritePosition += this.SpriteSpeedX;
             }
-
             else if (keyState.IsKeyDown(Keys.Left) || keyState.IsKeyDown(Keys.A))
             {
                 this.PlayerSate = SpriteState.MoveLeft;
@@ -46,7 +45,6 @@
 
                 this.SpritePosition -= this.SpriteSpeedX;
             }
-
             else if (keyState.IsKeyDown(Keys.Up) || keyState.IsKeyDown(Keys.W))
             {
                 this.PlayerSate = SpriteState.MoveUp;
@@ -59,7 +57,6 @@
 
                 this.SpritePosition -= this.SpriteSpeedY;
             }
-
              else if (keyState.IsKeyDown(Keys.Down) || keyState.IsKeyDown(Keys.S))
             {
                 this.PlayerSate = SpriteState.MoveDown;
@@ -72,13 +69,14 @@
 
                 this.SpritePosition += this.SpriteSpeedY;
             }
-            /*
-             
+
+            /*             
             if (mouseState.LeftButton == ButtonState.Pressed && this.oldMouseState.LeftButton == ButtonState.Released)
             {
                 this.SpritePosition = new Vector2(mouseState.Position.X, mouseState.Position.Y);
             }
             */
+
             this.oldKeyState = keyState;
             this.oldMouseState = mouseState;
         }
