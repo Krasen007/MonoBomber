@@ -1,11 +1,10 @@
-﻿namespace Start
+﻿namespace MonoContra
 {
     using System;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
-    using MonoContra.Items;
-    using Start.BackgroundItems;
+    using MonoContra.Objects;
 
     public class EntryPoint : Game
     {

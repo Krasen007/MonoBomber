@@ -1,4 +1,4 @@
-﻿namespace Start
+﻿namespace MonoContra
 {
     using System;
 #if WINDOWS || LINUX
