@@ -5,6 +5,7 @@
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
     using MonoContra.Objects;
+    using MonoContra.Enumarables;
 
     public class EntryPoint : Game
     {
@@ -23,7 +24,7 @@
         private StaticItem rightTree;
         private Player player;
         private Enemy enemy;
-
+        private Wall wall;
         private StaticItem backgrTree;
 
         private bool loadOnce;
@@ -61,6 +62,8 @@
         {
             this.gameState = GameState.MainMenu;
             this.loadOnce = true;
+
+            this.wall = new Wall(Content, true, WallTypes.Unbreakable, GAME_WIDTH, GAME_HEIGHT, 8, new Vector2(0.45f, 0.45f));
             base.Initialize();
         }
 
@@ -110,7 +113,7 @@
                     this.UpdateGameOver(gameTime);
                     break;
             }
-
+            this.wall.Update(gameTime, GAME_WIDTH, GAME_HEIGHT);
             base.Update(gameTime);
         }
 
@@ -131,7 +134,9 @@
                     this.DrawGameOver(gameTime);
                     break;
             }
-
+            spriteBatch.Begin();
+            this.wall.Draw(spriteBatch);
+            spriteBatch.End();
             base.Draw(gameTime);
         }
 
