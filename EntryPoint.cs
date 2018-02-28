@@ -262,22 +262,15 @@
         private void DebugInformation()
         {
             MouseState mouseState = Mouse.GetState();
-            this.spriteBatch
-                .DrawString(
+            this.spriteBatch.DrawString(
                 this.debugFont,
                 "\n Debug info:" +
-                "\n Mouse to vector: " +
-                mouseState.Position.ToVector2() +
-                "\n girl sprite: " +
-                this.player.SpritePosition +
-                "\n Current State: " +
-                this.gameState +
-                "\n current enemy destination rect: " +
-                this.enemy.DestinationRectangle +
-                "\n girl backgr tex: " +
-                this.player.SpriteTexture.Width +
-                "\n girl backgr tex width: " +
-                this.player.Width,
+                "\n Mouse to vector: " + mouseState.Position.ToVector2() +
+                "\n girl sprite: " + this.player.SpritePosition +
+                "\n Current State: " + this.gameState +
+                "\n current enemy destination rect: " + this.enemy.DestinationRectangle +
+                "\n girl backgr tex: " + this.player.SpriteTexture.Width +
+                "\n girl backgr tex width: " + this.player.Width,
                 new Vector2(10, 10),
                 Color.DarkGray);
         }

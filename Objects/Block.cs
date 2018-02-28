@@ -1,45 +1,49 @@
 ﻿namespace MonoContra.Objects
 {
-    using global::MonoContra.Utilities;
+    using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
     using Microsoft.Xna.Framework.Graphics;
-    using System.Collections.Generic;
+    using global::MonoContra.Utilities;
 
     public abstract class Block
     {
-        protected Dictionary<string, Animation> animations;
-        protected string currentAnimationKey;
+        private Dictionary<string, Animation> animations;
+        private string currentAnimationKey;
 
-        protected double velocity;
-        protected Vector2 position;
-        protected double rotation;
-        protected Vector2 scale;
+        private double velocity;
+        private double rotation;
+        private Vector2 scale;
 
-        public bool isBreakable { get; protected set; }
-        public Vector2 Position
+        public Block(ContentManager content, int gameWidth, int gameHeight, double velocity, Vector2 scale)
         {
-            get
-            {
-                return this.position;
-            }
+            this.Velocity = velocity;
+            this.Scale = scale;
+            this.CurrentAnimationKey = string.Empty;
+            this.Animations = new Dictionary<string, Animation>();
+
+            this.CreateAnimations(content);
         }
 
-        public Block(ContentManager Content, int gameWidth, int gameHeight, double velocity, Vector2 scale)
-        {
-            this.velocity = velocity;
-            this.scale = scale;
-            this.currentAnimationKey = "";
-            this.animations = new Dictionary<string, Animation>();
+        public bool IsBreakable { get; protected set; }
 
-            this.CreateAnimations(Content);
-        }
+        public Vector2 Position { get; }
+
+        protected Dictionary<string, Animation> Animations { get => this.animations; set => this.animations = value; }
+
+        protected string CurrentAnimationKey { get => this.currentAnimationKey; set => this.currentAnimationKey = value; }
+
+        protected double Velocity { get => this.velocity; set => this.velocity = value; }
+
+        protected double Rotation { get => this.rotation; set => this.rotation = value; }
+
+        protected Vector2 Scale { get => this.scale; set => this.scale = value; }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            this.animations[this.currentAnimationKey].Draw(spriteBatch, this.rotation, this.position, this.scale);
+            this.Animations[this.CurrentAnimationKey].Draw(spriteBatch, this.Rotation, this.Position, this.Scale);
         }
 
-        protected abstract void CreateAnimations(ContentManager Content);
+        protected abstract void CreateAnimations(ContentManager content);
     }
 }
