@@ -8,8 +8,8 @@
 
     public abstract class Block
     {
-        protected Dictionary<string, Animation> animations;
-        //protected Vector2 Position;
+        private Dictionary<string, Animation> animations;
+        private Vector2 position;
         private string currentAnimationKey;
 
         private double velocity;
@@ -27,8 +27,10 @@
         }
 
         public bool IsBreakable { get; protected set; }
+
         public bool Health { get; protected set; }
-        public Vector2 Position { get; protected set; }
+
+        public Vector2 Position { get => this.position; set => this.position = value; }
 
         protected Dictionary<string, Animation> Animations { get => this.animations; set => this.animations = value; }
 
@@ -44,21 +46,25 @@
         {
             this.Animations[this.CurrentAnimationKey].Draw(spriteBatch, this.Rotation, this.Position, this.Scale);
         }
+
         public void TakeDamage()
         {
-            if(IsBreakable == true)
+            if (this.IsBreakable == true)
             {
                 this.Health = false;
             }
         }
-        public bool isAlive()
+
+        public bool IsAlive()
         {
             if (this.Health)
             {
                 return true;
             }
+
             return false;
         }
+
         protected abstract void CreateAnimations(ContentManager content);
     }
 }
