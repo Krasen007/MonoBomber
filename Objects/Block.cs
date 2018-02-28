@@ -9,6 +9,7 @@
     public abstract class Block
     {
         protected Dictionary<string, Animation> animations;
+        //protected Vector2 Position;
         private string currentAnimationKey;
 
         private double velocity;
@@ -27,7 +28,7 @@
 
         public bool IsBreakable { get; protected set; }
         public bool Health { get; protected set; }
-        public Vector2 Position { get; }
+        public Vector2 Position { get; protected set; }
 
         protected Dictionary<string, Animation> Animations { get => this.animations; set => this.animations = value; }
 
