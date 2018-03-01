@@ -17,7 +17,7 @@
             this.SpriteSpeedY = spriteSpeedY;
         }
 
-        public Texture2D SpriteTexture { get ; set; }
+        public Texture2D SpriteTexture { get; set; }
 
         public Vector2 SpritePosition { get; set; }
 

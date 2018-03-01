@@ -95,7 +95,7 @@
             {
                 this.Exit();
             }
-            
+
             // Update states
             switch (this.gameState)
             {
@@ -129,7 +129,7 @@
         }
 
         protected override void Draw(GameTime gameTime)
-        {            
+        {
             switch (this.gameState)
             {
                 case GameState.Intro:
@@ -182,7 +182,7 @@
                 this.debugFont,
                 "Press enter or space to START GAME \n" +
                 "W,A,S,D to move character, P for PAUSE, Esc for Exit.",
-                new Vector2(600, 400),
+                new Vector2(GAME_HEIGHT / 2, GAME_WIDTH / 2),
                 Color.CadetBlue);
             this.spriteBatch.Draw(this.backgrTree.SpriteTexture, new Vector2(300, 300), Color.White);
             this.spriteBatch.End();
@@ -208,7 +208,7 @@
             if (this.oldKeyState.IsKeyDown(Keys.P) && keyState.IsKeyUp(Keys.P))
             {
                 // TODO: Add more stuff
-                //this.graphics.GraphicsDevice.Clear(Color.Green);
+                ////this.graphics.GraphicsDevice.Clear(Color.Green);
                 this.gameState = GameState.PAUSE;
             }
 
