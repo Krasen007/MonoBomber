@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MonoContra.Objects
 {
-    public class Map
+    class Map
     {
     }
 }

@@ -113,7 +113,6 @@
                     this.UpdateGameOver(gameTime);
                     break;
             }
-
             this.wall.Update(gameTime, GAME_WIDTH, GAME_HEIGHT);
             base.Update(gameTime);
         }
@@ -135,7 +134,6 @@
                     this.DrawGameOver(gameTime);
                     break;
             }
-
             spriteBatch.Begin();
             this.wall.Draw(spriteBatch);
             spriteBatch.End();
