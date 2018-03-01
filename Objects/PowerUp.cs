@@ -1,6 +1,4 @@
-﻿
-
-namespace MonoContra.Objects
+﻿namespace MonoContra.Objects
 {
     using System;
     using Microsoft.Xna.Framework;
