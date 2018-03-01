@@ -5,24 +5,37 @@
 
     public class StaticItem
     {
-        private Texture2D spriteTexture;
-        private Vector2 spritePosition;
-        private Vector2 spriteSpeedX;
-        private Vector2 spriteSpeedY;
-
-        public StaticItem(Vector2 spritePos, Vector2 spriteSpdX, Vector2 spriteSpdY)
+        public StaticItem(Vector2 spritePosition)
         {
-            this.spritePosition = spritePos;
-            this.spriteSpeedX = spriteSpdX;
-            this.spriteSpeedY = spriteSpdY;
+            this.SpritePosition = spritePosition;
         }
 
-        public Texture2D SpriteTexture { get => this.spriteTexture; set => this.spriteTexture = value; }
+        public StaticItem(Vector2 spritePosition, Vector2 spriteSpeedX, Vector2 spriteSpeedY)
+        {
+            this.SpritePosition = spritePosition;
+            this.SpriteSpeedX = spriteSpeedX;
+            this.SpriteSpeedY = spriteSpeedY;
+        }
 
-        public Vector2 SpritePosition { get => this.spritePosition; set => this.spritePosition = value; }
+        public Texture2D SpriteTexture { get ; set; }
 
-        public Vector2 SpriteSpeedX { get => this.spriteSpeedX; protected set => this.spriteSpeedX = value; }
+        public Vector2 SpritePosition { get; set; }
 
-        public Vector2 SpriteSpeedY { get => this.spriteSpeedY; protected set => this.spriteSpeedY = value; }
+        public Vector2 SpriteSpeedX { get; set; }
+
+        public Vector2 SpriteSpeedY { get; set; }
+
+        public void Draw(SpriteBatch spriteBatch, Texture2D spriteTexture, Vector2 spritePosition, Color color)
+        {
+            spriteBatch.Draw(spriteTexture, spritePosition, color);
+        }
+
+        /// <summary>
+        /// Use ONLY for static items.
+        /// </summary>
+        internal void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(this.SpriteTexture, this.SpritePosition, Color.White);
+        }
     }
 }

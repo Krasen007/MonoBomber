@@ -3,7 +3,7 @@
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
     using Microsoft.Xna.Framework.Graphics;
-    using MonoContra.Enumarables;
+    using MonoContra.Enumerables;
     using MonoContra.Objects;
     using MonoContra.Utilities;
 

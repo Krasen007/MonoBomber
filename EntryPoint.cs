@@ -1,11 +1,11 @@
 ﻿namespace MonoContra
 {
     using System;
+    using Enumerables;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
-    using MonoContra.Objects;
-    using MonoContra.Enumarables;
+    using Objects;
 
     public class EntryPoint : Game
     {
@@ -20,6 +20,7 @@
         private SpriteFont debugFont;
         private bool tildePressed;
 
+        private StaticItem background;
         private StaticItem topTree;
         private StaticItem rightTree;
         private Player player;
@@ -120,6 +121,7 @@
                     this.UpdateGameOver(gameTime);
                     break;
             }
+
             this.wall.Update(gameTime, GAME_WIDTH, GAME_HEIGHT);
             this.wall1.Update(gameTime, GAME_WIDTH, GAME_HEIGHT);
             this.rock.Update(gameTime, GAME_WIDTH, GAME_HEIGHT);
@@ -143,11 +145,12 @@
                     this.DrawGameOver(gameTime);
                     break;
             }
-            spriteBatch.Begin();
-            this.wall.Draw(spriteBatch);
-            this.wall1.Draw(spriteBatch);
-            this.rock.Draw(spriteBatch);
-            spriteBatch.End();
+
+            this.spriteBatch.Begin();
+            this.wall.Draw(this.spriteBatch);
+            this.wall1.Draw(this.spriteBatch);
+            this.rock.Draw(this.spriteBatch);
+            this.spriteBatch.End();
             base.Draw(gameTime);
         }
 
@@ -173,7 +176,7 @@
                 this.LoadMainMenu();
             }
 
-            this.graphics.GraphicsDevice.Clear(Color.Black);
+            this.graphics.GraphicsDevice.Clear(Color.DarkRed);
             this.spriteBatch.Begin();
             this.spriteBatch.DrawString(
                 this.debugFont,
@@ -205,7 +208,7 @@
             if (this.oldKeyState.IsKeyDown(Keys.P) && keyState.IsKeyUp(Keys.P))
             {
                 // TODO: Add more stuff
-                this.graphics.GraphicsDevice.Clear(Color.Purple);
+                //this.graphics.GraphicsDevice.Clear(Color.Green);
                 this.gameState = GameState.PAUSE;
             }
 
@@ -234,11 +237,12 @@
                 this.LoadLevelOne();
             }
 
-            this.graphics.GraphicsDevice.Clear(Color.DarkRed);
             this.spriteBatch.Begin();
 
-            this.spriteBatch.Draw(this.topTree.SpriteTexture, this.topTree.SpritePosition, Color.White);
-            this.spriteBatch.Draw(this.rightTree.SpriteTexture, this.rightTree.SpritePosition, Color.White);
+            this.background.Draw(this.spriteBatch);
+
+            this.topTree.Draw(this.spriteBatch, this.topTree.SpriteTexture, this.topTree.SpritePosition, Color.White);
+            this.rightTree.Draw(this.spriteBatch, this.rightTree.SpriteTexture, this.rightTree.SpritePosition, Color.White);
 
             this.player.Draw(this.spriteBatch, 1.25, 1.25, this.player.PlayerSate);
             this.enemy.Draw(this.spriteBatch, 0.25, 0.25, this.enemy.EnemyState);
@@ -279,6 +283,9 @@
         // Load textures and objects for level one
         private void LoadLevelOne()
         {
+            this.background = new StaticItem(Vector2.Zero);
+            this.background.SpriteTexture = Content.Load<Texture2D>("background2");
+
             this.topTree = new StaticItem(new Vector2(1300, 400), new Vector2(50f, 50f), new Vector2(0, 10));
             this.topTree.SpriteTexture = Content.Load<Texture2D>("Tree");
 

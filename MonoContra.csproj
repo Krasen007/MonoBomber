@@ -42,7 +42,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Enumarables\WallTypes.cs" />
+    <Compile Include="Enumerables\WallTypes.cs" />
     <Compile Include="Objects\Map.cs" />
     <Compile Include="Units\AnimatedSprite.cs" />
     <Compile Include="Units\Enemy.cs" />
