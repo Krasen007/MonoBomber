@@ -25,10 +25,12 @@
         private StaticItem rightTree;
         private Player player;
         private Enemy enemy;
-        private Wall wall;
-        private Wall wall1;
 
-        private Wall rock;
+        ////private Wall wall;
+        ////private Wall wall1;
+        ////private Wall rock;
+        private Map map;
+
         private StaticItem backgrTree;
 
         private bool loadOnce;
@@ -67,10 +69,10 @@
             this.gameState = GameState.MainMenu;
             this.loadOnce = true;
 
-            this.wall = new Wall(Content, new Vector2(100, 100), true, WallTypes.Unbreakable, GAME_WIDTH, GAME_HEIGHT, 8, new Vector2(1f, 1f));
-            this.wall1 = new Wall(Content, new Vector2(170, 100), true, WallTypes.Unbreakable, GAME_WIDTH, GAME_HEIGHT, 8, new Vector2(1f, 1f));
-
-            this.rock = new Wall(Content, new Vector2(170, 170), true, WallTypes.Breakable, GAME_WIDTH, GAME_HEIGHT, 8, new Vector2(1f, 1f));
+            ////this.wall = new Wall(Content, new Vector2(100, 100), true, WallTypes.Unbreakable, GAME_WIDTH, GAME_HEIGHT, 8, new Vector2(1f, 1f));
+            ////this.wall1 = new Wall(Content, new Vector2(170, 100), true, WallTypes.Unbreakable, GAME_WIDTH, GAME_HEIGHT, 8, new Vector2(1f, 1f));
+            ////this.rock = new Wall(Content, new Vector2(170, 170), true, WallTypes.Breakable, GAME_WIDTH, GAME_HEIGHT, 8, new Vector2(1f, 1f));
+            this.map = new Map(Content, 15, 15);
 
             base.Initialize();
         }
@@ -122,9 +124,10 @@
                     break;
             }
 
-            this.wall.Update(gameTime, GAME_WIDTH, GAME_HEIGHT);
-            this.wall1.Update(gameTime, GAME_WIDTH, GAME_HEIGHT);
-            this.rock.Update(gameTime, GAME_WIDTH, GAME_HEIGHT);
+            ////this.wall.Update(gameTime, GAME_WIDTH, GAME_HEIGHT);
+            ////this.wall1.Update(gameTime, GAME_WIDTH, GAME_HEIGHT);
+            ////this.rock.Update(gameTime, GAME_WIDTH, GAME_HEIGHT);
+            this.map.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -146,10 +149,11 @@
                     break;
             }
 
+            ////this.wall.Draw(spriteBatch);
+            ////this.wall1.Draw(spriteBatch);
+            ////this.rock.Draw(spriteBatch);
             this.spriteBatch.Begin();
-            this.wall.Draw(this.spriteBatch);
-            this.wall1.Draw(this.spriteBatch);
-            this.rock.Draw(this.spriteBatch);
+            this.map.Draw(this.spriteBatch);
             this.spriteBatch.End();
             base.Draw(gameTime);
         }
@@ -244,7 +248,7 @@
             this.topTree.Draw(this.spriteBatch, this.topTree.SpriteTexture, this.topTree.SpritePosition, Color.White);
             this.rightTree.Draw(this.spriteBatch, this.rightTree.SpriteTexture, this.rightTree.SpritePosition, Color.White);
 
-            this.player.Draw(this.spriteBatch, 1.25, 1.25, this.player.PlayerSate);
+            this.player.Draw(this.spriteBatch, 1, 1, this.player.PlayerSate);
             this.enemy.Draw(this.spriteBatch, 0.25, 0.25, this.enemy.EnemyState);
 
             // Manage debug font
