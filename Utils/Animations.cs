@@ -16,17 +16,16 @@
         private int cols;
         private double frameDuration;
         private double timeSinceLastChange;
+
         // width and height per frame
         private int width;
         private int height;
-
-        public Rectangle FrameBounds { get; private set; }
 
         public Animation(Texture2D spriteSheet, int frames, int rows, int cols, int width, int height)
         {
             this.texture = spriteSheet;
             this.framesCount = frames;
-            //this.FrameBounds = new Rectangle(0, 0, width, height);
+            ////this.FrameBounds = new Rectangle(0, 0, width, height);
 
             this.currentFrameRow = 0;
             this.currentFrameCol = 0;
@@ -39,11 +38,13 @@
             this.height = height;
         }
 
+        public Rectangle FrameBounds { get; private set; }
+
         public void Update(GameTime gameTime)
         {
             this.timeSinceLastChange += gameTime.ElapsedGameTime.Milliseconds;
 
-            if (this.timeSinceLastChange >= frameDuration)
+            if (this.timeSinceLastChange >= this.frameDuration)
             {
                 this.timeSinceLastChange = 0;
 
@@ -52,6 +53,7 @@
                 {
                     this.currentFrameRow = (this.currentFrameRow + 1) % this.rows;
                 }
+
                 this.currentFrame = (this.currentFrame + 1) % this.framesCount;
 
                 if (this.currentFrame == 0)
@@ -60,8 +62,13 @@
                     this.currentFrameCol = 0;
                 }
 
-                this.FrameBounds = new Rectangle(this.width * this.currentFrameCol,
-                    this.height * this.currentFrameRow, this.width, this.height);
+                this.FrameBounds = new Rectangle(
+                    this.width * 
+                    this.currentFrameCol,
+                    this.height * 
+                    this.currentFrameRow, 
+                    this.width, 
+                    this.height);
             }
         }
 
