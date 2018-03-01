@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Enumarables\WallTypes.cs" />
     <Compile Include="Objects\Map.cs" />
+    <Compile Include="Objects\PowerUp.cs" />
     <Compile Include="Units\AnimatedSprite.cs" />
     <Compile Include="Units\Enemy.cs" />
     <Compile Include="Units\Player.cs" />
