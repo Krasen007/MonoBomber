@@ -24,10 +24,11 @@
         private StaticItem rightTree;
         private Player player;
         private Enemy enemy;
-        private Wall wall;
-        private Wall wall1;
+        //private Wall wall;
+        //private Wall wall1;
+        //private Wall rock;
+        private Map map;
 
-        private Wall rock;
         private StaticItem backgrTree;
 
         private bool loadOnce;
@@ -66,10 +67,10 @@
             this.gameState = GameState.MainMenu;
             this.loadOnce = true;
 
-            this.wall = new Wall(Content, new Vector2(100, 100), true, WallTypes.Unbreakable, GAME_WIDTH, GAME_HEIGHT, 8, new Vector2(1f, 1f));
-            this.wall1 = new Wall(Content, new Vector2(170, 100), true, WallTypes.Unbreakable, GAME_WIDTH, GAME_HEIGHT, 8, new Vector2(1f, 1f));
-
-            this.rock = new Wall(Content, new Vector2(170, 170), true, WallTypes.Breakable, GAME_WIDTH, GAME_HEIGHT, 8, new Vector2(1f, 1f));
+            //this.wall = new Wall(Content, new Vector2(100, 100), true, WallTypes.Unbreakable, GAME_WIDTH, GAME_HEIGHT, 8, new Vector2(1f, 1f));
+            //this.wall1 = new Wall(Content, new Vector2(170, 100), true, WallTypes.Unbreakable, GAME_WIDTH, GAME_HEIGHT, 8, new Vector2(1f, 1f));
+            map = new Map(Content,15, 15);
+            //this.rock = new Wall(Content, new Vector2(170, 170), true, WallTypes.Breakable, GAME_WIDTH, GAME_HEIGHT, 8, new Vector2(1f, 1f));
 
             base.Initialize();
         }
@@ -120,9 +121,10 @@
                     this.UpdateGameOver(gameTime);
                     break;
             }
-            this.wall.Update(gameTime, GAME_WIDTH, GAME_HEIGHT);
-            this.wall1.Update(gameTime, GAME_WIDTH, GAME_HEIGHT);
-            this.rock.Update(gameTime, GAME_WIDTH, GAME_HEIGHT);
+            //this.wall.Update(gameTime, GAME_WIDTH, GAME_HEIGHT);
+            //this.wall1.Update(gameTime, GAME_WIDTH, GAME_HEIGHT);
+            //this.rock.Update(gameTime, GAME_WIDTH, GAME_HEIGHT);
+            map.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -144,9 +146,10 @@
                     break;
             }
             spriteBatch.Begin();
-            this.wall.Draw(spriteBatch);
-            this.wall1.Draw(spriteBatch);
-            this.rock.Draw(spriteBatch);
+            //this.wall.Draw(spriteBatch);
+            //this.wall1.Draw(spriteBatch);
+            //this.rock.Draw(spriteBatch);
+            map.Draw(spriteBatch);
             spriteBatch.End();
             base.Draw(gameTime);
         }
