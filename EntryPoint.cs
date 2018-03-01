@@ -24,10 +24,18 @@
         private StaticItem rightTree;
         private Player player;
         private Enemy enemy;
+<<<<<<< HEAD
         private Wall wall;
         private Wall wall1;
 
         private Wall rock;
+=======
+        //private Wall wall;
+        //private Wall wall1;
+        //private Wall rock;
+        private Map map;
+
+>>>>>>> bf012fa01a3b57a2d2aaea2da6f3c05749b0c7c8
         private StaticItem backgrTree;
 
         private bool loadOnce;
@@ -66,10 +74,17 @@
             this.gameState = GameState.MainMenu;
             this.loadOnce = true;
 
+<<<<<<< HEAD
             this.wall = new Wall(Content, new Vector2(100, 100), true, WallTypes.Unbreakable, GAME_WIDTH, GAME_HEIGHT, 8, new Vector2(1f, 1f));
             this.wall1 = new Wall(Content, new Vector2(170, 100), true, WallTypes.Unbreakable, GAME_WIDTH, GAME_HEIGHT, 8, new Vector2(1f, 1f));
 
             this.rock = new Wall(Content, new Vector2(170, 170), true, WallTypes.Breakable, GAME_WIDTH, GAME_HEIGHT, 8, new Vector2(1f, 1f));
+=======
+            //this.wall = new Wall(Content, new Vector2(100, 100), true, WallTypes.Unbreakable, GAME_WIDTH, GAME_HEIGHT, 8, new Vector2(1f, 1f));
+            //this.wall1 = new Wall(Content, new Vector2(170, 100), true, WallTypes.Unbreakable, GAME_WIDTH, GAME_HEIGHT, 8, new Vector2(1f, 1f));
+            map = new Map(Content,15, 15);
+            //this.rock = new Wall(Content, new Vector2(170, 170), true, WallTypes.Breakable, GAME_WIDTH, GAME_HEIGHT, 8, new Vector2(1f, 1f));
+>>>>>>> bf012fa01a3b57a2d2aaea2da6f3c05749b0c7c8
 
             base.Initialize();
         }
@@ -94,7 +109,11 @@
             {
                 this.Exit();
             }
+<<<<<<< HEAD
 
+=======
+            
+>>>>>>> bf012fa01a3b57a2d2aaea2da6f3c05749b0c7c8
             // Update states
             switch (this.gameState)
             {
@@ -120,14 +139,25 @@
                     this.UpdateGameOver(gameTime);
                     break;
             }
+<<<<<<< HEAD
             this.wall.Update(gameTime, GAME_WIDTH, GAME_HEIGHT);
             this.wall1.Update(gameTime, GAME_WIDTH, GAME_HEIGHT);
             this.rock.Update(gameTime, GAME_WIDTH, GAME_HEIGHT);
+=======
+            //this.wall.Update(gameTime, GAME_WIDTH, GAME_HEIGHT);
+            //this.wall1.Update(gameTime, GAME_WIDTH, GAME_HEIGHT);
+            //this.rock.Update(gameTime, GAME_WIDTH, GAME_HEIGHT);
+            map.Update(gameTime);
+>>>>>>> bf012fa01a3b57a2d2aaea2da6f3c05749b0c7c8
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
+<<<<<<< HEAD
         {
+=======
+        {            
+>>>>>>> bf012fa01a3b57a2d2aaea2da6f3c05749b0c7c8
             switch (this.gameState)
             {
                 case GameState.Intro:
@@ -144,9 +174,16 @@
                     break;
             }
             spriteBatch.Begin();
+<<<<<<< HEAD
             this.wall.Draw(spriteBatch);
             this.wall1.Draw(spriteBatch);
             this.rock.Draw(spriteBatch);
+=======
+            //this.wall.Draw(spriteBatch);
+            //this.wall1.Draw(spriteBatch);
+            //this.rock.Draw(spriteBatch);
+            map.Draw(spriteBatch);
+>>>>>>> bf012fa01a3b57a2d2aaea2da6f3c05749b0c7c8
             spriteBatch.End();
             base.Draw(gameTime);
         }
