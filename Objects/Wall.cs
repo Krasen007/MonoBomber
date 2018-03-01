@@ -9,18 +9,50 @@
 
     public class Wall : Block
     {
-        private const string UNBREAKABLE_ANIMATION_KEY = "Tree";
-        private const string BREAKABLE_ANIMATION_KEY = "wall";
-        
-        public Wall(ContentManager content, bool health, WallTypes wallType, int gameWidth, int gameHeight, double velocity, Vector2 scale)
-            : base(content, health, gameWidth, gameHeight, velocity, scale)
+        // block width height70px
+        private const string UNBREAKABLE_ANIMATION_KEY = "grave";
+        private const string BREAKABLE_ANIMATION_KEY = "rock";
+        private WallTypes wallType;
+
+        public Wall(ContentManager content, Vector2 position, bool health, WallTypes wallType, int gameWidth, int gameHeight, double velocity, Vector2 scale)
+            : base(content, position, health, gameWidth, gameHeight, velocity, scale)
         {
-            this.Position = new Vector2(100, 100);
             this.WallType = wallType;
-            this.CurrentAnimationKey = UNBREAKABLE_ANIMATION_KEY;
+            if (wallType == WallTypes.Unbreakable)
+            {
+                this.CurrentAnimationKey = UNBREAKABLE_ANIMATION_KEY;
+                this.Scale = scale * 0.15f;
+            }
+            else
+            {
+                this.CurrentAnimationKey = BREAKABLE_ANIMATION_KEY;
+                this.Scale = scale * 0.50f;
+            }
+
+            this.CreateAnimations(content);
         }
 
-        public WallTypes WallType { get; set; }
+        public WallTypes WallType
+        {
+            get
+            {
+                return this.wallType;
+            }
+
+            set
+            {
+                if (value == WallTypes.Unbreakable)
+                {
+                    this.Scale = this.Scale * 0.15f;
+                    this.wallType = value;
+                }
+                else
+                {
+                    this.Scale = this.Scale * 0.5f;
+                    this.wallType = value;
+                }
+            }
+        }
 
         public void Update(GameTime gameTime, int gameWidth, int gameHeight)
         {
@@ -32,11 +64,15 @@
 
         protected override void CreateAnimations(ContentManager content)
         {
-            var unbreakableWall = content.Load<Texture2D>(UNBREAKABLE_ANIMATION_KEY);
-            var breakableWall = content.Load<Texture2D>(BREAKABLE_ANIMATION_KEY);
+            if (this.WallType == WallTypes.Breakable)
+            {
+                var breakableWall = content.Load<Texture2D>(BREAKABLE_ANIMATION_KEY);
+                this.Animations.Add(BREAKABLE_ANIMATION_KEY, new Animation(breakableWall, 1, 1, 1, 128, 128));
+                return;
+            }
 
-            this.Animations.Add(UNBREAKABLE_ANIMATION_KEY, new Animation(unbreakableWall, 1, 1, 1, 239, 286)); // gameHeight / (wallPerRow * 2)
-            // this.animations.Add(BREAKABLE_ANIMATION_KEY, new Animation(breakableWall, 1, 1, 1, 50, 50));
+            var unbreakableWall = content.Load<Texture2D>(UNBREAKABLE_ANIMATION_KEY);
+            this.Animations.Add(UNBREAKABLE_ANIMATION_KEY, new Animation(unbreakableWall, 1, 1, 1, 512, 512)); // gameHeight / (wallPerRow * 2)
         }
     }
 }

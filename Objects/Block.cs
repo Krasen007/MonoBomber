@@ -8,23 +8,24 @@
 
     public abstract class Block
     {
+        // ~70px width
         private Dictionary<string, Animation> animations;
         private Vector2 position;
         private string currentAnimationKey;
-
         private double velocity;
         private double rotation;
         private Vector2 scale;
 
-        public Block(ContentManager content, bool health, int gameWidth, int gameHeight, double velocity, Vector2 scale)
+        public Block(ContentManager content, Vector2 position, bool health, int gameWidth, int gameHeight, double velocity, Vector2 scale)
         {
             this.Velocity = velocity;
             this.Health = true;
-            this.Scale = scale;
+            this.position = new Vector2(position.X, position.Y);
             this.CurrentAnimationKey = string.Empty;
             this.animations = new Dictionary<string, Animation>();
-            this.CreateAnimations(content);
         }
+
+        public bool Rectangle { get; protected set; }
 
         public bool IsBreakable { get; protected set; }
 
