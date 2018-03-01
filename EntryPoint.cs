@@ -234,7 +234,7 @@
         // Load textures and objects for level one
         private void LoadLevelOne()
         {
-            this.topTree = new StaticItem(new Vector2(1300, 400), new Vector2(50f, 50f), new Vector2(0, 10));
+            this.topTree = new StaticItem(new Vector2(1300, 400), new Vector2(25f, 50f), new Vector2(0, 10));
             this.topTree.SpriteTexture = Content.Load<Texture2D>("Tree");
 
             this.rightTree = new StaticItem(new Vector2(1500, 250), new Vector2(50f, 50f), new Vector2(0, 10));
