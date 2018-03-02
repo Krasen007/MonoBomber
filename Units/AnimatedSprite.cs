@@ -64,7 +64,7 @@
 
         protected SpriteEffects FlipSpriteState { get; set; }
 
-        public void Draw(SpriteBatch spriteBatch, double scaleX, double scaleY)
+        public virtual void Draw(SpriteBatch spriteBatch, double scaleX, double scaleY)
         {
             this.Width = this.SpriteTexture.Width / this.Columns;
             this.Height = this.SpriteTexture.Height / this.Rows;

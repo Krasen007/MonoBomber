@@ -19,7 +19,7 @@
                 this.HandleCollision(player);
 
                 // If player contains key
-                if (true) 
+                if (player.DestinationRectangle.Intersects(this.DestinationRectangle) && player.HasKey)
                 {
                     // Exit game, go to next level
                     this.OpenDoorAnim();
@@ -45,6 +45,7 @@
 
         private void HandleCollision(Player player)
         {
+            // TODO: do stuff
             return;
         }
     }
