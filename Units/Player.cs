@@ -80,5 +80,29 @@
             this.oldKeyState = keyState;
             this.oldMouseState = mouseState;
         }
+
+        public void Draw(SpriteBatch spriteBatch, double scaleX, double scaleY, SpriteState state)
+        {
+            if (state == SpriteState.MoveLeft)
+            {
+                this.Draw(spriteBatch, scaleX, scaleY);
+            }
+            else if (state == SpriteState.MoveRight)
+            {
+                this.Draw(spriteBatch, scaleX, scaleY);
+            }
+            else if (state == SpriteState.MoveUp)
+            {
+                this.Draw(spriteBatch, scaleX, scaleY);
+            }
+            else if (state == SpriteState.MoveDown)
+            {
+                this.Draw(spriteBatch, scaleX, scaleY);
+            }
+            else
+            {
+                this.Draw(spriteBatch, scaleX, scaleY);
+            }
+        }
     }
 }

@@ -250,14 +250,13 @@
             }
 
             this.spriteBatch.Begin();
-
             this.background.Draw(this.spriteBatch);
 
             this.topTree.Draw(this.spriteBatch, this.topTree.SpriteTexture, this.topTree.SpritePosition, Color.White);
             this.rightTree.Draw(this.spriteBatch, this.rightTree.SpriteTexture, this.rightTree.SpritePosition, Color.White);
 
-            this.player.Draw(this.spriteBatch, 1, 1, this.player.PlayerSate);
-            this.enemy.Draw(this.spriteBatch, 0.25, 0.25, this.enemy.EnemyState);
+            this.player.Draw(this.spriteBatch, 1, 1);
+            this.enemy.Draw(this.spriteBatch, 0.25, 0.25);
             this.exitDoor.Draw(this.spriteBatch, 0.15, 0.15);
             this.spriteBatch.End();
         }
@@ -306,7 +305,7 @@
 
             Texture2D doorLocked = Content.Load<Texture2D>("doorLocked");
             Texture2D doorOpen = Content.Load<Texture2D>("doorOpen");
-            this.exitDoor = new Door(doorOpen, 1, 4, new Vector2(200, 200));
+            this.exitDoor = new Door(doorOpen, 1, 4, new Vector2(250, 245));
 
             this.loadOnce = false;
         }
