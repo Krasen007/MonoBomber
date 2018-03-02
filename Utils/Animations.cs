@@ -75,7 +75,9 @@
         public void Draw(SpriteBatch spriteBatch, double rotation, Vector2 position, Vector2 scale)
         {
             Vector2 center = new Vector2(this.width / 2, this.height / 2);
+#pragma warning disable // Disable warning for obsoletenes...
             spriteBatch.Draw(this.texture, position, sourceRectangle: this.FrameBounds, origin: center, scale: scale, rotation: (float)rotation);
+#pragma warning restore
         }
     }
 }

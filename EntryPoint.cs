@@ -21,7 +21,7 @@
         private GameState gameState;
 
         // Menu State
-        private StaticItem backgrTree;
+        
 
         // GameStart Start
         private StaticItem background;
@@ -37,6 +37,8 @@
 
         private Door exitDoor;
         private Key key;
+
+        private Level levelOne;
 
         public EntryPoint()
         {
@@ -74,7 +76,7 @@
             ////this.wall1 = new Wall(Content, new Vector2(170, 100), true, WallTypes.Unbreakable, GAME_WIDTH, GAME_HEIGHT, 8, new Vector2(1f, 1f));
             ////this.rock = new Wall(Content, new Vector2(170, 170), true, WallTypes.Breakable, GAME_WIDTH, GAME_HEIGHT, 8, new Vector2(1f, 1f));
             this.map = new Map(Content, 15, 15);
-
+            
             base.Initialize();
         }
 
@@ -82,6 +84,8 @@
         {
             this.spriteBatch = new SpriteBatch(GraphicsDevice);
             this.debugFont = this.Content.Load<SpriteFont>("Debug");
+
+            this.levelOne = new Level(Content);
         }
 
         protected override void UnloadContent()
@@ -155,6 +159,7 @@
             ////this.rock.Draw(spriteBatch);
             this.spriteBatch.Begin();
             this.map.Draw(this.spriteBatch);
+            
 
             // Manage debug font
             if (this.tildePressed)
@@ -196,7 +201,7 @@
                 "W,A,S,D to move character, P for PAUSE, Esc for Exit.",
                 new Vector2(GAME_HEIGHT / 2, GAME_WIDTH / 2),
                 Color.CadetBlue);
-            this.spriteBatch.Draw(this.backgrTree.SpriteTexture, new Vector2(300, 300), Color.White);
+            this.levelOne.Draw(this.spriteBatch);
             this.spriteBatch.End();
         }
 
@@ -318,8 +323,6 @@
 
         private void LoadMainMenu()
         {
-            this.backgrTree = new StaticItem(new Vector2(125, 125), new Vector2(50f, 50f), new Vector2(0, 10));
-            this.backgrTree.SpriteTexture = Content.Load<Texture2D>("Tree");
             this.loadOnce = false;
         }
 

@@ -9,39 +9,30 @@
     public abstract class Block
     {
         // ~70px width
-        private Dictionary<string, Animation> animations;
-        private Vector2 position;
-        private string currentAnimationKey;
-        private double velocity;
-        private double rotation;
-        private Vector2 scale;
-
         public Block(ContentManager content, Vector2 position, bool health, int gameWidth, int gameHeight, double velocity, Vector2 scale)
         {
             this.Velocity = velocity;
             this.Health = true;
-            this.position = new Vector2(position.X, position.Y);
+            this.Position = new Vector2(position.X, position.Y);
             this.CurrentAnimationKey = string.Empty;
-            this.animations = new Dictionary<string, Animation>();
+            this.Animations = new Dictionary<string, Animation>();
         }
-
-        public bool Rectangle { get; protected set; }
 
         public bool IsBreakable { get; protected set; }
 
         public bool Health { get; protected set; }
 
-        public Vector2 Position { get => this.position; set => this.position = value; }
+        public Vector2 Position { get; set; }
 
-        protected Dictionary<string, Animation> Animations { get => this.animations; set => this.animations = value; }
+        protected Dictionary<string, Animation> Animations { get; set; }
 
-        protected string CurrentAnimationKey { get => this.currentAnimationKey; set => this.currentAnimationKey = value; }
+        protected string CurrentAnimationKey { get; set; }
 
-        protected double Velocity { get => this.velocity; set => this.velocity = value; }
+        protected double Velocity { get; set; }
 
-        protected double Rotation { get => this.rotation; set => this.rotation = value; }
+        protected double Rotation { get; set; }
 
-        protected Vector2 Scale { get => this.scale; set => this.scale = value; }
+        protected Vector2 Scale { get; set; }
 
         public void Draw(SpriteBatch spriteBatch)
         {

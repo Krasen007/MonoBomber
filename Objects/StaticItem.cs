@@ -33,7 +33,7 @@
         /// <summary>
         /// Use ONLY for static items.
         /// </summary>
-        internal void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(this.SpriteTexture, this.SpritePosition, Color.White);
         }

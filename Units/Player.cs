@@ -3,6 +3,7 @@
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
+    using MonoContra.Utilities;
 
     public class Player : AnimatedSprite
     {
@@ -24,6 +25,7 @@
             this.MovePlayer(keyState, mouseState);
 
             this.HandleKeyCollision(key);
+            ////this.HandleWallCollision(wall);
         }
 
         public void Draw(SpriteBatch spriteBatch, double scaleX, double scaleY, SpriteState state)
@@ -120,6 +122,14 @@
             {
                 this.HasKey = true;
             }
+        }
+
+        private void HandleWallCollision(Animation anim)
+        {
+            ////if (this.SpriteTexture.Bounds.Intersects(anim.Texture.Bounds))
+            ////{
+            ////    this.SpritePosition += new Vector2(0,0);
+            ////}
         }
     }
 }

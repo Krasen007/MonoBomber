@@ -53,7 +53,7 @@
     <Compile Include="Units\Player.cs" />
     <Compile Include="Objects\StaticItem.cs" />
     <Compile Include="EntryPoint.cs" />
-    <Compile Include="Levels\Level1.cs" />
+    <Compile Include="Levels\Level.cs" />
     <Compile Include="Objects\Block.cs" />
     <Compile Include="Run.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
