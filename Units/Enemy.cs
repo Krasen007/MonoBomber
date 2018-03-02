@@ -5,23 +5,20 @@
 
     public class Enemy : AnimatedSprite
     {
-        private int animationSpeed = 0;
-
-        private SpriteState enemyState;
+        private const int ANIMATION_SPEED = 5;
+        private int animaSpeedIncrement;
 
         public Enemy(Texture2D texture, int rows, int cols, Vector2 spritePos, Vector2 spriteSpdX, Vector2 spriteSpdY) : base(texture, rows, cols, spritePos, spriteSpdX, spriteSpdY)
         {
             this.FlipSpriteState = SpriteEffects.FlipHorizontally;
         }
-
-        public SpriteState EnemyState { get => this.enemyState; set => this.enemyState = value; }
-
+        
         // TODO: Add animations for enemy
         public void Update(Player player)
         {
-            this.animationSpeed++;
+            this.animaSpeedIncrement++;
 
-            if (this.animationSpeed >= 5)
+            if (this.animaSpeedIncrement >= ANIMATION_SPEED)
             {
                 this.CurrentFrame++;
                 if (this.CurrentFrame >= 7)
@@ -29,7 +26,7 @@
                     this.CurrentFrame = 0;
                 }
 
-                this.animationSpeed = 0;
+                this.animaSpeedIncrement = 0;
             }
 
             this.HandleCollision(player);

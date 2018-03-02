@@ -45,6 +45,7 @@
     <Compile Include="Enumerables\PowerUpTypes.cs" />
     <Compile Include="Enumerables\WallTypes.cs" />
     <Compile Include="Objects\Door.cs" />
+    <Compile Include="Objects\Key.cs" />
     <Compile Include="Objects\Map.cs" />
     <Compile Include="Objects\PowerUp.cs" />
     <Compile Include="Units\AnimatedSprite.cs" />
