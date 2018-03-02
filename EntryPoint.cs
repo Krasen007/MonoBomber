@@ -14,12 +14,16 @@
 
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
-
         private KeyboardState oldKeyState;
-
         private SpriteFont debugFont;
         private bool tildePressed;
+        private bool loadOnce;
+        private GameState gameState;
 
+        // Menu State
+        private StaticItem backgrTree;
+
+        // GameStart Start
         private StaticItem background;
         private StaticItem topTree;
         private StaticItem rightTree;
@@ -31,11 +35,7 @@
         ////private Wall rock;
         private Map map;
 
-        private StaticItem backgrTree;
-
-        private bool loadOnce;
-
-        private GameState gameState;
+        private Door exitDoor;
 
         public EntryPoint()
         {
@@ -154,6 +154,13 @@
             ////this.rock.Draw(spriteBatch);
             this.spriteBatch.Begin();
             this.map.Draw(this.spriteBatch);
+
+            // Manage debug font
+            if (this.tildePressed)
+            {
+                this.DebugInformation();
+            }
+
             this.spriteBatch.End();
             base.Draw(gameTime);
         }
@@ -221,6 +228,7 @@
             this.player.Update(keyState, mouseState);
             this.enemy.Update(this.player);
             this.MoveTree(gameTime);
+            this.exitDoor.Update(this.player);
 
             // if (true)//playerDied)
             //     _state = GameState.EndOfGame;
@@ -250,13 +258,7 @@
 
             this.player.Draw(this.spriteBatch, 1, 1, this.player.PlayerSate);
             this.enemy.Draw(this.spriteBatch, 0.25, 0.25, this.enemy.EnemyState);
-
-            // Manage debug font
-            if (this.tildePressed)
-            {
-                this.DebugInformation();
-            }
-
+            this.exitDoor.Draw(this.spriteBatch, 0.15, 0.15);
             this.spriteBatch.End();
         }
 
@@ -302,6 +304,10 @@
             Texture2D badGirl = Content.Load<Texture2D>("mele1");
             this.enemy = new Enemy(badGirl, 3, 3, new Vector2(500, 500), new Vector2(4, 0), new Vector2(0, 0));
 
+            Texture2D doorLocked = Content.Load<Texture2D>("doorLocked");
+            Texture2D doorOpen = Content.Load<Texture2D>("doorOpen");
+            this.exitDoor = new Door(doorOpen, 1, 4, new Vector2(200, 200));
+
             this.loadOnce = false;
         }
 
@@ -322,13 +328,12 @@
                 this.debugFont,
                 "\n Debug info:" +
                 "\n Mouse to vector: " + mouseState.Position.ToVector2() +
-                "\n girl sprite: " + this.player.SpritePosition +
-                "\n Current State: " + this.gameState +
-                "\n current enemy destination rect: " + this.enemy.DestinationRectangle +
-                "\n girl backgr tex: " + this.player.SpriteTexture.Width +
-                "\n girl backgr tex width: " + this.player.Width,
+                "\n player sprite: " + this.player.SpritePosition +
+                "\n player dest rect: " + this.player.DestinationRectangle +
+                "\n door rect: " + this.exitDoor.DestinationRectangle +
+                "\n enemy destination rect: " + this.enemy.DestinationRectangle,
                 new Vector2(10, 10),
-                Color.DarkGray);
+                Color.Orange);
         }
 
         // This will be removed soon

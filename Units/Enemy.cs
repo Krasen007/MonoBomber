@@ -6,18 +6,18 @@
     public class Enemy : AnimatedSprite
     {
         private int animationSpeed = 0;
-        
+
         private SpriteState enemyState;
 
         public Enemy(Texture2D texture, int rows, int cols, Vector2 spritePos, Vector2 spriteSpdX, Vector2 spriteSpdY) : base(texture, rows, cols, spritePos, spriteSpdX, spriteSpdY)
         {
             this.FlipSpriteState = SpriteEffects.FlipHorizontally;
         }
-        
+
         public SpriteState EnemyState { get => this.enemyState; set => this.enemyState = value; }
 
         // TODO: Add animations for enemy
-        public void Update(AnimatedSprite player)
+        public void Update(Player player)
         {
             this.animationSpeed++;
 
@@ -33,11 +33,6 @@
             }
 
             this.HandleCollision(player);
-        }
-
-        public override void Draw(SpriteBatch spriteBatch, double scaleX, double scaleY, SpriteState state)
-        {
-            base.Draw(spriteBatch, scaleX, scaleY, state);
         }
 
         private void HandleCollision(AnimatedSprite player)

@@ -8,8 +8,8 @@
 
     public class Map
     {
-        private List<Wall> walls = new List<Wall>();
         private const int WALL_WIDTH = 70;
+        private List<Wall> walls = new List<Wall>();
         private int mapWidth, mapHeight;
         private int blocksInRow, blocksInColumn; // колко квадрата да има на ред/колона
 

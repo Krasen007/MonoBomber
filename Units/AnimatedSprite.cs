@@ -4,29 +4,33 @@
     using Microsoft.Xna.Framework.Graphics;
 
     public abstract class AnimatedSprite : StaticItem
-    {
-        private Rectangle destinationRectangle;
-
-        private int currentFrame;
-        private int totalFrames;
-
-        private SpriteEffects flipSpriteState;
-
-        /// <param name="texture">Texture/spritesheet for the sprite</param>
+    {        
+        /// <param name="animatedTexture">Texture/spritesheet for the sprite</param>
         /// <param name="rows">Rows of the spritesheet</param>
         /// <param name="cols">Rows of the spritesheet</param>
         /// <param name="spritePos">Position of the map</param>
         /// <param name="spriteSpdX">Movement by X</param>
         /// <param name="spriteSpdY">Movement by Y</param>
-        public AnimatedSprite(Texture2D texture, int rows, int cols, Vector2 spritePos, Vector2 spriteSpdX, Vector2 spriteSpdY) : base(spritePos, spriteSpdX, spriteSpdY)
+        public AnimatedSprite(Texture2D animatedTexture, int rows, int cols, Vector2 spritePos, Vector2 spriteSpdX, Vector2 spriteSpdY) : base(spritePos, spriteSpdX, spriteSpdY)
         {
             // Those are used for drawing of the sprite
-            this.SpriteTexture = texture;
+            this.SpriteTexture = animatedTexture;
             this.Rows = rows;
             this.Columns = cols;
             this.CurrentFrame = 0;
             this.TotalFrames = this.Rows * this.Columns;
             this.FlipSpriteState = SpriteEffects.None;     
+        }
+
+        public AnimatedSprite(Texture2D animatedTexture, int rows, int cols, Vector2 spritePos) : base(spritePos)
+        {
+            // Those are used for drawing of the sprite
+            this.SpriteTexture = animatedTexture;
+            this.Rows = rows;
+            this.Columns = cols;
+            this.CurrentFrame = 0;
+            this.TotalFrames = this.Rows * this.Columns;
+            this.FlipSpriteState = SpriteEffects.None;
         }
 
         public enum SpriteState
@@ -44,7 +48,7 @@
 
         public int Height { get; set; }
 
-        public Rectangle DestinationRectangle { get => this.destinationRectangle; set => this.destinationRectangle = value; }
+        public Rectangle DestinationRectangle { get; set; }
 
         protected int Rows { get; private set; }
 
@@ -54,18 +58,13 @@
 
         protected int Column { get; set; }
 
-        protected int CurrentFrame { get => this.currentFrame; set => this.currentFrame = value; }
+        protected int CurrentFrame { get; set; }
 
-        protected int TotalFrames { get => this.totalFrames; set => this.totalFrames = value; }
+        protected int TotalFrames { get; set; }
 
-        protected SpriteEffects FlipSpriteState { get => this.flipSpriteState; set => this.flipSpriteState = value; }
+        protected SpriteEffects FlipSpriteState { get; set; }
 
-        public virtual void Update()
-        {
-            // Update method for your animated sprite
-        }
-
-        public virtual void Draw(SpriteBatch spriteBatch, double scaleX, double scaleY, SpriteState state)
+        public void Draw(SpriteBatch spriteBatch, double scaleX, double scaleY, SpriteState state)
         {
             if (state == SpriteState.MoveLeft)
             {
