@@ -64,31 +64,7 @@
 
         protected SpriteEffects FlipSpriteState { get; set; }
 
-        public void Draw(SpriteBatch spriteBatch, double scaleX, double scaleY, SpriteState state)
-        {
-            if (state == SpriteState.MoveLeft)
-            {
-                this.Animate(spriteBatch, scaleX, scaleY);
-            }
-            else if (state == SpriteState.MoveRight)
-            {
-                this.Animate(spriteBatch, scaleX, scaleY);
-            }
-            else if (state == SpriteState.MoveUp)
-            {
-                this.Animate(spriteBatch, scaleX, scaleY);
-            }
-            else if (state == SpriteState.MoveDown)
-            {
-                this.Animate(spriteBatch, scaleX, scaleY);
-            }
-            else
-            {
-                this.Animate(spriteBatch, scaleX, scaleY);
-            }
-        }
-
-        private void Animate(SpriteBatch spriteBatch, double scaleX, double scaleY)
+        public virtual void Draw(SpriteBatch spriteBatch, double scaleX, double scaleY)
         {
             this.Width = this.SpriteTexture.Width / this.Columns;
             this.Height = this.SpriteTexture.Height / this.Rows;
@@ -102,6 +78,6 @@
             this.DestinationRectangle = new Rectangle((int)SpritePosition.X, (int)SpritePosition.Y, (int)scaleX, (int)scaleY); // this is how is drawn
 
             spriteBatch.Draw(this.SpriteTexture, this.DestinationRectangle, sourceRectangle, Color.White, 0, Vector2.Zero, this.FlipSpriteState, 0);
-        }
+        }        
     }
 }

@@ -1,5 +1,6 @@
 ﻿namespace MonoContra.Objects
 {
+    using System;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
@@ -17,7 +18,40 @@
 
         public SpriteState PlayerSate { get => this.playerSate; set => this.playerSate = value; }
 
-        public void Update(KeyboardState keyState, MouseState mouseState)
+        public bool HasKey { get; private set; }
+
+        public void Update(KeyboardState keyState, MouseState mouseState, Key key)
+        {
+            this.MovePlayer(keyState, mouseState);
+
+            this.HandleKeyCollision(key);
+        }
+
+        public void Draw(SpriteBatch spriteBatch, double scaleX, double scaleY, SpriteState state)
+        {
+            if (state == SpriteState.MoveLeft)
+            {
+                this.Draw(spriteBatch, scaleX, scaleY);
+            }
+            else if (state == SpriteState.MoveRight)
+            {
+                this.Draw(spriteBatch, scaleX, scaleY);
+            }
+            else if (state == SpriteState.MoveUp)
+            {
+                this.Draw(spriteBatch, scaleX, scaleY);
+            }
+            else if (state == SpriteState.MoveDown)
+            {
+                this.Draw(spriteBatch, scaleX, scaleY);
+            }
+            else
+            {
+                this.Draw(spriteBatch, scaleX, scaleY);
+            }
+        }
+
+        private void MovePlayer(KeyboardState keyState, MouseState mouseState)
         {
             if (keyState.IsKeyDown(Keys.Right) || keyState.IsKeyDown(Keys.D))
             {
@@ -57,7 +91,7 @@
 
                 this.SpritePosition -= this.SpriteSpeedY;
             }
-             else if (keyState.IsKeyDown(Keys.Down) || keyState.IsKeyDown(Keys.S))
+            else if (keyState.IsKeyDown(Keys.Down) || keyState.IsKeyDown(Keys.S))
             {
                 this.PlayerSate = SpriteState.MoveDown;
 
@@ -79,6 +113,14 @@
 
             this.oldKeyState = keyState;
             this.oldMouseState = mouseState;
+        }
+
+        private void HandleKeyCollision(Key key)
+        {
+            if (this.DestinationRectangle.Intersects(key.DestinationRectangle))
+            {
+                this.HasKey = true;
+            }
         }
     }
 }
