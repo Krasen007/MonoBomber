@@ -34,6 +34,7 @@
 
         private Door exitDoor;
         private Key key;
+        private Bomb bomb;
 
         private LevelMainMenu levelOne;
 
@@ -220,6 +221,9 @@
             this.oldKeyState = keyState;
 
             this.player.Update(keyState, mouseState, this.key, this.Content, this.spriteBatch);
+            ////this.player.Bomb.Update(); // does not work
+            this.bomb.Update();
+
             this.enemy.Update(this.player);
             this.MoveTree(gameTime);
             this.exitDoor.Update(this.player);
@@ -251,6 +255,9 @@
             this.rightTree.Draw(this.spriteBatch, this.rightTree.SpriteTexture, this.rightTree.SpritePosition, Color.White);
 
             this.player.Draw(this.spriteBatch, 1, 1);
+            ////this.player.Bomb.Draw(this.spriteBatch, 0.75, 0.75); // does not work
+            this.bomb.Draw(this.spriteBatch, 0.75, 0.75);
+
             this.enemy.Draw(this.spriteBatch, 0.25, 0.25);
             this.exitDoor.Draw(this.spriteBatch, 0.15, 0.15);
             this.key.Draw(this.spriteBatch, 1, 1);
@@ -304,7 +311,10 @@
             this.exitDoor = new Door(doorOpen, 1, 4, new Vector2(250, 245));
 
             Texture2D keyAnim = Content.Load<Texture2D>("key");
-            this.key = new Key(keyAnim, 1, 3, new Vector2(666, 530));            
+            this.key = new Key(keyAnim, 1, 3, new Vector2(666, 530));
+
+            Texture2D bombAnim = Content.Load<Texture2D>("bombanimation");
+            this.bomb = new Bomb(bombAnim, 1, 5, new Vector2(377, 520));
 
             this.loadOnce = false;
         }

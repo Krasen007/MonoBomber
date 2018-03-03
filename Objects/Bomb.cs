@@ -5,16 +5,26 @@
 
     public class Bomb : AnimatedSprite
     {
+        private const int ANIMATION_SPEED = 9;
+        private int animaSpeedIncrement;
+
         public Bomb(Texture2D animatedTexture, int rows, int cols, Vector2 spritePos) : base(animatedTexture, rows, cols, spritePos)
         {
         }
 
         public void Update()
         {
-            this.CurrentFrame++;
-            if (this.CurrentFrame >= this.TotalFrames)
+            this.animaSpeedIncrement++;
+
+            if (this.animaSpeedIncrement >= ANIMATION_SPEED)
             {
-                this.CurrentFrame = this.TotalFrames - 1;
+                this.CurrentFrame++;
+                if (this.CurrentFrame >= this.TotalFrames)
+                {
+                    this.CurrentFrame = 0;
+                }
+
+                this.animaSpeedIncrement = 0;
             }
         }
     }

@@ -12,14 +12,15 @@
         private KeyboardState oldKeyState;
         private MouseState oldMouseState;
 
-        private Texture2D bombAnim;
-        private Bomb bomb;
+        private Texture2D bombAnim;        // not working 
 
         public Player(Texture2D texture, int rows, int cols, Vector2 spritePos, Vector2 spriteSpdX, Vector2 spriteSpdY) : base(texture, rows, cols, spritePos, spriteSpdX, spriteSpdY)
         {
         }
 
         public bool HasKey { get; private set; }
+
+        public Bomb Bomb { get; private set; }
 
         public void Update(KeyboardState keyState, MouseState mouseState, Key key, ContentManager bombAnimation, SpriteBatch spriteBatch)
         {
@@ -31,12 +32,8 @@
 
         private void DropBomb(SpriteBatch spriteBatch, ContentManager bombAnimation)
         {
-            this.bombAnim = bombAnimation.Load<Texture2D>("bombanimation");
-            this.bomb = new Bomb(this.bombAnim, 1, 5, this.SpritePosition);
-            spriteBatch.Begin();
-            this.bomb.Draw(spriteBatch, 1, 1);
-            this.bomb.Update();
-            spriteBatch.End();
+            this.bombAnim = bombAnimation.Load<Texture2D>("bombanimation"); // not working
+            this.Bomb = new Bomb(this.bombAnim, 1, 5, this.SpritePosition); // not working
         }
 
         private void MovePlayer(KeyboardState keyState, MouseState mouseState, ContentManager bombAnimation, SpriteBatch spriteBatch)
