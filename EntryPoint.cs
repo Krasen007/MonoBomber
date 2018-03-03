@@ -101,7 +101,7 @@
                     this.gameState = GameState.MainMenu;
                     break;
                 case GameState.MainMenu:
-                    this.UpdateMainMenu(gameTime, keyState);
+                    this.UpdateMainMenu(gameTime, keyState, mouseState);
                     break;
                 case GameState.GameStart:
                     this.UpdateGameStart(gameTime, keyState, mouseState);
@@ -162,7 +162,7 @@
 
         #region Update logic and states
 
-        private void UpdateMainMenu(GameTime gameTime, KeyboardState keyState)
+        private void UpdateMainMenu(GameTime gameTime, KeyboardState keyState, MouseState mouseState)
         {
             // Respond to user input for menu selections, etc
             if (this.oldKeyState.IsKeyDown(Keys.Enter) || this.oldKeyState.IsKeyDown(Keys.Space))
@@ -171,6 +171,12 @@
                 this.loadOnce = true;
             }
 
+            if (mouseState.LeftButton == ButtonState.Pressed)
+            {
+                this.gameState = GameState.GameStart;
+                this.loadOnce = true;
+            }
+            
             this.oldKeyState = keyState;
         }
 
@@ -179,19 +185,12 @@
             // Draw the main menu, any active selections, etc
             if (this.loadOnce)
             {
-                this.LoadMainMenu();
+                this.loadOnce = false;
             }
 
-            this.graphics.GraphicsDevice.Clear(Color.DarkRed);
-            this.spriteBatch.Begin();
-            this.spriteBatch.DrawString(
-                this.debugFont,
-                "Press enter or space to START GAME \n" +
-                "W,A,S,D to move character, P for PAUSE, Esc for Exit.",
-                new Vector2(GAME_HEIGHT / 2, GAME_WIDTH / 2),
-                Color.CadetBlue);
-            this.levelOne.Draw(this.spriteBatch);
-            this.spriteBatch.End();
+            this.graphics.GraphicsDevice.Clear(Color.DarkRed); 
+            this.levelOne.Draw(this.spriteBatch, this.debugFont);
+            
         }
 
         private void UpdateGameStart(GameTime gameTime, KeyboardState keyState, MouseState mouseState)
@@ -317,12 +316,7 @@
             this.bomb = new Bomb(bombAnim, 1, 5, new Vector2(377, 520));
 
             this.loadOnce = false;
-        }
-
-        private void LoadMainMenu()
-        {
-            this.loadOnce = false;
-        }
+        }        
 
         #endregion
 
