@@ -20,9 +20,6 @@
         private bool loadOnce;
         private GameState gameState;
 
-        // Menu State
-        
-
         // GameStart Start
         private StaticItem background;
         private StaticItem topTree;
@@ -38,7 +35,7 @@
         private Door exitDoor;
         private Key key;
 
-        private Level levelOne;
+        private LevelMainMenu levelOne;
 
         public EntryPoint()
         {
@@ -67,7 +64,7 @@
             ////this.wall1 = new Wall(Content, new Vector2(170, 100), true, WallTypes.Unbreakable, GAME_WIDTH, GAME_HEIGHT, 8, new Vector2(1f, 1f));
             ////this.rock = new Wall(Content, new Vector2(170, 170), true, WallTypes.Breakable, GAME_WIDTH, GAME_HEIGHT, 8, new Vector2(1f, 1f));
             this.map = new Map(Content, 15, 15);
-            
+
             base.Initialize();
         }
 
@@ -76,7 +73,8 @@
             this.spriteBatch = new SpriteBatch(GraphicsDevice);
             this.debugFont = this.Content.Load<SpriteFont>("Debug");
 
-            this.levelOne = new Level(Content);
+            // Menu State
+            this.levelOne = new LevelMainMenu(Content);
         }
 
         protected override void UnloadContent()
@@ -150,7 +148,6 @@
             ////this.rock.Draw(spriteBatch);
             this.spriteBatch.Begin();
             this.map.Draw(this.spriteBatch);
-            
 
             // Manage debug font
             if (this.tildePressed)
@@ -222,7 +219,7 @@
 
             this.oldKeyState = keyState;
 
-            this.player.Update(keyState, mouseState, this.key);
+            this.player.Update(keyState, mouseState, this.key, this.Content, this.spriteBatch);
             this.enemy.Update(this.player);
             this.MoveTree(gameTime);
             this.exitDoor.Update(this.player);
@@ -307,7 +304,7 @@
             this.exitDoor = new Door(doorOpen, 1, 4, new Vector2(250, 245));
 
             Texture2D keyAnim = Content.Load<Texture2D>("key");
-            this.key = new Key(keyAnim, 1, 3, new Vector2(666, 530));
+            this.key = new Key(keyAnim, 1, 3, new Vector2(666, 530));            
 
             this.loadOnce = false;
         }

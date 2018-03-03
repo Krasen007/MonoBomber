@@ -7,13 +7,14 @@
 
     public class PowerUp : Block
     {
-        private PowerUpTypes powerUpType;
-        
         private const string BOMBSATCHEL_ANIMATION_KEY = "bombSathel";
         private const string SONIC_ANIMATION_KEY = "sonic";
         private const string DRAGONLANCE_ANIMATION_KEY = "dragonLance";
-        //add mario star 
+
+        // add mario star 
         private const string MARIOSTAR_ANIMATION_KEY = "marioStar";
+
+        private PowerUpTypes powerUpType;
 
         public PowerUp(ContentManager content, Vector2 position, bool health, PowerUpTypes powerUpType, int gameWidth, int gameHeight, double velocity, Vector2 scale) : base(content, position, health, gameWidth, gameHeight, velocity, scale)
         {
@@ -25,7 +26,7 @@
                     this.CurrentAnimationKey = BOMBSATCHEL_ANIMATION_KEY;
                     break;
                 case PowerUpTypes.Sonic:
-                    this.CurrentAnimationKey =SONIC_ANIMATION_KEY;
+                    this.CurrentAnimationKey = SONIC_ANIMATION_KEY;
                     break;
                 case PowerUpTypes.DragonLance:
                     this.CurrentAnimationKey = DRAGONLANCE_ANIMATION_KEY;
@@ -34,6 +35,7 @@
                     this.CurrentAnimationKey = MARIOSTAR_ANIMATION_KEY;
                     break;
             }
+
             this.CreateAnimations(content);
         }
 
@@ -43,9 +45,10 @@
             {
                 return this.powerUpType;
             }
+
             set
             {
-                switch (powerUpType)
+                switch (this.powerUpType)
                 {
                     // TODO : scale 
                     case PowerUpTypes.BombSatchel:
@@ -61,8 +64,7 @@
                 }
             }
         }
-
-
+        
         protected override void CreateAnimations(ContentManager content)
         {
             throw new NotImplementedException();

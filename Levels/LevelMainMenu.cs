@@ -1,18 +1,16 @@
 ﻿namespace MonoContra.Objects
 {
-    using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
     using Microsoft.Xna.Framework.Graphics;
-    using global::MonoContra.Utilities;
 
-    public class Level
+    public class LevelMainMenu
     {
         private StaticItem backgrTree;
 
-        public Level(ContentManager content)
+        public LevelMainMenu(ContentManager content)
         {
-            LoadContent(content);
+            this.LoadContent(content);
         }
 
         public void Draw(SpriteBatch spriteBatch)

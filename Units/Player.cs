@@ -1,63 +1,48 @@
 ﻿namespace MonoContra.Objects
 {
+    using System;
     using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Content;
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
     using MonoContra.Utilities;
 
     public class Player : AnimatedSprite
     {
-        private SpriteState playerSate;
-
         private KeyboardState oldKeyState;
         private MouseState oldMouseState;
+
+        private Texture2D bombAnim;
+        private Bomb bomb;
 
         public Player(Texture2D texture, int rows, int cols, Vector2 spritePos, Vector2 spriteSpdX, Vector2 spriteSpdY) : base(texture, rows, cols, spritePos, spriteSpdX, spriteSpdY)
         {
         }
 
-        public SpriteState PlayerSate { get => this.playerSate; set => this.playerSate = value; }
-
         public bool HasKey { get; private set; }
 
-        public void Update(KeyboardState keyState, MouseState mouseState, Key key)
+        public void Update(KeyboardState keyState, MouseState mouseState, Key key, ContentManager bombAnimation, SpriteBatch spriteBatch)
         {
-            this.MovePlayer(keyState, mouseState);
+            this.MovePlayer(keyState, mouseState, bombAnimation, spriteBatch);
 
             this.HandleKeyCollision(key);
             ////this.HandleWallCollision(wall);
         }
 
-        public void Draw(SpriteBatch spriteBatch, double scaleX, double scaleY, SpriteState state)
+        private void DropBomb(SpriteBatch spriteBatch, ContentManager bombAnimation)
         {
-            if (state == SpriteState.MoveLeft)
-            {
-                this.Draw(spriteBatch, scaleX, scaleY);
-            }
-            else if (state == SpriteState.MoveRight)
-            {
-                this.Draw(spriteBatch, scaleX, scaleY);
-            }
-            else if (state == SpriteState.MoveUp)
-            {
-                this.Draw(spriteBatch, scaleX, scaleY);
-            }
-            else if (state == SpriteState.MoveDown)
-            {
-                this.Draw(spriteBatch, scaleX, scaleY);
-            }
-            else
-            {
-                this.Draw(spriteBatch, scaleX, scaleY);
-            }
+            this.bombAnim = bombAnimation.Load<Texture2D>("bombanimation");
+            this.bomb = new Bomb(this.bombAnim, 1, 5, this.SpritePosition);
+            spriteBatch.Begin();
+            this.bomb.Draw(spriteBatch, 1, 1);
+            this.bomb.Update();
+            spriteBatch.End();
         }
 
-        private void MovePlayer(KeyboardState keyState, MouseState mouseState)
+        private void MovePlayer(KeyboardState keyState, MouseState mouseState, ContentManager bombAnimation, SpriteBatch spriteBatch)
         {
             if (keyState.IsKeyDown(Keys.Right) || keyState.IsKeyDown(Keys.D))
             {
-                this.PlayerSate = SpriteState.MoveRight;
-
                 this.CurrentFrame++;
                 if (this.CurrentFrame >= 12)
                 {
@@ -68,8 +53,6 @@
             }
             else if (keyState.IsKeyDown(Keys.Left) || keyState.IsKeyDown(Keys.A))
             {
-                this.PlayerSate = SpriteState.MoveLeft;
-
                 // Bug when going from right to left
                 this.CurrentFrame++;
 
@@ -82,8 +65,6 @@
             }
             else if (keyState.IsKeyDown(Keys.Up) || keyState.IsKeyDown(Keys.W))
             {
-                this.PlayerSate = SpriteState.MoveUp;
-
                 this.CurrentFrame++;
                 if (this.CurrentFrame >= 18)
                 {
@@ -94,8 +75,6 @@
             }
             else if (keyState.IsKeyDown(Keys.Down) || keyState.IsKeyDown(Keys.S))
             {
-                this.PlayerSate = SpriteState.MoveDown;
-
                 this.CurrentFrame++;
                 if (this.CurrentFrame >= 6)
                 {
@@ -104,6 +83,12 @@
 
                 this.SpritePosition += this.SpriteSpeedY;
             }
+            else if (keyState.IsKeyDown(Keys.Space) || keyState.IsKeyDown(Keys.Enter))
+            {
+                this.DropBomb(spriteBatch, bombAnimation);                
+            }
+
+            this.oldKeyState = keyState;
 
             /*             
             if (mouseState.LeftButton == ButtonState.Pressed && this.oldMouseState.LeftButton == ButtonState.Released)

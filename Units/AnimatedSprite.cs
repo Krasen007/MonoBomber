@@ -33,17 +33,6 @@
             this.FlipSpriteState = SpriteEffects.None;
         }
 
-        public enum SpriteState
-        {
-            Idle,
-            MoveLeft,
-            MoveRight,
-            MoveUp,
-            MoveDown,
-            DropBomb,
-            Shoot
-        }
-
         public int Width { get; set; }
 
         public int Height { get; set; }
