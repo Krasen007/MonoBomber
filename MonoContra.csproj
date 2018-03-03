@@ -42,6 +42,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Enumerables\GameState.cs" />
     <Compile Include="Enumerables\PowerUpTypes.cs" />
     <Compile Include="Enumerables\WallTypes.cs" />
     <Compile Include="Objects\Door.cs" />

@@ -58,15 +58,6 @@
             this.IsMouseVisible = true;
         }
 
-        private enum GameState
-        {
-            Intro,
-            MainMenu,
-            GameStart,
-            PAUSE,
-            GameOver,
-        }
-
         protected override void Initialize()
         {
             this.gameState = GameState.MainMenu;
