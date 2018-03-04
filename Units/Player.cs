@@ -56,13 +56,13 @@
             {
                 this.SpritePosition = new Vector2(this.SpritePosition.X, 0);
             }
-            else if (this.SpritePosition.Y >= 1440)
+            else if (this.SpritePosition.Y >= 1440 - this.Width)
             {
-                this.SpritePosition = new Vector2(this.SpritePosition.X, 1440-this.Width);
+                this.SpritePosition = new Vector2(this.SpritePosition.X, 1440 - this.Width);
             }
-            else if (this.SpritePosition.X >= 2560)
+            else if (this.SpritePosition.X >= 2560 - this.Height)
             {
-                this.SpritePosition = new Vector2(2560-this.Height, this.SpritePosition.Y);
+                this.SpritePosition = new Vector2(2560 - this.Height, this.SpritePosition.Y);
             }
         }
 
@@ -146,11 +146,31 @@
         {
             foreach (var wall in walls)
             {
-                if (this.DestinationRectangle.Intersects(wall.DestinationRectangle))
+                //if (this.DestinationRectangle.Intersects(wall.DestinationRectangle))
+                //{
+                //    // TODO: Fix collision
+                //    this.SpritePosition = new Vector2(this.SpritePosition.X - wall.DestinationRectangle., this.SpritePosition.Y);
+                //}
+
+
+                if (wall.DestinationRectangle.Left == this.DestinationRectangle.Left)
                 {
-                    // TODO: Fix collision
-                    this.SpritePosition = new Vector2(this.SpritePosition.X - 2, this.SpritePosition.Y);
+                    this.SpritePosition = new Vector2(0, this.SpritePosition.Y);
                 }
+                //else if (this.SpritePosition.Y <= 0)
+                //{
+                //    this.SpritePosition = new Vector2(this.SpritePosition.X, 0);
+                //}
+                //else if (this.SpritePosition.Y >= 1440 - this.Width)
+                //{
+                //    this.SpritePosition = new Vector2(this.SpritePosition.X, 1440 - this.Width);
+                //}
+                //else if (this.SpritePosition.X >= wall.DestinationRectangle.Right)
+                //{
+                //    this.SpritePosition = new Vector2(2560 - this.Height, this.SpritePosition.Y);
+                //}
+
+
             }
         }
     }
