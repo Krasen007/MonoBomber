@@ -232,7 +232,7 @@
             this.key.Update(this.player);
 
             this.map.Update(gameTime);
-            camera.Update(player.SpritePosition, map.MapWidth* 70, map.MapHeight*70);
+            camera.Update(player.SpritePosition, 2560, 1440);
             // if (true)//playerDied)
             //     _state = GameState.EndOfGame;
 
@@ -361,7 +361,7 @@
                 "\n player dest rect: " + this.player.DestinationRectangle +
                 "\n door rect: " + this.exitDoor.DestinationRectangle +
                 "\n enemy destination rect: " + this.enemy.DestinationRectangle,
-                new Vector2(10, 10),
+                new Vector2(player.SpritePosition.X-100, player.SpritePosition.Y-100),
                 Color.Orange);
         }        
     }

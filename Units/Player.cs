@@ -58,11 +58,11 @@
             }
             else if (this.SpritePosition.Y >= 1440)
             {
-                this.SpritePosition = new Vector2(this.SpritePosition.X, 1440);
+                this.SpritePosition = new Vector2(this.SpritePosition.X, 1440-this.Width);
             }
             else if (this.SpritePosition.X >= 2560)
             {
-                this.SpritePosition = new Vector2(2560, this.SpritePosition.Y);
+                this.SpritePosition = new Vector2(2560-this.Height, this.SpritePosition.Y);
             }
         }
 
