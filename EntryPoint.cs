@@ -189,8 +189,7 @@
             }
 
             this.graphics.GraphicsDevice.Clear(Color.DarkRed); 
-            this.levelOne.Draw(this.spriteBatch, this.debugFont);
-            
+            this.levelOne.Draw(this.spriteBatch, this.debugFont);            
         }
 
         private void UpdateGameStart(GameTime gameTime, KeyboardState keyState, MouseState mouseState)
@@ -219,7 +218,7 @@
 
             this.oldKeyState = keyState;
 
-            this.player.Update(keyState, mouseState, this.key, this.Content, this.spriteBatch);
+            this.player.Update(keyState, mouseState, this.key, this.Content, this.spriteBatch, this.map.Walls);
             ////this.player.Bomb.Update(); // does not work
             this.bomb.Update();
 
@@ -300,7 +299,7 @@
             this.rightTree.SpriteTexture = Content.Load<Texture2D>("Tree");
 
             Texture2D playerMoves = Content.Load<Texture2D>("bomberman");
-            this.player = new Player(playerMoves, 4, 6, new Vector2(0, 330), new Vector2(10, 0), new Vector2(0, 10));
+            this.player = new Player(playerMoves, 4, 6, new Vector2(0, 310), new Vector2(10, 0), new Vector2(0, 10));
 
             Texture2D badGirl = Content.Load<Texture2D>("mele1");
             this.enemy = new Enemy(badGirl, 3, 3, new Vector2(500, 500), new Vector2(4, 0), new Vector2(0, 0));

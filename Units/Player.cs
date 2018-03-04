@@ -1,6 +1,7 @@
 ﻿namespace MonoContra.Objects
 {
     using System;
+    using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
     using Microsoft.Xna.Framework.Graphics;
@@ -22,12 +23,12 @@
 
         public Bomb Bomb { get; private set; }
 
-        public void Update(KeyboardState keyState, MouseState mouseState, Key key, ContentManager bombAnimation, SpriteBatch spriteBatch)
+        public void Update(KeyboardState keyState, MouseState mouseState, Key key, ContentManager bombAnimation, SpriteBatch spriteBatch, List<Wall> walls)
         {
             this.MovePlayer(keyState, mouseState, bombAnimation, spriteBatch);
 
             this.HandleKeyCollision(key);
-            ////this.HandleWallCollision(wall);
+            this.HandleWallCollision(walls);
         }
 
         private void DropBomb(SpriteBatch spriteBatch, ContentManager bombAnimation)
@@ -82,7 +83,7 @@
             }
             else if (keyState.IsKeyDown(Keys.Space) || keyState.IsKeyDown(Keys.Enter))
             {
-                this.DropBomb(spriteBatch, bombAnimation);                
+                this.DropBomb(spriteBatch, bombAnimation);
             }
 
             this.oldKeyState = keyState;
@@ -106,12 +107,16 @@
             }
         }
 
-        private void HandleWallCollision(Animation anim)
+        private void HandleWallCollision(List<Wall> walls)
         {
-            ////if (this.SpriteTexture.Bounds.Intersects(anim.Texture.Bounds))
-            ////{
-            ////    this.SpritePosition += new Vector2(0,0);
-            ////}
+            foreach (var wall in walls)
+            {
+                if (this.DestinationRectangle.Intersects(wall.DestinationRectangle))
+                {
+                    // TODO: Fix collision
+                    this.SpritePosition = new Vector2(this.SpritePosition.X - 2, this.SpritePosition.Y);
+                }
+            }
         }
     }
 }

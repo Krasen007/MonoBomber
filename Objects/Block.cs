@@ -16,13 +16,16 @@
             this.Position = new Vector2(position.X, position.Y);
             this.CurrentAnimationKey = string.Empty;
             this.Animations = new Dictionary<string, Animation>();
-        }
+            this.DestinationRectangle = new Rectangle((int)this.Position.X, (int)this.Position.Y, (int)this.Scale.X, (int)this.Scale.Y);
+        }        
 
         public bool IsBreakable { get; protected set; }
 
         public bool Health { get; protected set; }
 
         public Vector2 Position { get; set; }
+
+        public Rectangle DestinationRectangle { get; set; }
 
         protected Dictionary<string, Animation> Animations { get; set; }
 

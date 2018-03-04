@@ -9,6 +9,7 @@
     public class Map
     {
         private const int WALL_WIDTH = 70;
+
         private List<Wall> walls = new List<Wall>();
         private int mapWidth, mapHeight;
         private int blocksInRow, blocksInColumn; // колко квадрата да има на ред/колона
@@ -34,7 +35,9 @@
         
         public int BlocksInRow { get; }
 
-        public int BlocksInColumn { get; }              
+        public int BlocksInColumn { get; }
+
+        public List<Wall> Walls { get => this.walls; set => this.walls = value; }
 
         public void Generate(ContentManager content)
         {
@@ -43,14 +46,14 @@
                 int yCoord = y * WALL_WIDTH;
                 for (int x = 1; x <= this.blocksInRow; x += 2)
                 {
-                    this.walls.Add(new Wall(content, new Vector2(x * WALL_WIDTH, yCoord), true, WallTypes.Unbreakable, this.mapWidth, this.mapHeight, 8, new Vector2(1f, 1f)));
+                    this.Walls.Add(new Wall(content, new Vector2(x * WALL_WIDTH, yCoord), true, WallTypes.Unbreakable, this.mapWidth, this.mapHeight, 8, new Vector2(1f, 1f)));
                 }
             }
         }
 
         public void Update(GameTime gameTime)
         {
-            foreach (var wall in this.walls)
+            foreach (var wall in this.Walls)
             {
                 wall.Update(gameTime, 0, 0);
             }
@@ -58,7 +61,7 @@
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            foreach (var wall in this.walls)
+            foreach (var wall in this.Walls)
             {
                 wall.Draw(spriteBatch);
             }
