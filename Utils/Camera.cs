@@ -20,38 +20,38 @@
 
         public Matrix Transform
         {
-            get { return transform; }
+            get { return this.transform; }
         }
 
         public void Update(Vector2 position, int xOffset, int yOffset)
         {
-            if(position.X < viewport.Width/2)
+            if (position.X < this.viewport.Width / 2)
             {
-                center.X = viewport.Width / 2;
+                this.center.X = this.viewport.Width / 2;
             }
-            else if (position.X > xOffset - (viewport.Width/2))
+            else if (position.X > xOffset - (this.viewport.Width / 2))
             {
-                center.X = xOffset - (viewport.Width / 2);
+                this.center.X = xOffset - (this.viewport.Width / 2);
             }
             else
             {
-                center.X = position.X;
+                this.center.X = position.X;
             }
 
-            if (position.Y < viewport.Height / 2)
+            if (position.Y < this.viewport.Height / 2)
             {
-                center.Y = viewport.Height / 2;
+                this.center.Y = this.viewport.Height / 2;
             }
-            else if (position.Y > yOffset - (viewport.Height / 2))
+            else if (position.Y > yOffset - (this.viewport.Height / 2))
             {
-                center.Y = yOffset - (viewport.Height / 2);
+                this.center.Y = yOffset - (this.viewport.Height / 2);
             }
             else
             {
-                center.Y = position.Y;
+                this.center.Y = position.Y;
             }
-            transform = Matrix.CreateTranslation(new Vector3(-center.X + (viewport.Width / 2),
-                                                              -center.Y + (viewport.Height / 2), 0));
+
+            this.transform = Matrix.CreateTranslation(new Vector3(-this.center.X + (this.viewport.Width / 2), -this.center.Y + (this.viewport.Height / 2), 0));
         }
     }
 }

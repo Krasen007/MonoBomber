@@ -1,5 +1,6 @@
 ﻿namespace MonoContra.Objects
 {
+    using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
@@ -13,6 +14,8 @@
         private List<Wall> walls = new List<Wall>();
         private int mapWidth, mapHeight;
         private int blocksInRow, blocksInColumn; // колко квадрата да има на ред/колона
+        private Random rng = new Random();
+        private int chanceToSpawnWall;
 
         public Map(ContentManager content, int blocksInRow, int blocksInColumn)
         {
@@ -20,7 +23,8 @@
             this.blocksInColumn = blocksInColumn;
             this.mapWidth = WALL_WIDTH * blocksInRow;
             this.mapHeight = WALL_WIDTH * blocksInColumn;
-            this.Generate(content);
+            this.GenerateUnbreakableWalls(content);
+            this.GenerateRandomBreakableWalls(content);
         }
 
         public int MapWidth
@@ -39,7 +43,7 @@
 
         public List<Wall> Walls { get => this.walls; set => this.walls = value; }
 
-        public void Generate(ContentManager content)
+        public void GenerateUnbreakableWalls(ContentManager content)
         {
             for (int y = 0; y < this.blocksInColumn; y += 2)
             {
@@ -47,6 +51,38 @@
                 for (int x = 1; x <= this.blocksInRow; x += 2)
                 {
                     this.Walls.Add(new Wall(content, new Vector2(x * WALL_WIDTH, yCoord), true, WallTypes.Unbreakable, this.mapWidth, this.mapHeight, 8, new Vector2(1f, 1f)));
+                }
+            }
+        }
+
+        public void GenerateRandomBreakableWalls(ContentManager content)
+        {
+            for (int y = 0; y < this.blocksInColumn; y++)
+            {
+                int yCoord = y * WALL_WIDTH;
+                if (y % 2 == 0)
+                {
+                    for (int x = 0; x <= this.blocksInRow; x += 2)
+                    {
+                        this.chanceToSpawnWall = this.rng.Next(0, 100);
+
+                        if (this.chanceToSpawnWall < 30)
+                        {
+                            this.Walls.Add(new Wall(content, new Vector2(x * WALL_WIDTH, yCoord), true, WallTypes.Breakable, this.mapWidth, this.mapHeight, 8, new Vector2(1f, 1f)));
+                        }
+                    }
+                }
+                else
+                {
+                    for (int x = 1; x <= this.blocksInRow; x++)
+                    {
+                        this.chanceToSpawnWall = this.rng.Next(0, 100);
+
+                        if (this.chanceToSpawnWall < 30)
+                        {
+                            this.Walls.Add(new Wall(content, new Vector2(x * WALL_WIDTH, yCoord), true, WallTypes.Breakable, this.mapWidth, this.mapHeight, 8, new Vector2(1f, 1f)));
+                        }
+                    }
                 }
             }
         }
