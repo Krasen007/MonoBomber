@@ -13,6 +13,9 @@
         private const int GAME_WIDTH = 1280;
         private const int GAME_HEIGHT = 720;
 
+        private const int MAP_WIDTH = 2560;
+        private const int MAP_HEIGHT = 1440;
+
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
         private KeyboardState oldKeyState;
@@ -186,7 +189,7 @@
                 this.gameState = GameState.GameStart;
             }
             
-                this.loadOnce = true;
+            this.loadOnce = true;
             this.oldMouseState = mouseState;
             this.oldKeyState = keyState;
         }
@@ -252,7 +255,7 @@
             this.key.Update(this.player);
 
             this.map.Update(gameTime);
-            this.camera.Update(this.player.SpritePosition, 2560, 1440);
+            this.camera.Update(this.player.SpritePosition, MAP_WIDTH, MAP_HEIGHT);
 
             // if (true)//playerDied)
             //     _state = GameState.EndOfGame;
@@ -271,6 +274,7 @@
             if (this.loadOnce)
             {
                 this.LoadLevelOne();
+                this.loadOnce = false;
             }
 
             this.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, this.camera.Transform);
@@ -363,8 +367,6 @@
 
             Texture2D bombAnim = Content.Load<Texture2D>("bombanimation");
             this.bomb = new Bomb(bombAnim, 1, 5, new Vector2(387, 530));
-
-            this.loadOnce = false;
         }
 
         #endregion
