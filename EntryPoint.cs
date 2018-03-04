@@ -6,6 +6,7 @@
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
     using Objects;
+    using MonoContra.Utils;
 
     public class EntryPoint : Game
     {
@@ -29,7 +30,7 @@
         ////private Wall wall1;
         ////private Wall rock;
         private Map map;
-
+        private Camera camera;
         private Door exitDoor;
         private Key key;
         private Bomb bomb;
@@ -62,7 +63,7 @@
             ////this.wall = new Wall(Content, new Vector2(100, 100), true, WallTypes.Unbreakable, GAME_WIDTH, GAME_HEIGHT, 8, new Vector2(1f, 1f));
             ////this.wall1 = new Wall(Content, new Vector2(170, 100), true, WallTypes.Unbreakable, GAME_WIDTH, GAME_HEIGHT, 8, new Vector2(1f, 1f));
             ////this.rock = new Wall(Content, new Vector2(170, 170), true, WallTypes.Breakable, GAME_WIDTH, GAME_HEIGHT, 8, new Vector2(1f, 1f));
-            this.map = new Map(Content, 15, 15);
+            this.map = new Map(Content, 35, 35);
 
             base.Initialize();
         }
@@ -72,6 +73,7 @@
             this.spriteBatch = new SpriteBatch(GraphicsDevice);
             this.gameFont = this.Content.Load<SpriteFont>("Debug");
 
+            camera = new Camera(GraphicsDevice.Viewport);
             // Menu State
             this.levelOne = new LevelMainMenu(Content);
         }
@@ -120,7 +122,7 @@
             ////this.wall.Update(gameTime, GAME_WIDTH, GAME_HEIGHT);
             ////this.wall1.Update(gameTime, GAME_WIDTH, GAME_HEIGHT);
             ////this.rock.Update(gameTime, GAME_WIDTH, GAME_HEIGHT);
-            this.map.Update(gameTime);
+          
             base.Update(gameTime);
         }
 
@@ -145,16 +147,7 @@
             ////this.wall.Draw(spriteBatch);
             ////this.wall1.Draw(spriteBatch);
             ////this.rock.Draw(spriteBatch);
-            this.spriteBatch.Begin();
-            this.map.Draw(this.spriteBatch);
 
-            // Manage debug font
-            if (this.tildePressed)
-            {
-                this.DebugInformation();
-            }
-
-            this.spriteBatch.End();
             base.Draw(gameTime);
         }
 
@@ -238,6 +231,8 @@
             this.exitDoor.Update(this.player);
             this.key.Update(this.player);
 
+            this.map.Update(gameTime);
+            camera.Update(player.SpritePosition, map.MapWidth* 70, map.MapHeight*70);
             // if (true)//playerDied)
             //     _state = GameState.EndOfGame;
 
@@ -257,8 +252,17 @@
                 this.LoadLevelOne();
             }
 
-            this.spriteBatch.Begin();
+            this.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend,
+                      null, null, null, null, camera.Transform);
+
             this.background.Draw(this.spriteBatch);
+            this.map.Draw(this.spriteBatch);
+
+            // Manage debug font
+            if (this.tildePressed)
+            {
+                this.DebugInformation();
+            }           
             
             this.player.Draw(this.spriteBatch, 0.90, 0.90);
             ////this.player.Bomb.Draw(this.spriteBatch, 0.75, 0.75); // does not work

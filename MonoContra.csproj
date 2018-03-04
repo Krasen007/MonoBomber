@@ -62,6 +62,7 @@
     <Compile Include="Utils\Animations.cs" />
     <Compile Include="Objects\Wall.cs" />
     <Compile Include="Utils\Button.cs" />
+    <Compile Include="Utils\Camera.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">
