@@ -5,8 +5,8 @@
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
-    using Objects;
     using MonoContra.Utils;
+    using Objects;
 
     public class EntryPoint : Game
     {
@@ -16,26 +16,27 @@
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
         private KeyboardState oldKeyState;
+        private MouseState oldMouseState;
         private SpriteFont gameFont;
         private bool tildePressed;
         private bool loadOnce;
         private GameState gameState;
 
-        // GameStart Start
+        // GameState Intro
+        private Intro intro;
+
+        // GameState MainMenu
+        private MainMenu mainMenu;
+
+        // GameState GameStart
         private StaticItem background;
         private Player player;
         private Enemy enemy;
-
-        ////private Wall wall;
-        ////private Wall wall1;
-        ////private Wall rock;
         private Map map;
         private Camera camera;
         private Door exitDoor;
         private Key key;
         private Bomb bomb;
-
-        private LevelMainMenu levelOne;
 
         public EntryPoint()
         {
@@ -57,12 +58,8 @@
 
         protected override void Initialize()
         {
-            this.gameState = GameState.MainMenu;
+            this.gameState = GameState.Intro;
             this.loadOnce = true;
-
-            ////this.wall = new Wall(Content, new Vector2(100, 100), true, WallTypes.Unbreakable, GAME_WIDTH, GAME_HEIGHT, 8, new Vector2(1f, 1f));
-            ////this.wall1 = new Wall(Content, new Vector2(170, 100), true, WallTypes.Unbreakable, GAME_WIDTH, GAME_HEIGHT, 8, new Vector2(1f, 1f));
-            ////this.rock = new Wall(Content, new Vector2(170, 170), true, WallTypes.Breakable, GAME_WIDTH, GAME_HEIGHT, 8, new Vector2(1f, 1f));
             this.map = new Map(Content, 35, 35);
 
             base.Initialize();
@@ -70,12 +67,16 @@
 
         protected override void LoadContent()
         {
+            // Intro State
+            this.intro = new Intro(Content);
+
+            // Menu State
+            this.mainMenu = new MainMenu(Content);
+
+            // GameStart State
             this.spriteBatch = new SpriteBatch(GraphicsDevice);
             this.gameFont = this.Content.Load<SpriteFont>("Debug");
-
-            camera = new Camera(GraphicsDevice.Viewport);
-            // Menu State
-            this.levelOne = new LevelMainMenu(Content);
+            this.camera = new Camera(GraphicsDevice.Viewport);
         }
 
         protected override void UnloadContent()
@@ -97,8 +98,7 @@
             switch (this.gameState)
             {
                 case GameState.Intro:
-                    // TODO: add this
-                    this.gameState = GameState.MainMenu;
+                    this.UpdateIntro(gameTime, keyState, mouseState);
                     break;
                 case GameState.MainMenu:
                     this.UpdateMainMenu(gameTime, keyState, mouseState);
@@ -118,20 +118,16 @@
                     this.UpdateGameOver(keyState, mouseState);
                     break;
             }
-
-            ////this.wall.Update(gameTime, GAME_WIDTH, GAME_HEIGHT);
-            ////this.wall1.Update(gameTime, GAME_WIDTH, GAME_HEIGHT);
-            ////this.rock.Update(gameTime, GAME_WIDTH, GAME_HEIGHT);
-          
+            
             base.Update(gameTime);
-        }
+        }       
 
         protected override void Draw(GameTime gameTime)
         {
             switch (this.gameState)
             {
                 case GameState.Intro:
-                    this.gameState = GameState.MainMenu;
+                    this.DrawIntroScreen();                    
                     break;
                 case GameState.MainMenu:
                     this.DrawMainMenu(gameTime);
@@ -144,30 +140,54 @@
                     break;
             }
 
-            ////this.wall.Draw(spriteBatch);
-            ////this.wall1.Draw(spriteBatch);
-            ////this.rock.Draw(spriteBatch);
-
             base.Draw(gameTime);
         }
-
         #region Update logic and states
+
+        private void UpdateIntro(GameTime gameTime, KeyboardState keyState, MouseState mouseState)
+        {
+            if (keyState.IsKeyUp(Keys.Enter) && this.oldKeyState.IsKeyDown(Keys.Enter))
+            {
+                this.gameState = GameState.MainMenu;
+            }
+
+            if (mouseState.LeftButton == ButtonState.Pressed && this.oldMouseState.LeftButton == ButtonState.Released)
+            {
+                this.gameState = GameState.MainMenu;
+            }
+
+            this.loadOnce = true;
+
+            this.oldMouseState = mouseState;
+            this.oldKeyState = keyState;
+        }
+
+        private void DrawIntroScreen()
+        {
+            if (this.loadOnce)
+            {
+                this.loadOnce = false;
+            }
+
+            this.graphics.GraphicsDevice.Clear(Color.White);
+            this.intro.Draw(this.spriteBatch, GAME_WIDTH, GAME_HEIGHT);
+        }
 
         private void UpdateMainMenu(GameTime gameTime, KeyboardState keyState, MouseState mouseState)
         {
             // Respond to user input for menu selections, etc
-            if (this.oldKeyState.IsKeyDown(Keys.Enter) || this.oldKeyState.IsKeyDown(Keys.Space))
+            if (keyState.IsKeyUp(Keys.Enter) && this.oldKeyState.IsKeyDown(Keys.Enter))
             {
                 this.gameState = GameState.GameStart;
-                this.loadOnce = true;
             }
 
-            if (mouseState.LeftButton == ButtonState.Pressed)
+            if (mouseState.LeftButton == ButtonState.Pressed && this.oldMouseState.LeftButton == ButtonState.Released)
             {
                 this.gameState = GameState.GameStart;
-                this.loadOnce = true;
             }
             
+                this.loadOnce = true;
+            this.oldMouseState = mouseState;
             this.oldKeyState = keyState;
         }
 
@@ -179,8 +199,8 @@
                 this.loadOnce = false;
             }
 
-            this.graphics.GraphicsDevice.Clear(Color.DarkRed); 
-            this.levelOne.Draw(this.spriteBatch, this.gameFont);            
+            this.graphics.GraphicsDevice.Clear(Color.DarkRed);
+            this.mainMenu.Draw(this.spriteBatch, this.gameFont);
         }
 
         private void UpdateGameStart(GameTime gameTime, KeyboardState keyState, MouseState mouseState)
@@ -232,7 +252,8 @@
             this.key.Update(this.player);
 
             this.map.Update(gameTime);
-            camera.Update(player.SpritePosition, 2560, 1440);
+            this.camera.Update(this.player.SpritePosition, 2560, 1440);
+
             // if (true)//playerDied)
             //     _state = GameState.EndOfGame;
 
@@ -252,8 +273,7 @@
                 this.LoadLevelOne();
             }
 
-            this.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend,
-                      null, null, null, null, camera.Transform);
+            this.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, this.camera.Transform);
 
             this.background.Draw(this.spriteBatch);
             this.map.Draw(this.spriteBatch);
@@ -262,8 +282,8 @@
             if (this.tildePressed)
             {
                 this.DebugInformation();
-            }           
-            
+            }
+
             this.player.Draw(this.spriteBatch, 0.90, 0.90);
             ////this.player.Bomb.Draw(this.spriteBatch, 0.75, 0.75); // does not work
             this.bomb.Draw(this.spriteBatch, 0.55, 0.55);
@@ -326,7 +346,7 @@
         private void LoadLevelOne()
         {
             this.background = new StaticItem(Vector2.Zero);
-            this.background.SpriteTexture = Content.Load<Texture2D>("background3");            
+            this.background.SpriteTexture = Content.Load<Texture2D>("background3");
 
             Texture2D playerMoves = Content.Load<Texture2D>("bomberman");
             this.player = new Player(playerMoves, 4, 6, new Vector2(0, 310), new Vector2(10, 0), new Vector2(0, 10));
@@ -345,7 +365,7 @@
             this.bomb = new Bomb(bombAnim, 1, 5, new Vector2(387, 530));
 
             this.loadOnce = false;
-        }        
+        }
 
         #endregion
 
@@ -361,8 +381,8 @@
                 "\n player dest rect: " + this.player.DestinationRectangle +
                 "\n door rect: " + this.exitDoor.DestinationRectangle +
                 "\n enemy destination rect: " + this.enemy.DestinationRectangle,
-                new Vector2(player.SpritePosition.X-100, player.SpritePosition.Y-100),
+                new Vector2(this.player.SpritePosition.X - 150, this.player.SpritePosition.Y - 150),
                 Color.Orange);
-        }        
+        }
     }
 }

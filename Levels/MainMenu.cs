@@ -4,11 +4,11 @@
     using Microsoft.Xna.Framework.Content;
     using Microsoft.Xna.Framework.Graphics;
 
-    public class LevelMainMenu
+    public class MainMenu
     {
         private StaticItem backgrTree;
 
-        public LevelMainMenu(ContentManager content)
+        public MainMenu(ContentManager content)
         {
             this.LoadContent(content);
         }

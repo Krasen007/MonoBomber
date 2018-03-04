@@ -1,15 +1,16 @@
 ﻿namespace MonoContra.Objects
 {
-    using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
-    using MonoContra.Enumerables;
 
     public class Player : AnimatedSprite
     {
+        private const int ANIMATION_SPEED = 2;
+        private int animaSpeedIncrement;
+
         private KeyboardState oldKeyState;
         private MouseState oldMouseState;
 
@@ -33,17 +34,6 @@
             this.HandleKeyCollision(key);
             this.HandleWallCollision(walls);
             this.HandleSidesCollision();
-
-            ////if (!IsAlive)
-            ////{
-            ////    state = GameState.GameOver;
-            ////   // return state;
-            ////}
-            ////else
-            ////{
-            ////    state = GameState.GameStart;
-            ////   // return state;
-            ////}
         }
 
         private void HandleSidesCollision()
@@ -76,42 +66,66 @@
         {
             if (keyState.IsKeyDown(Keys.Right) || keyState.IsKeyDown(Keys.D))
             {
-                this.CurrentFrame++;
-                if (this.CurrentFrame >= 12)
+                this.animaSpeedIncrement++;                
+                if (this.animaSpeedIncrement >= ANIMATION_SPEED)
                 {
-                    this.CurrentFrame = 7;
+                    this.CurrentFrame++;
+                    if (this.CurrentFrame >= 12)
+                    {
+                        this.CurrentFrame = 7;
+                    }
+
+                    this.animaSpeedIncrement = 0;
                 }
 
                 this.SpritePosition += this.SpriteSpeedX;
             }
             else if (keyState.IsKeyDown(Keys.Left) || keyState.IsKeyDown(Keys.A))
             {
-                // Bug when going from right to left
-                this.CurrentFrame++;
-
-                if (this.CurrentFrame >= this.TotalFrames)
+                this.animaSpeedIncrement++;
+                if (this.animaSpeedIncrement >= ANIMATION_SPEED)
                 {
-                    this.CurrentFrame = 19;
+                    // Bug when going from right to left
+                    this.CurrentFrame++;
+
+                    if (this.CurrentFrame >= this.TotalFrames)
+                    {
+                        this.CurrentFrame = 19;
+                    }
+
+                    this.animaSpeedIncrement = 0;
                 }
 
                 this.SpritePosition -= this.SpriteSpeedX;
             }
             else if (keyState.IsKeyDown(Keys.Up) || keyState.IsKeyDown(Keys.W))
             {
-                this.CurrentFrame++;
-                if (this.CurrentFrame >= 18)
+                this.animaSpeedIncrement++;
+                if (this.animaSpeedIncrement >= ANIMATION_SPEED)
                 {
-                    this.CurrentFrame = 13;
+                    this.CurrentFrame++;
+                    if (this.CurrentFrame >= 18)
+                    {
+                        this.CurrentFrame = 13;
+                    }
+
+                    this.animaSpeedIncrement = 0;
                 }
 
                 this.SpritePosition -= this.SpriteSpeedY;
             }
             else if (keyState.IsKeyDown(Keys.Down) || keyState.IsKeyDown(Keys.S))
             {
-                this.CurrentFrame++;
-                if (this.CurrentFrame >= 6)
+                this.animaSpeedIncrement++;
+                if (this.animaSpeedIncrement >= ANIMATION_SPEED)
                 {
-                    this.CurrentFrame = 0;
+                    this.CurrentFrame++;
+                    if (this.CurrentFrame >= 6)
+                    {
+                        this.CurrentFrame = 0;
+                    }
+
+                    this.animaSpeedIncrement = 0;
                 }
 
                 this.SpritePosition += this.SpriteSpeedY;
@@ -146,31 +160,11 @@
         {
             foreach (var wall in walls)
             {
-                //if (this.DestinationRectangle.Intersects(wall.DestinationRectangle))
-                //{
-                //    // TODO: Fix collision
-                //    this.SpritePosition = new Vector2(this.SpritePosition.X - wall.DestinationRectangle., this.SpritePosition.Y);
-                //}
-
-
-                if (wall.DestinationRectangle.Left == this.DestinationRectangle.Left)
+                if (this.DestinationRectangle.Intersects(wall.DestinationRectangle))
                 {
-                    this.SpritePosition = new Vector2(0, this.SpritePosition.Y);
+                    // TODO: Fix collision
+                    // this.SpritePosition = new Vector2(this.SpritePosition.X -2, this.SpritePosition.Y);
                 }
-                //else if (this.SpritePosition.Y <= 0)
-                //{
-                //    this.SpritePosition = new Vector2(this.SpritePosition.X, 0);
-                //}
-                //else if (this.SpritePosition.Y >= 1440 - this.Width)
-                //{
-                //    this.SpritePosition = new Vector2(this.SpritePosition.X, 1440 - this.Width);
-                //}
-                //else if (this.SpritePosition.X >= wall.DestinationRectangle.Right)
-                //{
-                //    this.SpritePosition = new Vector2(2560 - this.Height, this.SpritePosition.Y);
-                //}
-
-
             }
         }
     }

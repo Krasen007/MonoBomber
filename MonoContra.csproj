@@ -45,6 +45,7 @@
     <Compile Include="Enumerables\GameState.cs" />
     <Compile Include="Enumerables\PowerUpTypes.cs" />
     <Compile Include="Enumerables\WallTypes.cs" />
+    <Compile Include="Levels\Intro.cs" />
     <Compile Include="Objects\Bomb.cs" />
     <Compile Include="Objects\Door.cs" />
     <Compile Include="Objects\Key.cs" />
@@ -55,7 +56,7 @@
     <Compile Include="Units\Player.cs" />
     <Compile Include="Objects\StaticItem.cs" />
     <Compile Include="EntryPoint.cs" />
-    <Compile Include="Levels\LevelMainMenu.cs" />
+    <Compile Include="Levels\MainMenu.cs" />
     <Compile Include="Objects\Block.cs" />
     <Compile Include="Run.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

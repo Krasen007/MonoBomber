@@ -5,7 +5,7 @@
 
     public class Key : AnimatedSprite
     {
-        private const int ANIMATION_SPEED = 50;
+        private const int ANIMATION_SPEED = 20;
         private int animaSpeedIncrement;
         private bool pastOne = false;
 
