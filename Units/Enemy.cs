@@ -29,14 +29,14 @@
                 this.animaSpeedIncrement = 0;
             }
 
-            this.HandleCollision(player);
+            this.HandlePlayerCollision(player);
         }
 
-        private void HandleCollision(AnimatedSprite player)
+        private void HandlePlayerCollision(Player player)
         {
             if (this.DestinationRectangle.Intersects(player.DestinationRectangle))
             {
-                this.SpriteTexture.Dispose();
+                player.IsAlive = false;
             }
         }
     }

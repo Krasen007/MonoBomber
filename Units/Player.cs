@@ -1,12 +1,11 @@
 ﻿namespace MonoContra.Objects
 {
-    using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
-    using MonoContra.Utilities;
+    using MonoContra.Enumerables;
 
     public class Player : AnimatedSprite
     {
@@ -17,9 +16,12 @@
 
         public Player(Texture2D texture, int rows, int cols, Vector2 spritePos, Vector2 spriteSpdX, Vector2 spriteSpdY) : base(texture, rows, cols, spritePos, spriteSpdX, spriteSpdY)
         {
+            this.IsAlive = true;
         }
 
         public bool HasKey { get; private set; }
+
+        public bool IsAlive { get; set; }
 
         public Bomb Bomb { get; private set; }
 
@@ -29,6 +31,17 @@
 
             this.HandleKeyCollision(key);
             this.HandleWallCollision(walls);
+
+            ////if (!IsAlive)
+            ////{
+            ////    state = GameState.GameOver;
+            ////   // return state;
+            ////}
+            ////else
+            ////{
+            ////    state = GameState.GameStart;
+            ////   // return state;
+            ////}
         }
 
         private void DropBomb(SpriteBatch spriteBatch, ContentManager bombAnimation)

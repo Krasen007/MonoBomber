@@ -50,7 +50,8 @@
 
         private void HandleCollision(Player player)
         {
-            this.SpriteTexture.Dispose();
+            // Hide key from map
+            this.SpritePosition = new Vector2(-100, -100);
         }
     }
 }
