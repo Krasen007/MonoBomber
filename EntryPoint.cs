@@ -326,7 +326,7 @@
         private void LoadLevelOne()
         {
             this.background = new StaticItem(Vector2.Zero);
-            this.background.SpriteTexture = Content.Load<Texture2D>("background2");            
+            this.background.SpriteTexture = Content.Load<Texture2D>("background3");            
 
             Texture2D playerMoves = Content.Load<Texture2D>("bomberman");
             this.player = new Player(playerMoves, 4, 6, new Vector2(0, 310), new Vector2(10, 0), new Vector2(0, 10));

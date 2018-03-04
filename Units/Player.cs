@@ -1,5 +1,6 @@
 ﻿namespace MonoContra.Objects
 {
+    using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
@@ -31,6 +32,7 @@
 
             this.HandleKeyCollision(key);
             this.HandleWallCollision(walls);
+            this.HandleSidesCollision();
 
             ////if (!IsAlive)
             ////{
@@ -42,6 +44,26 @@
             ////    state = GameState.GameStart;
             ////   // return state;
             ////}
+        }
+
+        private void HandleSidesCollision()
+        {
+            if (this.SpritePosition.X <= 0)
+            {
+                this.SpritePosition = new Vector2(0, this.SpritePosition.Y);
+            }
+            else if (this.SpritePosition.Y <= 0)
+            {
+                this.SpritePosition = new Vector2(this.SpritePosition.X, 0);
+            }
+            else if (this.SpritePosition.Y >= 1440)
+            {
+                this.SpritePosition = new Vector2(this.SpritePosition.X, 1440);
+            }
+            else if (this.SpritePosition.X >= 2560)
+            {
+                this.SpritePosition = new Vector2(2560, this.SpritePosition.Y);
+            }
         }
 
         private void DropBomb(SpriteBatch spriteBatch, ContentManager bombAnimation)
