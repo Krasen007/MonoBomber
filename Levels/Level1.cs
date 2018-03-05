@@ -19,7 +19,7 @@
 
         // private MouseState oldMouseState;
         private bool tildePressed = false;
-        private bool gamePaused = false;
+        private bool gamePause = false;
         private bool loadOnce = true;
 
         private StaticItem background;
@@ -37,6 +37,8 @@
             this.camera = new Camera(viewport.Viewport);
             this.gameFont = content.Load<SpriteFont>("Debug");
         }        
+
+        public bool GamePause { get => this.gamePause; set => this.gamePause = value; }
 
         public void Update(GameTime gameTime, KeyboardState keyState, MouseState mouseState, SpriteBatch spriteBatch, GameState gameState, SpriteFont gameFont)
         {
@@ -57,15 +59,14 @@
 
             if (this.oldKeyState.IsKeyDown(Keys.P) && keyState.IsKeyUp(Keys.P))
             {
-                if (!this.gamePaused)
+                if (!this.GamePause)
                 {
-                    this.gamePaused = true;
-                    ////new Pause();
-                    ////gameState = GameState.PAUSE;
+                    this.GamePaused(spriteBatch);
+                    this.GamePause = true;
                 }
                 else
                 {
-                    this.gamePaused = false;
+                    this.GamePause = false;
                 }
             }
 
@@ -87,10 +88,16 @@
             this.map.Update(gameTime);
             this.camera.Update(this.player.SpritePosition, MAP_WIDTH, MAP_HEIGHT);
         }
+
         public bool IsPlayerAlive()
         {
-            return player.IsAlive;
-        }        
+            return this.player.IsAlive;
+        }
+
+        public bool Pause()
+        {
+            return this.GamePause;
+        }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch, ContentManager content)
         {
@@ -115,11 +122,6 @@
             {
                 this.DebugInformation(spriteBatch);
             }
-
-            if (this.gamePaused)
-            {
-                this.GamePaused(spriteBatch);
-            }
                         
             this.player.Draw(spriteBatch, 0.90, 0.90);
             ////this.player.Bomb.Draw(this.spriteBatch, 0.75, 0.75); // does not work
@@ -135,14 +137,14 @@
         {
             // TODO: Add more stuff maybe
             ////this.graphics.GraphicsDevice.Clear(Color.Green);
-            ////spriteBatch.Begin();
+            spriteBatch.Begin();
             spriteBatch.DrawString(
                 this.gameFont,
                 "\n Game paused! " +
                 "\n Press P to resume.",
                 new Vector2(this.player.SpritePosition.X, this.player.SpritePosition.Y),
                 Color.DarkBlue);
-            ////spriteBatch.End();
+            spriteBatch.End();
         }
 
         private void LoadLevelOne(ContentManager content)

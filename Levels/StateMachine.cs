@@ -24,20 +24,17 @@
 
         // GameState GameStart
         private Level1 levelOne;
-
-        // GameState Pause
-        private Pause pause;
         
         // Update
         private KeyboardState oldKeyState;
         private MouseState oldMouseState;
 
-        public GameState GameState { get; set; }
-
         public StateMachine()
         {
             this.Initialize();
         }
+
+        public GameState GameState { get; set; }
 
         public void Initialize()
         {
@@ -58,8 +55,6 @@
 
             // GameStart State        
             this.levelOne = new Level1(content, graphicsDevice);
-
-            this.pause = new Pause();
         }
 
         public void Update(GameTime gameTime, ContentManager content, GraphicsDevice graphicsDevice)
@@ -69,7 +64,7 @@
 
             if (this.oldKeyState.IsKeyDown(Keys.Escape) && keyState.IsKeyUp(Keys.Escape))
             {
-                 //this.Exit();
+                 // this.Exit();
             }
 
             switch (this.GameState)
@@ -84,7 +79,13 @@
                     this.UpdateGameStart(gameTime, keyState, mouseState, content, graphicsDevice);
                     break;
                 case GameState.PAUSE:
-                    this.pause.Update(keyState, this.GameState);
+                    if (this.oldKeyState.IsKeyDown(Keys.P) && keyState.IsKeyUp(Keys.P))
+                    {
+                        GameState = GameState.GameStart;
+                        this.levelOne.GamePause = false;
+                    }
+
+                    this.oldKeyState = keyState;
                     break;
                 case GameState.GameOver:
                     this.UpdateGameOver(keyState, mouseState);
@@ -178,10 +179,15 @@
         private void UpdateGameStart(GameTime gameTime, KeyboardState keyState, MouseState mouseState, ContentManager content, GraphicsDevice graphicsDevice)
         {
             this.levelOne.Update(gameTime, keyState, mouseState, this.spriteBatch, this.GameState, this.gameFont);
-            if (!levelOne.IsPlayerAlive())
+            if (!this.levelOne.IsPlayerAlive())
             {
                 this.levelOne = new Level1(content, graphicsDevice);
-                GameState = GameState.GameOver;
+                this.GameState = GameState.GameOver;
+            }
+
+            if (this.levelOne.Pause())
+            {
+                this.GameState = GameState.PAUSE;
             }
         }
 
@@ -189,7 +195,6 @@
         {
             this.levelOne.Draw(gameTime, this.spriteBatch, content);
         }
-
 
         private void UpdateGameOver(KeyboardState keyState, MouseState mouseState)
         {
