@@ -141,11 +141,15 @@
                         
             this.player.Draw(spriteBatch, 0.90, 0.90);
             ////this.player.Bomb.Draw(this.spriteBatch, 0.75, 0.75); // does not work
-            if(this.bomb.Health == true)
+            if(this.bomb.Health == true && timeSinceLastShot <= 5)
             {
                 this.bomb.Draw(spriteBatch, 0.55, 0.55);
+                //this.bomb.Health = false;
             }
-
+            if (timeSinceLastShot > 5)
+            {
+                this.bomb.Health = false;
+            }
             this.enemy.Draw(spriteBatch, 0.13, 0.13);
             this.exitDoor.Draw(spriteBatch, 0.15, 0.15);
             this.key.Draw(spriteBatch, 1, 1);
