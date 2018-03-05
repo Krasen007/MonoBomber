@@ -5,6 +5,7 @@
     using Microsoft.Xna.Framework.Content;
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
+    using MonoContra.Utils;
 
     public class Player : AnimatedSprite
     {
@@ -160,10 +161,21 @@
         {
             foreach (var wall in walls)
             {
-                if (this.DestinationRectangle.Intersects(wall.DestinationRectangle))
+                if (CollisionHelper.CollideTop(this.DestinationRectangle, wall.DestinationRectangle))
                 {
-                    // TODO: Fix collision
-                    // this.SpritePosition = new Vector2(this.SpritePosition.X -2, this.SpritePosition.Y);
+                    this.SpritePosition -= this.SpriteSpeedY;
+                }
+                else if (CollisionHelper.CollideBottom(this.DestinationRectangle, wall.DestinationRectangle))
+                {
+                    this.SpritePosition += this.SpriteSpeedY;
+                }
+                else if (CollisionHelper.CollideRight(this.DestinationRectangle, wall.DestinationRectangle))
+                {
+                    this.SpritePosition += this.SpriteSpeedX;
+                }
+                else if (CollisionHelper.CollideLeft(this.DestinationRectangle, wall.DestinationRectangle))
+                {
+                    this.SpritePosition -= this.SpriteSpeedX;
                 }
             }
         }
