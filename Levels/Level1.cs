@@ -5,6 +5,7 @@
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
     using MonoContra.Enumerables;
+    using MonoContra.Levels;
     using MonoContra.Utils;
 
     public class Level1
@@ -28,7 +29,7 @@
         private Camera camera;
         private Door exitDoor;
         private Key key;
-        private Bomb bomb;        
+        private Bomb bomb;
 
         public Level1(ContentManager content, GraphicsDevice viewport)
         {
@@ -73,7 +74,6 @@
             this.player.Update(keyState, mouseState, this.key, spriteBatch, this.map.Walls);
             if (!this.player.IsAlive)
             {
-                gameState = GameState.GameOver;
                 this.player.IsAlive = true;
             }
 
@@ -87,6 +87,10 @@
             this.map.Update(gameTime);
             this.camera.Update(this.player.SpritePosition, MAP_WIDTH, MAP_HEIGHT);
         }
+        public bool IsPlayerAlive()
+        {
+            return player.IsAlive;
+        }        
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch, ContentManager content)
         {

@@ -10,8 +10,7 @@
     public class StateMachine
     {
         // Init
-        private bool loadOnce;
-        private GameState gameState;
+        private bool loadOnce;        
 
         // Load
         private SpriteBatch spriteBatch;
@@ -33,6 +32,8 @@
         private KeyboardState oldKeyState;
         private MouseState oldMouseState;
 
+        public GameState GameState { get; set; }
+
         public StateMachine()
         {
             this.Initialize();
@@ -40,7 +41,7 @@
 
         public void Initialize()
         {
-            this.gameState = GameState.Intro;
+            this.GameState = GameState.Intro;
             this.loadOnce = true;
         }
 
@@ -61,17 +62,17 @@
             this.pause = new Pause();
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, ContentManager content, GraphicsDevice graphicsDevice)
         {
             KeyboardState keyState = Keyboard.GetState();
             MouseState mouseState = Mouse.GetState();
 
             if (this.oldKeyState.IsKeyDown(Keys.Escape) && keyState.IsKeyUp(Keys.Escape))
             {
-                // this.Exit();
+                 //this.Exit();
             }
 
-            switch (this.gameState)
+            switch (this.GameState)
             {
                 case GameState.Intro:
                     this.UpdateIntro(gameTime, keyState, mouseState);
@@ -80,10 +81,10 @@
                     this.UpdateMainMenu(gameTime, keyState, mouseState);
                     break;
                 case GameState.GameStart:
-                    this.levelOne.Update(gameTime, keyState, mouseState, this.spriteBatch, this.gameState, this.gameFont);
+                    this.UpdateGameStart(gameTime, keyState, mouseState, content, graphicsDevice);
                     break;
                 case GameState.PAUSE:
-                    this.pause.Update(keyState, this.gameState);
+                    this.pause.Update(keyState, this.GameState);
                     break;
                 case GameState.GameOver:
                     this.UpdateGameOver(keyState, mouseState);
@@ -96,7 +97,7 @@
 
         public void Draw(GameTime gameTime, ContentManager content, GraphicsDeviceManager graphics, int gameWidth, int gameHeight)
         {
-            switch (this.gameState)
+            switch (this.GameState)
             {
                 case GameState.Intro:
                     this.DrawIntroScreen(graphics, gameWidth, gameHeight);
@@ -105,7 +106,7 @@
                     this.DrawMainMenu(gameTime, graphics);
                     break;
                 case GameState.GameStart:
-                    this.levelOne.Draw(gameTime, this.spriteBatch, content);
+                    this.DrawGameStart(gameTime, content);
                     break;
                 case GameState.GameOver:
                     this.DrawGameOver(gameTime, graphics);
@@ -119,12 +120,12 @@
         {
             if (keyState.IsKeyUp(Keys.Enter) && this.oldKeyState.IsKeyDown(Keys.Enter))
             {
-                this.gameState = GameState.MainMenu;
+                GameState = GameState.MainMenu;
             }
 
             if (mouseState.LeftButton == ButtonState.Pressed && this.oldMouseState.LeftButton == ButtonState.Released)
             {
-                this.gameState = GameState.MainMenu;
+                GameState = GameState.MainMenu;
             }
 
             this.loadOnce = true;
@@ -149,12 +150,12 @@
             // Respond to user input for menu selections, etc
             if (keyState.IsKeyUp(Keys.Enter) && this.oldKeyState.IsKeyDown(Keys.Enter))
             {
-                this.gameState = GameState.GameStart;
+                this.GameState = GameState.GameStart;
             }
 
             if (mouseState.LeftButton == ButtonState.Pressed && this.oldMouseState.LeftButton == ButtonState.Released)
             {
-                this.gameState = GameState.GameStart;
+                this.GameState = GameState.GameStart;
             }
 
             this.loadOnce = true;
@@ -174,6 +175,22 @@
             this.mainMenu.Draw(this.spriteBatch, this.gameFont);
         }
 
+        private void UpdateGameStart(GameTime gameTime, KeyboardState keyState, MouseState mouseState, ContentManager content, GraphicsDevice graphicsDevice)
+        {
+            this.levelOne.Update(gameTime, keyState, mouseState, this.spriteBatch, this.GameState, this.gameFont);
+            if (!levelOne.IsPlayerAlive())
+            {
+                this.levelOne = new Level1(content, graphicsDevice);
+                GameState = GameState.GameOver;
+            }
+        }
+
+        private void DrawGameStart(GameTime gameTime, ContentManager content)
+        {
+            this.levelOne.Draw(gameTime, this.spriteBatch, content);
+        }
+
+
         private void UpdateGameOver(KeyboardState keyState, MouseState mouseState)
         {
             // Update scores
@@ -186,14 +203,14 @@
             //    //ResetLevel();
             //    _state = GameState.Gameplay;
             // }
-            if (this.oldKeyState.IsKeyDown(Keys.Enter) || this.oldKeyState.IsKeyDown(Keys.Space))
+            if (keyState.IsKeyUp(Keys.Enter) && this.oldKeyState.IsKeyDown(Keys.Enter))
             {
-                this.gameState = GameState.GameStart;
+                this.GameState = GameState.GameStart;
             }
 
-            if (mouseState.LeftButton == ButtonState.Pressed)
+            if (mouseState.LeftButton == ButtonState.Pressed && this.oldMouseState.LeftButton == ButtonState.Released)
             {
-                this.gameState = GameState.GameStart;                
+                this.GameState = GameState.GameStart;
             }
 
             this.loadOnce = true;

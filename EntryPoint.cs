@@ -51,7 +51,7 @@
 
         protected override void Update(GameTime gameTime)
         {
-            this.stateMachine.Update(gameTime);
+            this.stateMachine.Update(gameTime, this.Content, this.GraphicsDevice);
 
             base.Update(gameTime);
         }

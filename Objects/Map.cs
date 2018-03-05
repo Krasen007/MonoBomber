@@ -78,7 +78,7 @@
                     {
                         this.chanceToSpawnWall = this.rng.Next(0, 100);
 
-                        if (this.chanceToSpawnWall < 30)
+                        if (this.chanceToSpawnWall < 1)
                         {
                             this.Walls.Add(new Wall(content, new Vector2(x * WALL_WIDTH, yCoord), true, WallTypes.Breakable, this.mapWidth, this.mapHeight, 8, new Vector2(1f, 1f)));
                         }
