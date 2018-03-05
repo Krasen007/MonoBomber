@@ -186,20 +186,17 @@
             //    //ResetLevel();
             //    _state = GameState.Gameplay;
             // }
-
-            // Respond to user input for menu selections, etc
             if (this.oldKeyState.IsKeyDown(Keys.Enter) || this.oldKeyState.IsKeyDown(Keys.Space))
             {
                 this.gameState = GameState.GameStart;
-                this.loadOnce = true;
             }
 
             if (mouseState.LeftButton == ButtonState.Pressed)
             {
-                this.gameState = GameState.GameStart;
-                this.loadOnce = true;
+                this.gameState = GameState.GameStart;                
             }
 
+            this.loadOnce = true;
             this.oldKeyState = keyState;
         }
 

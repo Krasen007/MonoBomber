@@ -1,14 +1,7 @@
 ﻿namespace MonoContra
 {
-    using System;
-    using Enumerables;
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Content;
-    using Microsoft.Xna.Framework.Graphics;
-    using Microsoft.Xna.Framework.Input;
     using MonoContra.Levels;
-    using MonoContra.Utils;
-    using Objects;
 
     public class EntryPoint : Game
     {
@@ -18,9 +11,7 @@
         private const int MAP_WIDTH = 2560;
         private const int MAP_HEIGHT = 1440;
 
-        private GraphicsDeviceManager graphics;
-
-        // State Machine
+        private GraphicsDeviceManager graphics;        
         private StateMachine stateMachine;
 
         public EntryPoint()

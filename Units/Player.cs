@@ -162,18 +162,22 @@
             {
                 if (CollisionHelper.CollideTop(this.DestinationRectangle, wall.DestinationRectangle))
                 {
+                    this.CurrentFrame = 0;
                     this.SpritePosition -= this.SpriteSpeedY;
                 }
                 else if (CollisionHelper.CollideBottom(this.DestinationRectangle, wall.DestinationRectangle))
                 {
+                    this.CurrentFrame = 13;
                     this.SpritePosition += this.SpriteSpeedY;
                 }
                 else if (CollisionHelper.CollideRight(this.DestinationRectangle, wall.DestinationRectangle))
                 {
+                    this.CurrentFrame = 19;
                     this.SpritePosition += this.SpriteSpeedX;
                 }
                 else if (CollisionHelper.CollideLeft(this.DestinationRectangle, wall.DestinationRectangle))
                 {
+                    this.CurrentFrame = 7;
                     this.SpritePosition -= this.SpriteSpeedX;
                 }
             }
