@@ -123,6 +123,11 @@
             return this.GamePause;
         }
 
+        public int NumberOfLives()
+        {
+            return this.player.NumberOfLives;
+        }
+
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch, ContentManager content)
         {
             // Draw the background the level
@@ -166,7 +171,7 @@
 
             foreach (BalloonEnemy balloonEnenemy in this.balloonEnemys)
             {
-                balloonEnenemy.Draw(spriteBatch, 0.13, 0.13);
+                balloonEnenemy.Draw(spriteBatch, 1.1, 1.1);
             }
 
             spriteBatch.End();
@@ -181,7 +186,7 @@
                 this.gameFont,
                 "\n Game paused! " +
                 "\n Press P to resume.",
-                new Vector2(this.player.SpritePosition.X, this.player.SpritePosition.Y),
+                new Vector2(this.player.DestinationRectangle.X, this.player.DestinationRectangle.Y), // this.player.SpritePosition.X, this.player.SpritePosition.Y
                 Color.DarkBlue);
             spriteBatch.End();
         }
@@ -210,9 +215,9 @@
             Texture2D moreBombsAnim = content.Load<Texture2D>("bombSathel");
             this.moreBombs = new PowerUpMoreBombs(moreBombsAnim, 1, 1, new Vector2(388, 180));
 
-            Texture2D balloonEnemyAnim = content.Load<Texture2D>("girlMove1");
-            this.balloonEnemys.Add(new BalloonEnemy(balloonEnemyAnim, 3, 3, new Vector2(323, 123), new Vector2(5, 0), new Vector2(0, 5)));
-            this.balloonEnemys.Add(new BalloonEnemy(balloonEnemyAnim, 3, 3, new Vector2(523, 423), new Vector2(15, 0), new Vector2(0, 15)));
+            Texture2D balloonEnemyAnim = content.Load<Texture2D>("HeartStripBalloon");
+            this.balloonEnemys.Add(new BalloonEnemy(balloonEnemyAnim, 4, 4, new Vector2(300, 180), new Vector2(5, 0), new Vector2(0, 5)));
+            this.balloonEnemys.Add(new BalloonEnemy(balloonEnemyAnim, 4, 4, new Vector2(500, 460), new Vector2(5, 0), new Vector2(0, 5)));
         }
 
         private void DebugInformation(SpriteBatch spriteBatch)
@@ -224,7 +229,7 @@
                 "\n Mouse to vector: " + mouseState.Position.ToVector2() +
                 "\n player sprite: " + this.player.SpritePosition +
                 "\n player dest rect: " + this.player.DestinationRectangle +
-                "\n door rect: " + this.exitDoor.DestinationRectangle +
+                "\n player lives: " + this.player.NumberOfLives +
                 "\n enemy destination rect: " + this.enemy.DestinationRectangle,
                 new Vector2(this.player.SpritePosition.X - 150, this.player.SpritePosition.Y - 150),
                 Color.Orange);

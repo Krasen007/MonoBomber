@@ -20,6 +20,7 @@
         public Player(Texture2D texture, int rows, int cols, Vector2 spritePos, Vector2 spriteSpdX, Vector2 spriteSpdY) : base(texture, rows, cols, spritePos, spriteSpdX, spriteSpdY)
         {
             this.IsAlive = true;
+            this.NumberOfLives = 3;
         }
 
         public bool HasKey { get; private set; }
@@ -27,6 +28,8 @@
         public bool IsAlive { get; set; }
 
         public List<Bomb> Bombs { get => this.bombs; set => this.bombs = value; }
+
+        public int NumberOfLives { get; set; }
 
         public void Update(KeyboardState keyState, MouseState mouseState, Key key, SpriteBatch spriteBatch, List<Wall> walls)
         {

@@ -7,6 +7,8 @@
     /// </summary>
     public static class Run
     {
+        public static EntryPoint Game { get; private set; }
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -15,6 +17,7 @@
         {
             using (var game = new EntryPoint())
             {
+                Game = game;
                 game.Run();
             }
         }

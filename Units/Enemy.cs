@@ -37,6 +37,7 @@
             if (this.DestinationRectangle.Intersects(player.DestinationRectangle))
             {
                 player.IsAlive = false;
+                player.NumberOfLives--;
             }
         }
     }

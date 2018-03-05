@@ -9,23 +9,15 @@
 
     public class StateMachine
     {
-        // Init
         private bool loadOnce;        
-
-        // Load
+        
         private SpriteBatch spriteBatch;
         private SpriteFont gameFont;
-
-        // GameState Intro
+        
         private Intro intro;
-
-        // GameState MainMenu
         private MainMenu mainMenu;
-
-        // GameState GameStart
         private Level1 levelOne;
         
-        // Update
         private KeyboardState oldKeyState;
         private MouseState oldMouseState;
 
@@ -64,7 +56,7 @@
 
             if (this.oldKeyState.IsKeyDown(Keys.Escape) && keyState.IsKeyUp(Keys.Escape))
             {
-                 // this.Exit();
+                Run.Game.Exit();
             }
 
             switch (this.GameState)
@@ -110,7 +102,7 @@
                     this.DrawGameStart(gameTime, content);
                     break;
                 case GameState.GameOver:
-                    this.DrawGameOver(gameTime, graphics);
+                    this.DrawGameOver(gameTime, graphics, content);
                     break;
             }
         }
@@ -181,8 +173,17 @@
             this.levelOne.Update(gameTime, keyState, mouseState, this.spriteBatch, this.GameState, this.gameFont);
             if (!this.levelOne.IsPlayerAlive())
             {
-                this.levelOne = new Level1(content, graphicsDevice);
-                this.GameState = GameState.GameOver;
+                if (this.levelOne.NumberOfLives() <= 0)
+                {
+                    this.levelOne = new Level1(content, graphicsDevice);
+                    this.GameState = GameState.GameOver;
+                }
+                else
+                {
+                    // lower lives ???
+                    this.levelOne = new Level1(content, graphicsDevice);                    
+                    this.GameState = GameState.GameOver;
+                }
             }
 
             if (this.levelOne.Pause())
@@ -222,18 +223,22 @@
             this.oldKeyState = keyState;
         }
 
-        private void DrawGameOver(GameTime gameTime, GraphicsDeviceManager graphics)
+        private void DrawGameOver(GameTime gameTime, GraphicsDeviceManager graphics, ContentManager content)
         {
+            StaticItem gameOverScreen = new StaticItem(Vector2.Zero);
+            gameOverScreen.SpriteTexture = content.Load<Texture2D>("gameover");
+
             // Draw text and scores
             // Draw menu for restarting level or going back to main menu
-            graphics.GraphicsDevice.Clear(Color.Teal);
+            graphics.GraphicsDevice.Clear(Color.Black);
             this.spriteBatch.Begin();
+            this.spriteBatch.Draw(gameOverScreen.SpriteTexture, new Vector2(280,300), Color.White);
             this.spriteBatch.DrawString(
                 this.gameFont,
                 "\n You are dead! " +
                 "\n Press Enter to restart.",
                 new Vector2(500, 250), // this.player.SpritePosition.X, this.player.SpritePosition.Y),
-                Color.DarkBlue);
+                Color.DarkSeaGreen);
             this.spriteBatch.End();
         }
 
