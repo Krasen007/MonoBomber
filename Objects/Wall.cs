@@ -14,8 +14,8 @@
         private const string BREAKABLE_ANIMATION_KEY = "rock";
         private WallTypes wallType;
 
-        public Wall(ContentManager content, Vector2 position, bool health, WallTypes wallType, int gameWidth, int gameHeight, double velocity, Vector2 scale)
-            : base(content, position, health, gameWidth, gameHeight, velocity, scale)
+        public Wall(ContentManager content, Vector2 position, bool health, WallTypes wallType, double velocity, Vector2 scale)
+            : base(content, position, health, velocity, scale)
         {
             this.WallType = wallType;
             if (wallType == WallTypes.Unbreakable)
@@ -54,7 +54,7 @@
             }
         }
 
-        public void Update(GameTime gameTime, int gameWidth, int gameHeight)
+        public void Update(GameTime gameTime)
         {
            foreach (var pair in this.Animations)
            {

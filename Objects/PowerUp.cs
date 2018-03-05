@@ -16,7 +16,7 @@
 
         private PowerUpTypes powerUpType;
 
-        public PowerUp(ContentManager content, Vector2 position, bool health, PowerUpTypes powerUpType, int gameWidth, int gameHeight, double velocity, Vector2 scale) : base(content, position, health, gameWidth, gameHeight, velocity, scale)
+        public PowerUp(ContentManager content, Vector2 position, bool health, PowerUpTypes powerUpType, double velocity, Vector2 scale) : base(content, position, health, velocity, scale)
         {
             this.PowerUpType = powerUpType;
             switch (powerUpType)

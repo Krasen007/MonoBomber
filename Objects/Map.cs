@@ -50,7 +50,7 @@
                 int yCoord = y * WALL_WIDTH;
                 for (int x = 1; x <= this.blocksInRow; x += 2)
                 {
-                    this.Walls.Add(new Wall(content, new Vector2(x * WALL_WIDTH, yCoord), true, WallTypes.Unbreakable, this.mapWidth, this.mapHeight, 8, new Vector2(1f, 1f)));
+                    this.Walls.Add(new Wall(content, new Vector2(x * WALL_WIDTH, yCoord), true, WallTypes.Unbreakable, 8, new Vector2(1f, 1f)));
                 }
             }
         }
@@ -68,7 +68,7 @@
 
                         if (this.chanceToSpawnWall < 30)
                         {
-                            this.Walls.Add(new Wall(content, new Vector2(x * WALL_WIDTH, yCoord), true, WallTypes.Breakable, this.mapWidth, this.mapHeight, 8, new Vector2(1f, 1f)));
+                            this.Walls.Add(new Wall(content, new Vector2(x * WALL_WIDTH, yCoord), true, WallTypes.Breakable, 8, new Vector2(1f, 1f)));
                         }
                     }
                 }
@@ -80,7 +80,7 @@
 
                         if (this.chanceToSpawnWall < 1)
                         {
-                            this.Walls.Add(new Wall(content, new Vector2(x * WALL_WIDTH, yCoord), true, WallTypes.Breakable, this.mapWidth, this.mapHeight, 8, new Vector2(1f, 1f)));
+                            this.Walls.Add(new Wall(content, new Vector2(x * WALL_WIDTH, yCoord), true, WallTypes.Breakable, 8, new Vector2(1f, 1f)));
                         }
                     }
                 }
@@ -91,7 +91,7 @@
         {
             foreach (var wall in this.Walls)
             {
-                wall.Update(gameTime, 0, 0);
+                wall.Update(gameTime);
             }
         }
 
