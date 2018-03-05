@@ -13,12 +13,12 @@
             this.LoadContent(content);
         }
 
-        public void Draw(SpriteBatch spriteBatch, SpriteFont debugFont)
+        public void Draw(SpriteBatch spriteBatch, SpriteFont gameFont)
         {
             spriteBatch.Begin();
             spriteBatch.Draw(this.backgrTree.SpriteTexture, new Vector2(300, 300), Color.White);
             spriteBatch.DrawString(
-                debugFont,
+                gameFont,
                 "Press enter or space to START GAME \n" +
                 "W,A,S,D to move character, P for PAUSE, Esc for Exit.",
                 new Vector2(600, 325), // GAME_WIDTH / 2 - 20, GAME_HEIGHT / 2 - 30),
