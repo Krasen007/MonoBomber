@@ -5,6 +5,7 @@
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
+    using MonoContra.Levels;
     using MonoContra.Utils;
     using Objects;
 
@@ -21,9 +22,14 @@
         private KeyboardState oldKeyState;
         private MouseState oldMouseState;
         private SpriteFont gameFont;
-        private bool tildePressed;
+        //private bool tildePressed;
         private bool loadOnce;
         private GameState gameState;
+
+
+
+        // State Machine
+        private StateMachine stateMachine;
 
         // GameState Intro
         private Intro intro;
@@ -32,18 +38,14 @@
         private MainMenu mainMenu;
 
         // GameState GameStart
-        private StaticItem background;
-        private Player player;
-        private Enemy enemy;
-        private Map map;
-        private Camera camera;
-        private Door exitDoor;
-        private Key key;
-        private Bomb bomb;
+        private Level1 levelOne;
+
+        // GameState Pause
+        private Pause pause;
 
         public EntryPoint()
         {
-            this.Window.Title = "CONTRA";
+            this.Window.Title = "MonoBomber";
             this.graphics = new GraphicsDeviceManager(this);
             this.Content.RootDirectory = "Content";
 
@@ -61,25 +63,29 @@
 
         protected override void Initialize()
         {
+            this.stateMachine = new StateMachine();
+
             this.gameState = GameState.Intro;
             this.loadOnce = true;
-            this.map = new Map(Content, 35, 35);
 
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
+            this.spriteBatch = new SpriteBatch(GraphicsDevice);
+            this.gameFont = this.Content.Load<SpriteFont>("Debug");
+
             // Intro State
             this.intro = new Intro(Content);
 
             // Menu State
             this.mainMenu = new MainMenu(Content);
 
-            // GameStart State
-            this.spriteBatch = new SpriteBatch(GraphicsDevice);
-            this.gameFont = this.Content.Load<SpriteFont>("Debug");
-            this.camera = new Camera(GraphicsDevice.Viewport);
+            // GameStart State        
+            this.levelOne = new Level1(Content, GraphicsDevice);
+
+            this.pause = new Pause();
         }
 
         protected override void UnloadContent()
@@ -96,8 +102,7 @@
             {
                 this.Exit();
             }
-
-            // Update states
+            
             switch (this.gameState)
             {
                 case GameState.Intro:
@@ -107,36 +112,34 @@
                     this.UpdateMainMenu(gameTime, keyState, mouseState);
                     break;
                 case GameState.GameStart:
-                    this.UpdateGameStart(gameTime, keyState, mouseState);
+                    this.levelOne.Update(gameTime, keyState, mouseState, this.spriteBatch, this.gameState, this.gameFont);
                     break;
                 case GameState.PAUSE:
-                    if (this.oldKeyState.IsKeyDown(Keys.P) && keyState.IsKeyUp(Keys.P))
-                    {
-                        this.gameState = GameState.GameStart;
-                    }
-
-                    this.oldKeyState = keyState;
+                    this.pause.Update(keyState, gameState);
                     break;
                 case GameState.GameOver:
                     this.UpdateGameOver(keyState, mouseState);
                     break;
             }
-            
+
+            this.oldMouseState = mouseState;
+            this.oldKeyState = keyState;
+
             base.Update(gameTime);
-        }       
+        }
 
         protected override void Draw(GameTime gameTime)
         {
             switch (this.gameState)
             {
                 case GameState.Intro:
-                    this.DrawIntroScreen();                    
+                    this.DrawIntroScreen();
                     break;
                 case GameState.MainMenu:
                     this.DrawMainMenu(gameTime);
                     break;
                 case GameState.GameStart:
-                    this.DrawGameStart(gameTime);
+                    this.levelOne.Draw(gameTime, this.spriteBatch, this.Content);
                     break;
                 case GameState.GameOver:
                     this.DrawGameOver(gameTime);
@@ -188,7 +191,7 @@
             {
                 this.gameState = GameState.GameStart;
             }
-            
+
             this.loadOnce = true;
             this.oldMouseState = mouseState;
             this.oldKeyState = keyState;
@@ -204,98 +207,6 @@
 
             this.graphics.GraphicsDevice.Clear(Color.DarkRed);
             this.mainMenu.Draw(this.spriteBatch, this.gameFont);
-        }
-
-        private void UpdateGameStart(GameTime gameTime, KeyboardState keyState, MouseState mouseState)
-        {
-            // Respond to user actions in the game.
-            // Update enemies
-            // Handle collisions
-            if (this.oldKeyState.IsKeyDown(Keys.OemTilde) && keyState.IsKeyUp(Keys.OemTilde))
-            {
-                if (!this.tildePressed)
-                {
-                    this.tildePressed = true;
-                }
-                else
-                {
-                    this.tildePressed = false;
-                }
-            }
-
-            if (this.oldKeyState.IsKeyDown(Keys.P) && keyState.IsKeyUp(Keys.P))
-            {
-                // TODO: Add more stuff maybe
-                ////this.graphics.GraphicsDevice.Clear(Color.Green);
-                this.gameState = GameState.PAUSE;
-                this.spriteBatch.Begin();
-                this.spriteBatch.DrawString(
-                    this.gameFont,
-                    "\n Game paused! " +
-                    "\n Press P to resume.",
-                    new Vector2(this.player.SpritePosition.X, this.player.SpritePosition.Y),
-                    Color.DarkBlue);
-                this.spriteBatch.End();
-            }
-
-            this.oldKeyState = keyState;
-
-            this.player.Update(keyState, mouseState, this.key, this.Content, this.spriteBatch, this.map.Walls);
-            if (!this.player.IsAlive)
-            {
-                this.gameState = GameState.GameOver;
-                this.player.IsAlive = true;
-            }
-
-            ////this.player.Bomb.Update(); // does not work
-            this.bomb.Update();
-
-            this.enemy.Update(this.player);
-            this.exitDoor.Update(this.player);
-            this.key.Update(this.player);
-
-            this.map.Update(gameTime);
-            this.camera.Update(this.player.SpritePosition, MAP_WIDTH, MAP_HEIGHT);
-
-            // if (true)//playerDied)
-            //     _state = GameState.EndOfGame;
-
-            // When game over contition is met
-            // this.loadOnce = true;
-        }
-
-        private void DrawGameStart(GameTime gameTime)
-        {
-            // Draw the background the level
-            // Draw enemies
-            // Draw the player
-            // Draw particle effects, etc
-            // Level one
-            if (this.loadOnce)
-            {
-                this.LoadLevelOne();
-                this.loadOnce = false;
-            }
-
-            this.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, this.camera.Transform);
-
-            this.background.Draw(this.spriteBatch);
-            this.map.Draw(this.spriteBatch);
-
-            // Manage debug font
-            if (this.tildePressed)
-            {
-                this.DebugInformation();
-            }
-
-            this.player.Draw(this.spriteBatch, 0.90, 0.90);
-            ////this.player.Bomb.Draw(this.spriteBatch, 0.75, 0.75); // does not work
-            this.bomb.Draw(this.spriteBatch, 0.55, 0.55);
-
-            this.enemy.Draw(this.spriteBatch, 0.13, 0.13);
-            this.exitDoor.Draw(this.spriteBatch, 0.15, 0.15);
-            this.key.Draw(this.spriteBatch, 1, 1);
-            this.spriteBatch.End();
         }
 
         private void UpdateGameOver(KeyboardState keyState, MouseState mouseState)
@@ -337,54 +248,11 @@
                 this.gameFont,
                 "\n You are dead! " +
                 "\n Press Enter to restart.",
-                new Vector2(this.player.SpritePosition.X, this.player.SpritePosition.Y),
+                new Vector2(0, 0), //this.player.SpritePosition.X, this.player.SpritePosition.Y),
                 Color.DarkBlue);
             this.spriteBatch.End();
         }
 
-        #endregion
-
-        #region Loading        
-
-        // Load textures and objects for level one
-        private void LoadLevelOne()
-        {
-            this.background = new StaticItem(Vector2.Zero);
-            this.background.SpriteTexture = Content.Load<Texture2D>("background3");
-
-            Texture2D playerMoves = Content.Load<Texture2D>("bomberman");
-            this.player = new Player(playerMoves, 4, 6, new Vector2(0, 310), new Vector2(10, 0), new Vector2(0, 10));
-
-            Texture2D badGirl = Content.Load<Texture2D>("mele1");
-            this.enemy = new Enemy(badGirl, 3, 3, new Vector2(520, 525), new Vector2(4, 0), new Vector2(0, 0));
-
-            Texture2D doorLocked = Content.Load<Texture2D>("doorLocked");
-            Texture2D doorOpen = Content.Load<Texture2D>("doorOpen");
-            this.exitDoor = new Door(doorOpen, 1, 4, new Vector2(250, 245));
-
-            Texture2D keyAnim = Content.Load<Texture2D>("key");
-            this.key = new Key(keyAnim, 1, 3, new Vector2(666, 390));
-
-            Texture2D bombAnim = Content.Load<Texture2D>("bombanimation");
-            this.bomb = new Bomb(bombAnim, 1, 5, new Vector2(387, 530));
-        }
-
-        #endregion
-
-        // Replace Console WriteLine
-        private void DebugInformation()
-        {
-            MouseState mouseState = Mouse.GetState();
-            this.spriteBatch.DrawString(
-                this.gameFont,
-                "\n Debug info:" +
-                "\n Mouse to vector: " + mouseState.Position.ToVector2() +
-                "\n player sprite: " + this.player.SpritePosition +
-                "\n player dest rect: " + this.player.DestinationRectangle +
-                "\n door rect: " + this.exitDoor.DestinationRectangle +
-                "\n enemy destination rect: " + this.enemy.DestinationRectangle,
-                new Vector2(this.player.SpritePosition.X - 150, this.player.SpritePosition.Y - 150),
-                Color.Orange);
-        }
+        #endregion                
     }
 }

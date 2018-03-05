@@ -15,8 +15,7 @@
         private KeyboardState oldKeyState;
         private MouseState oldMouseState;
 
-        private Texture2D bombAnim;        // not working 
-
+        // private Texture2D bombAnim;        // not working 
         public Player(Texture2D texture, int rows, int cols, Vector2 spritePos, Vector2 spriteSpdX, Vector2 spriteSpdY) : base(texture, rows, cols, spritePos, spriteSpdX, spriteSpdY)
         {
             this.IsAlive = true;
@@ -28,9 +27,9 @@
 
         public Bomb Bomb { get; private set; }
 
-        public void Update(KeyboardState keyState, MouseState mouseState, Key key, ContentManager bombAnimation, SpriteBatch spriteBatch, List<Wall> walls)
+        public void Update(KeyboardState keyState, MouseState mouseState, Key key, SpriteBatch spriteBatch, List<Wall> walls)
         {
-            this.MovePlayer(keyState, mouseState, bombAnimation, spriteBatch);
+            this.MovePlayer(keyState, mouseState, spriteBatch);
 
             this.HandleKeyCollision(key);
             this.HandleWallCollision(walls);
@@ -57,13 +56,13 @@
             }
         }
 
-        private void DropBomb(SpriteBatch spriteBatch, ContentManager bombAnimation)
+        private void DropBomb(SpriteBatch spriteBatch)
         {
-            this.bombAnim = bombAnimation.Load<Texture2D>("bombanimation"); // not working
-            this.Bomb = new Bomb(this.bombAnim, 1, 5, this.SpritePosition); // not working
+            // this.bombAnim = bombAnimation.Load<Texture2D>("bombanimation"); // not working
+            // this.Bomb = new Bomb(this.bombAnim, 1, 5, this.SpritePosition); // not working
         }
 
-        private void MovePlayer(KeyboardState keyState, MouseState mouseState, ContentManager bombAnimation, SpriteBatch spriteBatch)
+        private void MovePlayer(KeyboardState keyState, MouseState mouseState, SpriteBatch spriteBatch)
         {
             if (keyState.IsKeyDown(Keys.Right) || keyState.IsKeyDown(Keys.D))
             {
@@ -133,7 +132,7 @@
             }
             else if (keyState.IsKeyDown(Keys.Space) || keyState.IsKeyDown(Keys.Enter))
             {
-                this.DropBomb(spriteBatch, bombAnimation);
+                this.DropBomb(spriteBatch);
             }
 
             this.oldKeyState = keyState;
