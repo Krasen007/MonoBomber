@@ -1,11 +1,12 @@
 ﻿namespace MonoContra.Objects
 {
+    using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
     using MonoContra.Enumerables;
-    using MonoContra.Levels;
+    using MonoContra.Units;
     using MonoContra.Utils;
 
     public class Level1
@@ -13,13 +14,12 @@
         private const int MAP_WIDTH = 2560;
         private const int MAP_HEIGHT = 1440;
         private float timeSinceLastShot = 0f;
-        // private GameState gameState;
+
         private SpriteFont gameFont;
         private KeyboardState oldKeyState;
 
         // private MouseState oldMouseState;
         private bool tildePressed = false;
-        private bool gamePause = false;
         private bool loadOnce = true;
 
         private StaticItem background;
@@ -31,14 +31,17 @@
         private Key key;
         private Bomb bomb;
 
+        private PowerUpMoreBombs moreBombs;
+        private List<BalloonEnemy> balloonEnemys = new List<BalloonEnemy>();
+
         public Level1(ContentManager content, GraphicsDevice viewport)
         {
             this.map = new Map(content, 35, 35);
             this.camera = new Camera(viewport.Viewport);
             this.gameFont = content.Load<SpriteFont>("Debug");
-        }        
+        }
 
-        public bool GamePause { get => this.gamePause; set => this.gamePause = value; }
+        public bool GamePause { get; set; }
 
         public void Update(GameTime gameTime, KeyboardState keyState, MouseState mouseState, SpriteBatch spriteBatch, GameState gameState, SpriteFont gameFont)
         {
@@ -70,21 +73,23 @@
                 }
             }
 
+            this.oldKeyState = keyState;
+
             if (this.oldKeyState.IsKeyDown(Keys.Space) && this.bomb.Health == false)
             {
                 this.bomb.SpritePosition = new Vector2(this.player.SpritePosition.X + 15, this.player.SpritePosition.Y + 10);
-                timeSinceLastShot = 0;
+                this.timeSinceLastShot = 0;
                 this.bomb.Health = true;
             }
+
             this.oldKeyState = keyState;
 
-            if(this.bomb.Health == true)
+            if (this.bomb.Health == true)
             {
-                timeSinceLastShot += (float)gameTime.ElapsedGameTime.TotalSeconds;
-                if (timeSinceLastShot <= 5)
+                this.timeSinceLastShot += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                if (this.timeSinceLastShot <= 5)
                 {
-                    this.bomb.Update();
-                    //
+                    this.bomb.UpdateAnimation();
                 }
             }
 
@@ -94,12 +99,15 @@
                 this.player.IsAlive = true;
             }
 
-            ////this.player.Bomb.Update(); // does not work
-            
-
             this.enemy.Update(this.player);
             this.exitDoor.Update(this.player);
             this.key.Update(this.player);
+
+            this.moreBombs.Update(this.player);
+            foreach (BalloonEnemy balloonEnemy in this.balloonEnemys)
+            {
+                balloonEnemy.Update(spriteBatch, this.map.Walls, gameTime);
+            }
 
             this.map.Update(gameTime);
             this.camera.Update(this.player.SpritePosition, MAP_WIDTH, MAP_HEIGHT);
@@ -138,21 +146,29 @@
             {
                 this.DebugInformation(spriteBatch);
             }
-                        
-            this.player.Draw(spriteBatch, 0.90, 0.90);
-            ////this.player.Bomb.Draw(this.spriteBatch, 0.75, 0.75); // does not work
-            if(this.bomb.Health == true && timeSinceLastShot <= 5)
+
+            if (this.bomb.Health == true && this.timeSinceLastShot <= 5)
             {
                 this.bomb.Draw(spriteBatch, 0.55, 0.55);
-                //this.bomb.Health = false;
+                //// this.bomb.Health = false;
             }
-            if (timeSinceLastShot > 5)
+
+            if (this.timeSinceLastShot > 5)
             {
                 this.bomb.Health = false;
             }
+
+            this.player.Draw(spriteBatch, 0.90, 0.90);
             this.enemy.Draw(spriteBatch, 0.13, 0.13);
             this.exitDoor.Draw(spriteBatch, 0.15, 0.15);
             this.key.Draw(spriteBatch, 1, 1);
+            this.moreBombs.Draw(spriteBatch, 1, 1);
+
+            foreach (BalloonEnemy balloonEnenemy in this.balloonEnemys)
+            {
+                balloonEnenemy.Draw(spriteBatch, 0.13, 0.13);
+            }
+
             spriteBatch.End();
         }
 
@@ -190,6 +206,13 @@
 
             Texture2D bombAnim = content.Load<Texture2D>("bombanimation");
             this.bomb = new Bomb(bombAnim, 1, 5, new Vector2(100, 100));
+
+            Texture2D moreBombsAnim = content.Load<Texture2D>("bombSathel");
+            this.moreBombs = new PowerUpMoreBombs(moreBombsAnim, 1, 1, new Vector2(388, 180));
+
+            Texture2D balloonEnemyAnim = content.Load<Texture2D>("girlMove1");
+            this.balloonEnemys.Add(new BalloonEnemy(balloonEnemyAnim, 3, 3, new Vector2(323, 123), new Vector2(5, 0), new Vector2(0, 5)));
+            this.balloonEnemys.Add(new BalloonEnemy(balloonEnemyAnim, 3, 3, new Vector2(523, 423), new Vector2(15, 0), new Vector2(0, 15)));
         }
 
         private void DebugInformation(SpriteBatch spriteBatch)

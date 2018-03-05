@@ -17,7 +17,7 @@
             this.CurrentAnimationKey = string.Empty;
             this.Animations = new Dictionary<string, Animation>();
             this.DestinationRectangle = new Rectangle((int)this.Position.X, (int)this.Position.Y, (int)this.Scale.X, (int)this.Scale.Y);
-        }        
+        }
 
         public bool IsBreakable { get; protected set; }
 
@@ -39,7 +39,7 @@
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            if(this.Health)
+            if (this.Health)
             {
                 this.Animations[this.CurrentAnimationKey].Draw(spriteBatch, this.Rotation, this.Position, this.Scale);
             }

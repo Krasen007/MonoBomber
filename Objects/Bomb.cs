@@ -9,14 +9,16 @@
         private const int BOMB_EXPLOSION_IN = 4000;
 
         private int animaSpeedIncrement;
-        private bool health;
 
+        // private bool health;
         public Bomb(Texture2D animatedTexture, int rows, int cols, Vector2 spritePos) : base(animatedTexture, rows, cols, spritePos)
         {
-            this.health = true;
+           // this.health = true;
         }
 
-        public void Update()
+        public bool Health { get; set; }
+
+        public void UpdateAnimation()
         {
             this.animaSpeedIncrement++;
 
@@ -31,7 +33,5 @@
                 this.animaSpeedIncrement = 0;
             }
         }
-
-        public bool Health { get; set; }
     }
 }

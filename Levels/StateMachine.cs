@@ -232,7 +232,7 @@
                 this.gameFont,
                 "\n You are dead! " +
                 "\n Press Enter to restart.",
-                new Vector2(0, 0), // this.player.SpritePosition.X, this.player.SpritePosition.Y),
+                new Vector2(500, 250), // this.player.SpritePosition.X, this.player.SpritePosition.Y),
                 Color.DarkBlue);
             this.spriteBatch.End();
         }

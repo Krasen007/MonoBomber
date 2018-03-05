@@ -14,6 +14,7 @@
 
         private KeyboardState oldKeyState;
         private MouseState oldMouseState;
+        private List<Bomb> bombs = new List<Bomb>();
 
         // private Texture2D bombAnim;        // not working 
         public Player(Texture2D texture, int rows, int cols, Vector2 spritePos, Vector2 spriteSpdX, Vector2 spriteSpdY) : base(texture, rows, cols, spritePos, spriteSpdX, spriteSpdY)
@@ -25,7 +26,7 @@
 
         public bool IsAlive { get; set; }
 
-        public Bomb Bomb { get; private set; }
+        public List<Bomb> Bombs { get => this.bombs; set => this.bombs = value; }
 
         public void Update(KeyboardState keyState, MouseState mouseState, Key key, SpriteBatch spriteBatch, List<Wall> walls)
         {
@@ -130,11 +131,11 @@
 
                 this.SpritePosition += this.SpriteSpeedY;
             }
-            else if (keyState.IsKeyDown(Keys.Space) || keyState.IsKeyDown(Keys.Enter))
-            {
-                this.DropBomb(spriteBatch);
-            }
 
+            ////else if (keyState.IsKeyDown(Keys.Space) || keyState.IsKeyDown(Keys.Enter))
+            ////{
+            ////    //this.DropBomb(spriteBatch);
+            ////}
             this.oldKeyState = keyState;
 
             /*             
