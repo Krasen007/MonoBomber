@@ -6,6 +6,8 @@
     public class Bomb : AnimatedSprite
     {
         private const int ANIMATION_SPEED = 9;
+        private const int BOMB_EXPLOSION_IN = 4000;
+
         private int animaSpeedIncrement;
         private bool health;
 

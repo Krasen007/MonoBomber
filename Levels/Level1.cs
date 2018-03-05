@@ -12,7 +12,7 @@
     {
         private const int MAP_WIDTH = 2560;
         private const int MAP_HEIGHT = 1440;
-
+        private float timeSinceLastShot = 0f;
         // private GameState gameState;
         private SpriteFont gameFont;
         private KeyboardState oldKeyState;
@@ -73,10 +73,20 @@
             if (this.oldKeyState.IsKeyDown(Keys.Space) && this.bomb.Health == false)
             {
                 this.bomb.SpritePosition = new Vector2(this.player.SpritePosition.X + 15, this.player.SpritePosition.Y + 10);
-                this.bomb.Update();
+                timeSinceLastShot = 0;
                 this.bomb.Health = true;
             }
             this.oldKeyState = keyState;
+
+            if(this.bomb.Health == true)
+            {
+                timeSinceLastShot += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                if (timeSinceLastShot <= 5)
+                {
+                    this.bomb.Update();
+                    //
+                }
+            }
 
             this.player.Update(keyState, mouseState, this.key, spriteBatch, this.map.Walls);
             if (!this.player.IsAlive)
