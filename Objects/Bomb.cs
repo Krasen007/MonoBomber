@@ -7,9 +7,11 @@
     {
         private const int ANIMATION_SPEED = 9;
         private int animaSpeedIncrement;
+        private bool health;
 
         public Bomb(Texture2D animatedTexture, int rows, int cols, Vector2 spritePos) : base(animatedTexture, rows, cols, spritePos)
         {
+            this.health = true;
         }
 
         public void Update()
@@ -27,5 +29,7 @@
                 this.animaSpeedIncrement = 0;
             }
         }
+
+        public bool Health { get; set; }
     }
 }

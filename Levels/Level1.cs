@@ -70,6 +70,12 @@
                 }
             }
 
+            if (this.oldKeyState.IsKeyDown(Keys.Space) && this.bomb.Health == false)
+            {
+                this.bomb.SpritePosition = new Vector2(this.player.SpritePosition.X + 15, this.player.SpritePosition.Y + 10);
+                this.bomb.Update();
+                this.bomb.Health = true;
+            }
             this.oldKeyState = keyState;
 
             this.player.Update(keyState, mouseState, this.key, spriteBatch, this.map.Walls);
@@ -79,7 +85,7 @@
             }
 
             ////this.player.Bomb.Update(); // does not work
-            this.bomb.Update();
+            
 
             this.enemy.Update(this.player);
             this.exitDoor.Update(this.player);
@@ -125,7 +131,10 @@
                         
             this.player.Draw(spriteBatch, 0.90, 0.90);
             ////this.player.Bomb.Draw(this.spriteBatch, 0.75, 0.75); // does not work
-            this.bomb.Draw(spriteBatch, 0.55, 0.55);
+            if(this.bomb.Health == true)
+            {
+                this.bomb.Draw(spriteBatch, 0.55, 0.55);
+            }
 
             this.enemy.Draw(spriteBatch, 0.13, 0.13);
             this.exitDoor.Draw(spriteBatch, 0.15, 0.15);
@@ -166,7 +175,7 @@
             this.key = new Key(keyAnim, 1, 3, new Vector2(666, 390));
 
             Texture2D bombAnim = content.Load<Texture2D>("bombanimation");
-            this.bomb = new Bomb(bombAnim, 1, 5, new Vector2(387, 530));
+            this.bomb = new Bomb(bombAnim, 1, 5, new Vector2(100, 100));
         }
 
         private void DebugInformation(SpriteBatch spriteBatch)
