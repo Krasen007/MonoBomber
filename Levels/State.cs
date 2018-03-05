@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MonoContra.Levels
+﻿namespace MonoContra.Levels
 {
     public abstract class State
     {
@@ -12,7 +6,6 @@ namespace MonoContra.Levels
         {
         }
         
-
         public virtual void Update()
         {
         }
@@ -20,7 +13,5 @@ namespace MonoContra.Levels
         public virtual void Draw()
         {
         }
-
-
     }    
 }

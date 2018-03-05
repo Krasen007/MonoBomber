@@ -1,12 +1,10 @@
 ﻿namespace MonoContra.Objects
 {
-    using System;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
     using MonoContra.Enumerables;
-    using MonoContra.Levels;
     using MonoContra.Utils;
 
     public class Level1
@@ -14,10 +12,11 @@
         private const int MAP_WIDTH = 2560;
         private const int MAP_HEIGHT = 1440;
 
-        //private GameState gameState;
+        // private GameState gameState;
         private SpriteFont gameFont;
         private KeyboardState oldKeyState;
-       // private MouseState oldMouseState;
+
+        // private MouseState oldMouseState;
         private bool tildePressed = false;
         private bool gamePaused = false;
         private bool loadOnce = true;
@@ -60,8 +59,8 @@
                 if (!this.gamePaused)
                 {
                     this.gamePaused = true;
-                    //new Pause();
-                    //gameState = GameState.PAUSE;
+                    ////new Pause();
+                    ////gameState = GameState.PAUSE;
                 }
                 else
                 {
@@ -69,8 +68,7 @@
                 }
             }
 
-            this.oldKeyState = keyState;           
-            
+            this.oldKeyState = keyState;
 
             this.player.Update(keyState, mouseState, this.key, spriteBatch, this.map.Walls);
             if (!this.player.IsAlive)
@@ -133,14 +131,14 @@
         {
             // TODO: Add more stuff maybe
             ////this.graphics.GraphicsDevice.Clear(Color.Green);
-            //spriteBatch.Begin();
+            ////spriteBatch.Begin();
             spriteBatch.DrawString(
                 this.gameFont,
                 "\n Game paused! " +
                 "\n Press P to resume.",
                 new Vector2(this.player.SpritePosition.X, this.player.SpritePosition.Y),
                 Color.DarkBlue);
-            //spriteBatch.End();
+            ////spriteBatch.End();
         }
 
         private void LoadLevelOne(ContentManager content)
