@@ -1,10 +1,12 @@
 ﻿namespace MonoContra.Objects
 {
+    using System;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
     using MonoContra.Enumerables;
+    using MonoContra.Levels;
     using MonoContra.Utils;
 
     public class Level1
@@ -17,6 +19,7 @@
         private KeyboardState oldKeyState;
        // private MouseState oldMouseState;
         private bool tildePressed = false;
+        private bool gamePaused = false;
         private bool loadOnce = true;
 
         private StaticItem background;
@@ -35,28 +38,39 @@
             this.gameFont = content.Load<SpriteFont>("Debug");
         }        
 
-        public void Update(GameTime gameTime, KeyboardState keyState, MouseState mouseState, SpriteBatch spriteBatch, GameState gameState)
+        public void Update(GameTime gameTime, KeyboardState keyState, MouseState mouseState, SpriteBatch spriteBatch, GameState gameState, SpriteFont gameFont)
         {
             // Respond to user actions in the game.
             // Update enemies
             // Handle collisions
+            if (this.oldKeyState.IsKeyDown(Keys.OemTilde) && keyState.IsKeyUp(Keys.OemTilde))
+            {
+                if (!this.tildePressed)
+                {
+                    this.tildePressed = true;
+                }
+                else
+                {
+                    this.tildePressed = false;
+                }
+            }
 
             if (this.oldKeyState.IsKeyDown(Keys.P) && keyState.IsKeyUp(Keys.P))
             {
-                // TODO: Add more stuff maybe
-                ////this.graphics.GraphicsDevice.Clear(Color.Green);
-                gameState = GameState.PAUSE;
-                spriteBatch.Begin();
-                spriteBatch.DrawString(
-                    this.gameFont,
-                    "\n Game paused! " +
-                    "\n Press P to resume.",
-                    new Vector2(this.player.SpritePosition.X, this.player.SpritePosition.Y),
-                    Color.DarkBlue);
-                spriteBatch.End();
+                if (!this.gamePaused)
+                {
+                    this.gamePaused = true;
+                    //new Pause();
+                    //gameState = GameState.PAUSE;
+                }
+                else
+                {
+                    this.gamePaused = false;
+                }
             }
 
-            this.oldKeyState = keyState;
+            this.oldKeyState = keyState;           
+            
 
             this.player.Update(keyState, mouseState, this.key, spriteBatch, this.map.Walls);
             if (!this.player.IsAlive)
@@ -100,6 +114,11 @@
                 this.DebugInformation(spriteBatch);
             }
 
+            if (this.gamePaused)
+            {
+                this.GamePaused(spriteBatch);
+            }
+                        
             this.player.Draw(spriteBatch, 0.90, 0.90);
             ////this.player.Bomb.Draw(this.spriteBatch, 0.75, 0.75); // does not work
             this.bomb.Draw(spriteBatch, 0.55, 0.55);
@@ -108,6 +127,20 @@
             this.exitDoor.Draw(spriteBatch, 0.15, 0.15);
             this.key.Draw(spriteBatch, 1, 1);
             spriteBatch.End();
+        }
+
+        private void GamePaused(SpriteBatch spriteBatch)
+        {
+            // TODO: Add more stuff maybe
+            ////this.graphics.GraphicsDevice.Clear(Color.Green);
+            //spriteBatch.Begin();
+            spriteBatch.DrawString(
+                this.gameFont,
+                "\n Game paused! " +
+                "\n Press P to resume.",
+                new Vector2(this.player.SpritePosition.X, this.player.SpritePosition.Y),
+                Color.DarkBlue);
+            //spriteBatch.End();
         }
 
         private void LoadLevelOne(ContentManager content)
