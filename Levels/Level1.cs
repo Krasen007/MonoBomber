@@ -144,6 +144,8 @@
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, this.camera.Transform);
 
             this.background.Draw(spriteBatch);
+            this.exitDoor.Draw(spriteBatch, 0.15, 0.15);
+            this.key.Draw(spriteBatch, 1, 1);
             this.map.Draw(spriteBatch);
 
             // Manage debug font
@@ -165,8 +167,7 @@
 
             this.player.Draw(spriteBatch, 0.90, 0.90);
             this.enemy.Draw(spriteBatch, 0.13, 0.13);
-            this.exitDoor.Draw(spriteBatch, 0.15, 0.15);
-            this.key.Draw(spriteBatch, 1, 1);
+            
             this.moreBombs.Draw(spriteBatch, 1, 1);
 
             foreach (BalloonEnemy balloonEnenemy in this.balloonEnemys)
