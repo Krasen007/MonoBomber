@@ -15,8 +15,6 @@
         private SpriteBatch spriteBatch;
         private SpriteFont gameFont;
 
-        private Intro intro;
-        private MainMenu mainMenu;
         private Level1 levelOne;
         //private Level2 levelTwo;
         private KeyboardState oldKeyState;
@@ -126,15 +124,12 @@
         }
 
         private void DrawIntroScreen(ContentManager content, GraphicsDeviceManager graphics, int gameWidth, int gameHeight)
-        {
+        {            
+            Intro intro = new Intro(content, this.spriteBatch, graphics);
             if (this.loadOnce)
             {
-                this.intro = new Intro(content);
                 this.loadOnce = false;
             }
-
-            graphics.GraphicsDevice.Clear(Color.White);
-            this.intro.Draw(this.spriteBatch, gameWidth, gameHeight);
         }
 
         private void UpdateMainMenu(GameTime gameTime, KeyboardState keyState, MouseState mouseState)
@@ -158,14 +153,11 @@
         private void DrawMainMenu(ContentManager content, GameTime gameTime, GraphicsDeviceManager graphics)
         {
             // Draw the main menu, any active selections, etc
+            MainMenu mainMenu = new MainMenu(content, spriteBatch, gameFont, graphics);
             if (this.loadOnce)
-            {
-                this.mainMenu = new MainMenu(content);
+            {                
                 this.loadOnce = false;
             }
-
-            graphics.GraphicsDevice.Clear(Color.DarkRed);
-            this.mainMenu.Draw(this.spriteBatch, this.gameFont);
         }
 
         private void UpdateGameStart(GameTime gameTime, KeyboardState keyState, MouseState mouseState, ContentManager content, GraphicsDevice graphicsDevice)
@@ -201,9 +193,10 @@
 
         private void DrawGameStart(ContentManager content, GameTime gameTime, GraphicsDevice graphicsDevice)
         {
+            this.levelOne = new Level1(content, graphicsDevice);
+
             if (this.loadOnce)
-            {
-                this.levelOne = new Level1(content, graphicsDevice);
+            {                
                 this.loadOnce = false;
             }
             this.levelOne.Draw(gameTime, this.spriteBatch, content);
