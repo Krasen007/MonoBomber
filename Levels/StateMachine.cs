@@ -1,5 +1,6 @@
 ﻿namespace MonoContra.Levels
 {
+    using System;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
     using Microsoft.Xna.Framework.Graphics;
@@ -9,15 +10,15 @@
 
     public class StateMachine
     {
-        private bool loadOnce;        
-        
+        private bool loadOnce;
+
         private SpriteBatch spriteBatch;
         private SpriteFont gameFont;
-        
+
         private Intro intro;
         private MainMenu mainMenu;
         private Level1 levelOne;
-        
+
         private KeyboardState oldKeyState;
         private MouseState oldMouseState;
 
@@ -82,6 +83,9 @@
                 case GameState.GameOver:
                     this.UpdateGameOver(keyState, mouseState);
                     break;
+                case GameState.GameWin:
+                    this.UpdateGameWin(keyState, mouseState, content, graphicsDevice);
+                    break;
             }
 
             this.oldMouseState = mouseState;
@@ -102,7 +106,10 @@
                     this.DrawGameStart(gameTime, content);
                     break;
                 case GameState.GameOver:
-                    this.DrawGameOver(gameTime, graphics, content);
+                    this.DrawGameOver(graphics, this.spriteBatch, this.gameFont, content);
+                    break;
+                case GameState.GameWin:
+                    this.DrawGameWin(gameTime, graphics, content);
                     break;
             }
         }
@@ -171,17 +178,24 @@
         private void UpdateGameStart(GameTime gameTime, KeyboardState keyState, MouseState mouseState, ContentManager content, GraphicsDevice graphicsDevice)
         {
             this.levelOne.Update(gameTime, keyState, mouseState, this.spriteBatch, this.GameState, this.gameFont);
-            if (!this.levelOne.IsPlayerAlive())
+
+            if (this.levelOne.IsPlayerAlive() && (this.levelOne.IsLevelCompleted()))
+            {
+                this.levelOne = new Level1(content, graphicsDevice);
+                this.GameState = GameState.GameWin;
+            }
+            else if (!this.levelOne.IsPlayerAlive())
             {
                 if (this.levelOne.NumberOfLives() <= 0)
                 {
+                    // start new game
                     this.levelOne = new Level1(content, graphicsDevice);
                     this.GameState = GameState.GameOver;
                 }
                 else
                 {
-                    // lower lives ???
-                    this.levelOne = new Level1(content, graphicsDevice);                    
+                    // lower lives and continue
+                    this.levelOne = new Level1(content, graphicsDevice);
                     this.GameState = GameState.GameOver;
                 }
             }
@@ -223,23 +237,30 @@
             this.oldKeyState = keyState;
         }
 
-        private void DrawGameOver(GameTime gameTime, GraphicsDeviceManager graphics, ContentManager content)
-        {
-            StaticItem gameOverScreen = new StaticItem(Vector2.Zero);
-            gameOverScreen.SpriteTexture = content.Load<Texture2D>("gameover");
+        private void DrawGameOver(GraphicsDeviceManager graphics, SpriteBatch spriteBatch, SpriteFont gameFont, ContentManager content)
+        {            
+            GameOver gameOver = new GameOver(spriteBatch, gameFont, content, graphics);
+        }
 
-            // Draw text and scores
-            // Draw menu for restarting level or going back to main menu
-            graphics.GraphicsDevice.Clear(Color.Black);
-            this.spriteBatch.Begin();
-            this.spriteBatch.Draw(gameOverScreen.SpriteTexture, new Vector2(280,300), Color.White);
-            this.spriteBatch.DrawString(
-                this.gameFont,
-                "\n You are dead! " +
-                "\n Press Enter to restart.",
-                new Vector2(500, 250), // this.player.SpritePosition.X, this.player.SpritePosition.Y),
-                Color.DarkSeaGreen);
-            this.spriteBatch.End();
+        private void UpdateGameWin(KeyboardState keyState, MouseState mouseState, ContentManager content, GraphicsDevice graphicsDevice)
+        {
+            if (keyState.IsKeyUp(Keys.Enter) && this.oldKeyState.IsKeyDown(Keys.Enter))
+            {
+                this.GameState = GameState.GameStart;
+            }
+
+            if (mouseState.LeftButton == ButtonState.Pressed && this.oldMouseState.LeftButton == ButtonState.Released)
+            {
+                this.GameState = GameState.GameStart;
+            }
+
+            this.loadOnce = true;
+            this.oldKeyState = keyState;
+        }
+
+        private void DrawGameWin(GameTime gameTime, GraphicsDeviceManager graphics, ContentManager content)
+        {
+            GameWin gameWin = new GameWin(this.spriteBatch, this.gameFont, content, graphics);
         }
 
         #endregion  
