@@ -9,9 +9,9 @@
 
     public class BalloonEnemy : AnimatedSprite
     {
+        private const int MOVEMENT_SPEED = 2;
         private const int ANIMATION_SPEED = 5;
         private int animaSpeedIncrement;
-        private int MOVEMENT_SPEED = 2;
 
         private Random randomDirection = new Random();
         private float elapsedTime = 0;
@@ -114,19 +114,7 @@
             else if (this.direction == 3)
             {
                 this.SpritePosition -= new Vector2(MOVEMENT_SPEED, 0);
-            }
-
-
-            //Vector2 elapsedDistance = this.SpritePosition;
-            //this.SpritePosition
-
-
-
-
-
-
-
-
+            }            
 
             this.UpdateAnimation();
         }

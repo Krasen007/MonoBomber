@@ -16,7 +16,8 @@
         private SpriteFont gameFont;
 
         private Level1 levelOne;
-        //private Level2 levelTwo;
+
+        // private Level2 levelTwo;
         private KeyboardState oldKeyState;
         private MouseState oldMouseState;
 
@@ -124,10 +125,10 @@
         }
 
         private void DrawIntroScreen(ContentManager content, GraphicsDeviceManager graphics, int gameWidth, int gameHeight)
-        {            
-            Intro intro = new Intro(content, this.spriteBatch, graphics);
+        {
             if (this.loadOnce)
             {
+                Intro intro = new Intro(content, this.spriteBatch, graphics);
                 this.loadOnce = false;
             }
         }
@@ -153,9 +154,9 @@
         private void DrawMainMenu(ContentManager content, GameTime gameTime, GraphicsDeviceManager graphics)
         {
             // Draw the main menu, any active selections, etc
-            MainMenu mainMenu = new MainMenu(content, spriteBatch, gameFont, graphics);
             if (this.loadOnce)
-            {                
+            {
+                MainMenu mainMenu = new MainMenu(content, this.spriteBatch, this.gameFont, graphics);
                 this.loadOnce = false;
             }
         }
@@ -164,7 +165,7 @@
         {
             this.levelOne.Update(gameTime, keyState, mouseState, this.spriteBatch, this.GameState, this.gameFont);
 
-            if (this.levelOne.IsPlayerAlive() && (this.levelOne.IsLevelCompleted()))
+            if (this.levelOne.IsPlayerAlive() && this.levelOne.IsLevelCompleted())
             {
                 this.levelOne = new Level1(content, graphicsDevice);
                 this.GameState = GameState.GameWin;
@@ -180,7 +181,7 @@
                 else
                 {
                     // lower lives and continue
-                    this.levelOne = new Level1(content, graphicsDevice);                    
+                    this.levelOne = new Level1(content, graphicsDevice);
                     this.GameState = GameState.GameOver;
                 }
             }
@@ -193,12 +194,12 @@
 
         private void DrawGameStart(ContentManager content, GameTime gameTime, GraphicsDevice graphicsDevice)
         {
-            this.levelOne = new Level1(content, graphicsDevice);
-
             if (this.loadOnce)
-            {                
+            {
+                this.levelOne = new Level1(content, graphicsDevice);
                 this.loadOnce = false;
             }
+
             this.levelOne.Draw(gameTime, this.spriteBatch, content);
         }
 
@@ -229,7 +230,7 @@
         }
 
         private void DrawGameOver(GraphicsDeviceManager graphics, SpriteBatch spriteBatch, SpriteFont gameFont, ContentManager content)
-        {            
+        {
             GameOver gameOver = new GameOver(spriteBatch, gameFont, content, graphics);
         }
 

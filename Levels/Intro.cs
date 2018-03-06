@@ -12,13 +12,7 @@
         {
             this.LoadContent(content);
             this.Draw(spriteBatch, graphics);
-        }
-
-        private void LoadContent(ContentManager content)
-        {
-            this.title = new StaticItem(Vector2.Zero);
-            this.title.SpriteTexture = content.Load<Texture2D>("monobomber");
-        }
+        }             
 
         public void Draw(SpriteBatch spriteBatch, GraphicsDeviceManager graphics)
         {
@@ -26,6 +20,12 @@
             spriteBatch.Begin();
             spriteBatch.Draw(this.title.SpriteTexture, new Vector2(1280 - this.title.SpriteTexture.Width - 60, (720 / 2) - this.title.SpriteTexture.Height + 20), Color.White);
             spriteBatch.End();
+        }
+
+        private void LoadContent(ContentManager content)
+        {
+            this.title = new StaticItem(Vector2.Zero);
+            this.title.SpriteTexture = content.Load<Texture2D>("monobomber");
         }
     }
 }

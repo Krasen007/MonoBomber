@@ -12,12 +12,6 @@
         {
             this.LoadContent(content);
             this.Draw(spriteBatch, gameFont, graphics);            
-        }       
-
-        private void LoadContent(ContentManager content)
-        {
-            this.backgrTree = new StaticItem(new Vector2(125, 125), new Vector2(50f, 50f), new Vector2(0, 10));
-            this.backgrTree.SpriteTexture = content.Load<Texture2D>("Tree");
         }
 
         public void Draw(SpriteBatch spriteBatch, SpriteFont gameFont, GraphicsDeviceManager graphics)
@@ -32,6 +26,12 @@
                 new Vector2(600, 325), // GAME_WIDTH / 2 - 20, GAME_HEIGHT / 2 - 30),
                 Color.CadetBlue);
             spriteBatch.End();
+        }
+
+        private void LoadContent(ContentManager content)
+        {
+            this.backgrTree = new StaticItem(new Vector2(125, 125), new Vector2(50f, 50f), new Vector2(0, 10));
+            this.backgrTree.SpriteTexture = content.Load<Texture2D>("Tree");
         }
     }
 }

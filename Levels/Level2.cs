@@ -10,7 +10,7 @@
     using MonoContra.Units;
     using MonoContra.Utils;
 
-    class Level2
+    public class Level2
     {
         private const int MAP_WIDTH = 100;
         private const int MAP_HEIGHT = 100;
@@ -100,11 +100,11 @@
                 this.player.IsAlive = true;
             }
 
-            //this.enemy.Update(this.player);
+            // this.enemy.Update(this.player);
             this.exitDoor.Update(this.player);
             this.key.Update(this.player);
 
-            //this.moreBombs.Update(this.player);
+            // this.moreBombs.Update(this.player);
             foreach (BalloonEnemy balloonEnemy in this.balloonEnemys)
             {
                 balloonEnemy.Update(spriteBatch, this.map.Walls, gameTime, this.player);
@@ -133,6 +133,7 @@
         {
             return this.exitDoor.LevelComplete;
         }
+
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch, ContentManager content)
         {
             // Draw the background the level
