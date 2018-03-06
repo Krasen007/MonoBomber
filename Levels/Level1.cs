@@ -30,8 +30,10 @@
         private Door exitDoor;
         private Key key;
         private Bomb bomb;
-
+        //private List<Bomb> bombs;
+        //private int bombsCount;
         private PowerUpMoreBombs moreBombs;
+        //private List<PowerUp> powerUps;
         private List<BalloonEnemy> balloonEnemys = new List<BalloonEnemy>();
 
         public Level1(ContentManager content, GraphicsDevice viewport)
