@@ -18,7 +18,7 @@
         private Intro intro;
         private MainMenu mainMenu;
         private Level1 levelOne;
-
+        //private Level2 levelTwo;
         private KeyboardState oldKeyState;
         private MouseState oldMouseState;
 
@@ -39,15 +39,6 @@
         {
             this.spriteBatch = new SpriteBatch(graphicsDevice);
             this.gameFont = content.Load<SpriteFont>("Debug");
-
-            // Intro State
-            this.intro = new Intro(content);
-
-            // Menu State
-            this.mainMenu = new MainMenu(content);
-
-            // GameStart State        
-            this.levelOne = new Level1(content, graphicsDevice);
         }
 
         public void Update(GameTime gameTime, ContentManager content, GraphicsDevice graphicsDevice)
@@ -92,18 +83,18 @@
             this.oldKeyState = keyState;
         }
 
-        public void Draw(GameTime gameTime, ContentManager content, GraphicsDeviceManager graphics, int gameWidth, int gameHeight)
+        public void Draw(GameTime gameTime, ContentManager content, GraphicsDeviceManager graphics, GraphicsDevice graphicsDevice, int gameWidth, int gameHeight)
         {
             switch (this.GameState)
             {
                 case GameState.Intro:
-                    this.DrawIntroScreen(graphics, gameWidth, gameHeight);
+                    this.DrawIntroScreen(content, graphics, gameWidth, gameHeight);
                     break;
                 case GameState.MainMenu:
-                    this.DrawMainMenu(gameTime, graphics);
+                    this.DrawMainMenu(content, gameTime, graphics);
                     break;
                 case GameState.GameStart:
-                    this.DrawGameStart(gameTime, content);
+                    this.DrawGameStart(content, gameTime, graphicsDevice);
                     break;
                 case GameState.GameOver:
                     this.DrawGameOver(graphics, this.spriteBatch, this.gameFont, content);
@@ -134,10 +125,11 @@
             this.oldKeyState = keyState;
         }
 
-        private void DrawIntroScreen(GraphicsDeviceManager graphics, int gameWidth, int gameHeight)
+        private void DrawIntroScreen(ContentManager content, GraphicsDeviceManager graphics, int gameWidth, int gameHeight)
         {
             if (this.loadOnce)
             {
+                this.intro = new Intro(content);
                 this.loadOnce = false;
             }
 
@@ -163,11 +155,12 @@
             this.oldKeyState = keyState;
         }
 
-        private void DrawMainMenu(GameTime gameTime, GraphicsDeviceManager graphics)
+        private void DrawMainMenu(ContentManager content, GameTime gameTime, GraphicsDeviceManager graphics)
         {
             // Draw the main menu, any active selections, etc
             if (this.loadOnce)
             {
+                this.mainMenu = new MainMenu(content);
                 this.loadOnce = false;
             }
 
@@ -195,7 +188,7 @@
                 else
                 {
                     // lower lives and continue
-                    this.levelOne = new Level1(content, graphicsDevice);
+                    this.levelOne = new Level1(content, graphicsDevice);                    
                     this.GameState = GameState.GameOver;
                 }
             }
@@ -206,8 +199,13 @@
             }
         }
 
-        private void DrawGameStart(GameTime gameTime, ContentManager content)
+        private void DrawGameStart(ContentManager content, GameTime gameTime, GraphicsDevice graphicsDevice)
         {
+            if (this.loadOnce)
+            {
+                this.levelOne = new Level1(content, graphicsDevice);
+                this.loadOnce = false;
+            }
             this.levelOne.Draw(gameTime, this.spriteBatch, content);
         }
 
