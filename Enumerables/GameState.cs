@@ -7,5 +7,6 @@
         GameStart,
         PAUSE,
         GameOver,
+        GameWin,
     }
 }

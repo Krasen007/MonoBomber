@@ -6,23 +6,26 @@
     public class Door : AnimatedSprite
     {
         private const int ANIMATION_SPEED = 9;
-        private int animaSpeedIncrement;
+        private int animaSpeedIncrement;   
 
         public Door(Texture2D texture, int rows, int cols, Vector2 spritePos) : base(texture, rows, cols, spritePos)
         {
-        }              
+            this.LevelComplete = false;
+        }
+
+        public bool LevelComplete { get; set; }
 
         public void Update(Player player)
         {
             if (player.DestinationRectangle.Intersects(this.DestinationRectangle))
             {
-                this.HandleCollision(player);
-
+                // this.HandlePlayerCollision(player);
                 // If player contains key
                 if (player.DestinationRectangle.Intersects(this.DestinationRectangle) && player.HasKey)
                 {
                     // Exit game, go to next level
                     this.OpenDoorAnim();
+                    this.HandlePlayerCollision(player);
                 }
             }
         }
@@ -43,10 +46,10 @@
             }
         }
 
-        private void HandleCollision(Player player)
+        private void HandlePlayerCollision(Player player)
         {
             // TODO: do stuff
-            return;
+            this.LevelComplete = true;
         }
     }
 }

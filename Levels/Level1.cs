@@ -106,7 +106,7 @@
             this.moreBombs.Update(this.player);
             foreach (BalloonEnemy balloonEnemy in this.balloonEnemys)
             {
-                balloonEnemy.Update(spriteBatch, this.map.Walls, gameTime);
+                balloonEnemy.Update(spriteBatch, this.map.Walls, gameTime, this.player);
             }
 
             this.map.Update(gameTime);
@@ -126,6 +126,11 @@
         public int NumberOfLives()
         {
             return this.player.NumberOfLives;
+        }
+
+        public bool IsLevelCompleted()
+        {
+            return this.exitDoor.LevelComplete;
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch, ContentManager content)
@@ -198,6 +203,7 @@
 
             Texture2D playerMoves = content.Load<Texture2D>("bomberman");
             this.player = new Player(playerMoves, 4, 6, new Vector2(0, 310), new Vector2(10, 0), new Vector2(0, 10));
+            this.player.NumberOfLives = 3;
 
             Texture2D badGirl = content.Load<Texture2D>("mele1");
             this.enemy = new Enemy(badGirl, 3, 3, new Vector2(520, 525), new Vector2(4, 0), new Vector2(0, 0));
@@ -227,7 +233,7 @@
                 this.gameFont,
                 "\n Debug info:" +
                 "\n Mouse to vector: " + mouseState.Position.ToVector2() +
-                "\n player sprite: " + this.player.SpritePosition +
+                "\n levelcomplete door: " + this.exitDoor.LevelComplete +
                 "\n player dest rect: " + this.player.DestinationRectangle +
                 "\n player lives: " + this.player.NumberOfLives +
                 "\n enemy destination rect: " + this.enemy.DestinationRectangle,

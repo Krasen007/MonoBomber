@@ -23,11 +23,12 @@
 
         public bool IsAlive { get; set; }
 
-        public void Update(SpriteBatch spriteBatch, List<Wall> walls, GameTime gameTime)
+        public void Update(SpriteBatch spriteBatch, List<Wall> walls, GameTime gameTime, Player player)
         {
             this.Move(spriteBatch, gameTime);
             this.HandleWallCollision(walls);
             this.HandleSidesCollision();
+            this.HandlePlayerCollision(player);
         }
 
         private void HandleWallCollision(List<Wall> walls)
@@ -74,6 +75,15 @@
             else if (this.SpritePosition.X >= 2560 - this.Height)
             {
                 this.SpritePosition = new Vector2(2560 - this.Height, this.SpritePosition.Y);
+            }
+        }
+
+        private void HandlePlayerCollision(Player player)
+        {
+            if (this.DestinationRectangle.Intersects(player.DestinationRectangle))
+            {
+                player.IsAlive = false;
+                player.NumberOfLives--;
             }
         }
 
