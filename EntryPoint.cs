@@ -8,9 +8,6 @@
         private const int GAME_WIDTH = 1280;
         private const int GAME_HEIGHT = 720;
 
-        private const int MAP_WIDTH = 2560;
-        private const int MAP_HEIGHT = 1440;
-
         private GraphicsDeviceManager graphics;        
         private StateMachine stateMachine;
 
@@ -58,7 +55,7 @@
 
         protected override void Draw(GameTime gameTime)
         {
-            this.stateMachine.Draw(gameTime, this.Content, this.graphics, GAME_WIDTH, GAME_HEIGHT);
+            this.stateMachine.Draw(gameTime, this.Content, this.graphics, this.GraphicsDevice, GAME_WIDTH, GAME_HEIGHT);
 
             base.Draw(gameTime);
         }              

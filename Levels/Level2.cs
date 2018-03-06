@@ -1,4 +1,4 @@
-﻿namespace MonoContra.Objects
+﻿namespace MonoContra.Levels
 {
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
@@ -6,13 +6,14 @@
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
     using MonoContra.Enumerables;
+    using MonoContra.Objects;
     using MonoContra.Units;
     using MonoContra.Utils;
 
-    public class Level1
+    class Level2
     {
-        private const int MAP_WIDTH = 2560;
-        private const int MAP_HEIGHT = 1440;
+        private const int MAP_WIDTH = 100;
+        private const int MAP_HEIGHT = 100;
         private float timeSinceLastShot = 0f;
 
         private SpriteFont gameFont;
@@ -34,9 +35,9 @@
         private PowerUpMoreBombs moreBombs;
         private List<BalloonEnemy> balloonEnemys = new List<BalloonEnemy>();
 
-        public Level1(ContentManager content, GraphicsDevice viewport)
+        public Level2(ContentManager content, GraphicsDevice viewport)
         {
-            this.map = new Map(content, 35, 35);
+            this.map = new Map(content, 15, 15);
             this.camera = new Camera(viewport.Viewport);
             this.gameFont = content.Load<SpriteFont>("Debug");
         }
@@ -99,11 +100,11 @@
                 this.player.IsAlive = true;
             }
 
-            this.enemy.Update(this.player);
+            //this.enemy.Update(this.player);
             this.exitDoor.Update(this.player);
             this.key.Update(this.player);
 
-            this.moreBombs.Update(this.player);
+            //this.moreBombs.Update(this.player);
             foreach (BalloonEnemy balloonEnemy in this.balloonEnemys)
             {
                 balloonEnemy.Update(spriteBatch, this.map.Walls, gameTime, this.player);
@@ -132,7 +133,6 @@
         {
             return this.exitDoor.LevelComplete;
         }
-
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch, ContentManager content)
         {
             // Draw the background the level
@@ -172,7 +172,7 @@
 
             this.player.Draw(spriteBatch, 0.90, 0.90);
             this.enemy.Draw(spriteBatch, 0.13, 0.13);
-            
+
             this.moreBombs.Draw(spriteBatch, 1, 1);
 
             foreach (BalloonEnemy balloonEnenemy in this.balloonEnemys)

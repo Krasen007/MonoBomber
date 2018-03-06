@@ -11,6 +11,7 @@
     {
         private const int ANIMATION_SPEED = 5;
         private int animaSpeedIncrement;
+        private int MOVEMENT_SPEED = 2;
 
         private Random randomDirection = new Random();
         private float elapsedTime = 0;
@@ -89,31 +90,43 @@
 
         private void Move(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            this.elapsedTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
-            
+            this.elapsedTime += (float)gameTime.ElapsedGameTime.TotalSeconds;            
+
             // Get a new random direction every 1 second
-            if (this.elapsedTime > 1)
+            if (this.elapsedTime > 1f)
                 {
-                this.elapsedTime -= 1; // Subtract the 1 second we've already checked
+                this.elapsedTime -= 1f; // Subtract the 1 second we've already checked
                 this.direction = this.randomDirection.Next(0, 4);
                 }
 
             if (this.direction == 0)
             {
-                this.SpritePosition += new Vector2(this.randomDirection.Next(0, 5), 0);
+                this.SpritePosition += new Vector2(MOVEMENT_SPEED, 0);
             }
             else if (this.direction == 1)
             {
-                this.SpritePosition -= new Vector2(0, this.randomDirection.Next(0, 5));
+                this.SpritePosition -= new Vector2(0, MOVEMENT_SPEED);
             }
             else if (this.direction == 2)
             {
-                this.SpritePosition += new Vector2(0, this.randomDirection.Next(0, 5));
+                this.SpritePosition += new Vector2(0, MOVEMENT_SPEED);
             }
             else if (this.direction == 3)
             {
-                this.SpritePosition -= new Vector2(this.randomDirection.Next(0, 5), 0);
+                this.SpritePosition -= new Vector2(MOVEMENT_SPEED, 0);
             }
+
+
+            //Vector2 elapsedDistance = this.SpritePosition;
+            //this.SpritePosition
+
+
+
+
+
+
+
+
 
             this.UpdateAnimation();
         }
