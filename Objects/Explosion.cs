@@ -38,27 +38,31 @@
         
         public bool DestroyWalls(List<Wall> walls)
         {
-            foreach(Wall wall in walls)
+            bool result = true;
+
+            for (int i = 0; i <walls.Count; i++)
             {
-                if (wall.WallType == WallTypes.Unbreakable && (CollisionHelper.CollideBottom(this.DestinationRectangle, wall.DestinationRectangle) ||
-                    CollisionHelper.CollideLeft(this.DestinationRectangle, wall.DestinationRectangle) ||
-                    CollisionHelper.CollideRight(this.DestinationRectangle, wall.DestinationRectangle) ||
-                    CollisionHelper.CollideTop(this.DestinationRectangle, wall.DestinationRectangle) ||
-                    this.DestinationRectangle.Intersects(wall.DestinationRectangle)))
+                if (walls[i].WallType == WallTypes.Unbreakable && (CollisionHelper.CollideBottom(this.DestinationRectangle, walls[i].DestinationRectangle) ||
+                    CollisionHelper.CollideLeft(this.DestinationRectangle, walls[i].DestinationRectangle) ||
+                    CollisionHelper.CollideRight(this.DestinationRectangle, walls[i].DestinationRectangle) ||
+                    CollisionHelper.CollideTop(this.DestinationRectangle, walls[i].DestinationRectangle) ||
+                    this.DestinationRectangle.Intersects(walls[i].DestinationRectangle)))
                 {
                     this.Health = false;
-                    return false;
+                    result = false;
                 }
-                else if (wall.WallType == WallTypes.Breakable && (CollisionHelper.CollideBottom(this.DestinationRectangle, wall.DestinationRectangle) ||
-                    CollisionHelper.CollideLeft(this.DestinationRectangle, wall.DestinationRectangle) ||
-                    CollisionHelper.CollideRight(this.DestinationRectangle, wall.DestinationRectangle) ||
-                    CollisionHelper.CollideTop(this.DestinationRectangle, wall.DestinationRectangle) ||
-                    this.DestinationRectangle.Intersects(wall.DestinationRectangle)))
+                else if (walls[i].WallType == WallTypes.Breakable && (CollisionHelper.CollideBottom(this.DestinationRectangle, walls[i].DestinationRectangle) ||
+                    CollisionHelper.CollideLeft(this.DestinationRectangle, walls[i].DestinationRectangle) ||
+                    CollisionHelper.CollideRight(this.DestinationRectangle, walls[i].DestinationRectangle) ||
+                    CollisionHelper.CollideTop(this.DestinationRectangle, walls[i].DestinationRectangle) ||
+                    this.DestinationRectangle.Intersects(walls[i].DestinationRectangle)))
                 {
-                    wall.Health = false;
+                    walls[i].Health = false;
+                    walls.Remove(walls[i]);
+                    i--;
                 }
             }
-            return true;
+            return result;
         }
     }
 }
