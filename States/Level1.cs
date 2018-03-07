@@ -200,7 +200,6 @@
 
             if (this.timeSinceLastShot > 4 && this.timeSinceLastShot < 6)
             {
-                ////this.bomb.Health = false;
                 foreach (Explosion explosion in explosions)
                 {
                     explosion.Draw(spriteBatch);
@@ -277,11 +276,7 @@
 
             Texture2D moreBombsAnim = content.Load<Texture2D>("bombSathel");
             this.moreBombs = new PowerUpMoreBombs(moreBombsAnim, 1, 1, new Vector2(388, 180));
-
-
-
-            // Texture2D biggerRangeAnim = content.Load<Texture2D>("dragonLance");
-            // this.biggerRange = new PowerUpBiggerRange(moreBombsAnim, 1, 1, new Vector2(388, 180));
+            
             Texture2D balloonEnemyAnim = content.Load<Texture2D>("HeartStripBalloon");
             this.balloonEnemys.Add(new BalloonEnemy(balloonEnemyAnim, 4, 4, new Vector2(300, 182), new Vector2(2, 0), new Vector2(0, 2))); // SpeedX,Y - this number must be bigger than the speed of the sprite for collision to work
             this.balloonEnemys.Add(new BalloonEnemy(balloonEnemyAnim, 4, 4, new Vector2(500, 462), new Vector2(2, 0), new Vector2(0, 2)));

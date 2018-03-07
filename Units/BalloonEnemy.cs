@@ -38,22 +38,18 @@
             {
                 if (CollisionHelper.CollideTop(this.DestinationRectangle, wall.DestinationRectangle))
                 {
-                    // this.CurrentFrame = 0;
                     this.SpritePosition -= this.SpriteSpeedY;
                 }
                 else if (CollisionHelper.CollideBottom(this.DestinationRectangle, wall.DestinationRectangle))
                 {
-                    // this.CurrentFrame = 13;
                     this.SpritePosition += this.SpriteSpeedY;
                 }
                 else if (CollisionHelper.CollideRight(this.DestinationRectangle, wall.DestinationRectangle))
                 {
-                    // this.CurrentFrame = 19;
                     this.SpritePosition += this.SpriteSpeedX;
                 }
                 else if (CollisionHelper.CollideLeft(this.DestinationRectangle, wall.DestinationRectangle))
                 {
-                    // this.CurrentFrame = 7;
                     this.SpritePosition -= this.SpriteSpeedX;
                 }
             }
@@ -91,11 +87,10 @@
         private void Move(SpriteBatch spriteBatch, GameTime gameTime)
         {
             this.elapsedTime += (float)gameTime.ElapsedGameTime.TotalSeconds;            
-
-            // Get a new random direction every 1 second
+            
             if (this.elapsedTime > 1f)
                 {
-                this.elapsedTime -= 1f; // Subtract the 1 second we've already checked
+                this.elapsedTime -= 1f;
                 this.direction = this.randomDirection.Next(0, 4);
                 }
 

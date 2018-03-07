@@ -1,6 +1,5 @@
 ﻿namespace MonoBomber.Objects
 {
-    using System;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
@@ -23,7 +22,6 @@
         {
             this.UpdateAnimation();
 
-            // && player.HasKey)
             if (player.DestinationRectangle.Intersects(this.DestinationRectangle)) 
             {
                 this.HandlePlayerCollision(player);

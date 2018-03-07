@@ -16,8 +16,7 @@
         private int cols;
         private double frameDuration;
         private double timeSinceLastChange;
-
-        // width and height per frame
+        
         private int width;
         private int height;
 
@@ -25,7 +24,6 @@
         {
             this.texture = spriteSheet;
             this.framesCount = frames;
-            ////this.FrameBounds = new Rectangle(0, 0, width, height);
 
             this.currentFrameRow = 0;
             this.currentFrameCol = 0;

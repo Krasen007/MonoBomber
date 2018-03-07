@@ -13,7 +13,6 @@
             this.FlipSpriteState = SpriteEffects.FlipHorizontally;
         }
         
-        // TODO: Add animations for enemy
         public void Update(Player player)
         {
             this.animaSpeedIncrement++;

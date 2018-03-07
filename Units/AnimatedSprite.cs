@@ -13,7 +13,6 @@
         /// <param name="spriteSpdY">Movement by Y</param>
         public AnimatedSprite(Texture2D animatedTexture, int rows, int cols, Vector2 spritePos, Vector2 spriteSpdX, Vector2 spriteSpdY) : base(spritePos, spriteSpdX, spriteSpdY)
         {
-            // Those are used for drawing of the sprite
             this.SpriteTexture = animatedTexture;
             this.Rows = rows;
             this.Columns = cols;
@@ -24,7 +23,6 @@
 
         public AnimatedSprite(Texture2D animatedTexture, int rows, int cols, Vector2 spritePos) : base(spritePos)
         {
-            // Those are used for drawing of the sprite
             this.SpriteTexture = animatedTexture;
             this.Rows = rows;
             this.Columns = cols;

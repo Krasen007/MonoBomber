@@ -9,7 +9,6 @@
 
     public class Wall : Block
     {
-        // block width height70px
         private const string UNBREAKABLE_ANIMATION_KEY = "grave";
         private const string BREAKABLE_ANIMATION_KEY = "rock";
         private WallTypes wallType;

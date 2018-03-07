@@ -131,7 +131,6 @@
 
         private void UpdateMainMenu(GameTime gameTime, KeyboardState keyState, MouseState mouseState)
         {
-            // Respond to user input for menu selections, etc
             if (keyState.IsKeyUp(Keys.Enter) && this.oldKeyState.IsKeyDown(Keys.Enter))
             {
                 this.GameState = GameState.GameStart;
@@ -149,7 +148,6 @@
 
         private void DrawMainMenu(ContentManager content, GameTime gameTime, GraphicsDeviceManager graphics)
         {
-            // Draw the main menu, any active selections, etc
             if (this.loadOnce)
             {
                 MainMenu mainMenu = new MainMenu(content, this.spriteBatch, this.gameFont, graphics);
@@ -217,16 +215,6 @@
 
         private void UpdateGameOver(KeyboardState keyState, MouseState mouseState)
         {
-            // Update scores
-            // Do any animations, effects, etc for getting a high score
-            // Respond to user input to restart level, or go back to main menu
-            // if (true)//pushedMainMenuButton)
-            //      _state = GameState.MainMenu;
-            // else if (true)//pushedRestartLevelButton)
-            // {
-            //    //ResetLevel();
-            //    _state = GameState.Gameplay;
-            // }
             if (keyState.IsKeyUp(Keys.Enter) && this.oldKeyState.IsKeyDown(Keys.Enter))
             {
                 this.GameState = GameState.GameStart;

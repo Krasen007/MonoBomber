@@ -18,7 +18,7 @@
 
             if (player.DestinationRectangle.Intersects(this.DestinationRectangle))
             {
-                this.HandleCollision(player);
+                this.HideFromMap(player);
             }
         }
 
@@ -38,9 +38,8 @@
             }
         }
 
-        private void HandleCollision(Player player)
+        private void HideFromMap(Player player)
         {
-            // Hide powerup from map
             this.SpritePosition = new Vector2(-100, -100);
         }
     }

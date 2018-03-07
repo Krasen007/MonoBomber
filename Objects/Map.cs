@@ -13,7 +13,7 @@
 
         private List<Wall> walls = new List<Wall>();
         private int mapWidth, mapHeight;
-        private int blocksInRow, blocksInColumn; // колко квадрата да има на ред/колона
+        private int blocksInRow, blocksInColumn;
         private Random rng = new Random();
         private int chanceToSpawnWall;
 

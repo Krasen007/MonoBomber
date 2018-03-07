@@ -10,8 +10,7 @@
         public const string SONIC_ANIMATION_KEY = "sonic";
         public const string DRAGONLANCE_ANIMATION_KEY = "dragonLance";   
         protected const int ANIMATION_SPEED = 20;
-        
-        // private const string MARIOSTAR_ANIMATION_KEY = "marioStar";
+
         private PowerUpTypes powerUpType;
         private int animaSpeedIncrement;
 

@@ -18,7 +18,7 @@
                 gameFont,
                 "\n Game paused! " +
                 "\n Press P to resume.",
-                new Vector2(600, 230), // this.player.SpritePosition.X, this.player.SpritePosition.Y
+                new Vector2(600, 230),
                 Color.SandyBrown);
             spriteBatch.End();
         }

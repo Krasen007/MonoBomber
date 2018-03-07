@@ -50,12 +50,9 @@
                 this.State = States.None;
             }
         }
-
-        // Make sure Begin is called on s before you call this function
+        
         public void Draw(SpriteBatch s)
         {
-            // TODO: make it work
-            // s.Draw(_textures[State], _rectangle);
         }
     }
 }

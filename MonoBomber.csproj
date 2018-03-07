@@ -65,7 +65,6 @@
     <Compile Include="States\GameWin.cs" />
     <Compile Include="States\Level1.cs" />
     <Compile Include="States\Intro.cs" />
-    <Compile Include="States\Level2.cs" />
     <Compile Include="States\Pause.cs" />
     <Compile Include="States\StateMachine.cs" />
     <Compile Include="Objects\Bomb.cs" />

@@ -1,12 +1,12 @@
 Credits:
 
 Icon by Freepik is licensed by CC 3.0 BY
-Assets by opengameart.com
+Textures by opengameart.com, gameart2d.com, gamedevmarket.net
 
 Music:
 Main theme by Krasen Ivanov
 Game win sound by https://freesound.org/people/Tuudurt/sounds/275104/
-
+Game lose sound by https://freesound.org/people/cabled_mess/sounds/371451/
 
 ***
 
@@ -14,29 +14,53 @@ MonoBomber
 
 1. Using github the project is located here:
 https://github.com/Krasen007/MonoContra/
-1.	You MUST USE a Source Control System - Recommended bitbucket, but you can use anything else you like, for example, TFS, GitHub, TortoiseGit, CodePlex etc.
 ---
 2. Project Manager: Krasen Ivanov
-2.	Each team has to choose a Project Manager who will present the game in front of jury. The responsibility of the Project Manager is to help with all aspects of the game development - programming, graphic design, game design, giving out the tasks and keeping the deadlines for the game. The project manager will preferably (but not mandatory) be the most experienced developer in the team. He will be helping with coding the most complicated parts of the game.
 ---
-3. Contra
-3.	Choose a team name. 
+3. Team name: Contra
 ---
 4. GDD:
-4.	 You need to create a brief (2-3 pages) GDD which should include the following information:
 ---
 a.
-Krasen Ivanov - Static items, animated items, player, player movements, enemy,
-States, 
+Static items, animated items, player, player movements, enemy, enemy types,
+States, UIscore, Music, 
 
-Jeni - bugfixing, powerups
-Pavel - blocks
-Milcho - ideas
-a.	Presentation of the team - names and roles
+Krasen Ivanov - 
+music for game win, game lose, main theme,
+icon, intro graphic
+states, pause, game win, game over, intro, game start
+enemy random movement,
+animations, bomb, enemy, player, key
+key object
+door object
+background, static items
+gdd txt,
+enemy,
+player,
+
+
+Pavel - 
+bomb animation,
+bomb explosion, 
+spawn bombs,
+collision with walls,
+camera,
+random breakable walls,
+unbreakable walls,
+blocks,
+
+
+Jeni - 
+GDD Presentation,
+bugfixing, 
+powerups
+gamestates,
+
+Milcho - 
+ideas
 ---
 b. 
 Bomberman game with new additions like powerups, shootings, new type of walls.
-b.	Brief description of the game idea
 ---
 c. 
 TODO:
@@ -60,15 +84,12 @@ g.	OOP structure
 ---
 h.
 more levels, new powerups, new game modes
-h.	Future plans and ideas for the game - new modes, levels, functionality, characters, as per your idea.
 ---
 5.
 Only original work was used, even clases has been remade by our design.
-5.	DO NOT PLAGIARIZE - do not copy paste your games from the internet. Try to create your own simple game. It does not have to be original - e.g. Flappy Bird or a variation of Flappy Bird will be a fine idea, given that you do not copy paste it from the internet. If you do copy, we will know and the whole team will be disqualified from further modules in the course.
 ---
 6.
-TODO:
-6.	A completely finished game is required. 
+Try to find the key before the time runs out.
 ---
 
 

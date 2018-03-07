@@ -40,7 +40,6 @@
 
         private void HandleCollision(Player player)
         {
-            // Hide powerup from map
             this.SpritePosition = new Vector2(-100, -100);            
         }
     }

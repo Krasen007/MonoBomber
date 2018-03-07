@@ -15,8 +15,7 @@
         private KeyboardState oldKeyState;
         private MouseState oldMouseState;
         private List<Bomb> bombs = new List<Bomb>();
-
-        // private Texture2D bombAnim;        // not working 
+        
         public Player(Texture2D texture, int rows, int cols, Vector2 spritePos, Vector2 spriteSpdX, Vector2 spriteSpdY) : base(texture, rows, cols, spritePos, spriteSpdX, spriteSpdY)
         {
             this.IsAlive = true;

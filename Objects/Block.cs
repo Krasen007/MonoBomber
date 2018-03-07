@@ -8,7 +8,6 @@
 
     public abstract class Block
     {
-        // ~70px width
         public Block(ContentManager content, Vector2 position, bool health, double velocity, Vector2 scale)
         {
             this.Velocity = velocity;

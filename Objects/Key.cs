@@ -19,7 +19,7 @@
 
             if (player.DestinationRectangle.Intersects(this.DestinationRectangle) && player.HasKey)
             {
-                this.HandleCollision(player);
+                this.HideFromMap(player);
             }
         }
 
@@ -48,9 +48,8 @@
             }
         }
 
-        private void HandleCollision(Player player)
+        private void HideFromMap(Player player)
         {
-            // Hide key from map
             this.SpritePosition = new Vector2(-100, -100);
         }
     }

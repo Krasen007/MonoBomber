@@ -25,11 +25,8 @@
                 this.GameScore--;
             }
 
-            spriteBatch.DrawString(
-                gameFont,
-                "            Score: " + this.GameScore,
-                uiPosition, // this.player.SpritePosition.X, this.player.SpritePosition.Y
-                Color.Yellow);
+            spriteBatch.DrawString(gameFont,"            Score: " +
+                this.GameScore, uiPosition, Color.Yellow);
         }
     }
 }
