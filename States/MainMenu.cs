@@ -11,20 +11,27 @@
         public MainMenu(ContentManager content, SpriteBatch spriteBatch, SpriteFont gameFont, GraphicsDeviceManager graphics)
         {
             this.LoadContent(content);
-            this.Draw(spriteBatch, gameFont, graphics);            
+            this.Draw(spriteBatch, gameFont, graphics);
         }
 
         public void Draw(SpriteBatch spriteBatch, SpriteFont gameFont, GraphicsDeviceManager graphics)
         {
             graphics.GraphicsDevice.Clear(Color.DarkRed);
             spriteBatch.Begin();
-            spriteBatch.Draw(this.backgrTree.SpriteTexture, new Vector2(300, 300), Color.White);
+            spriteBatch.DrawString(gameFont, "MAIN MENU", new Vector2(580, 30), Color.LightGoldenrodYellow);
+            spriteBatch.Draw(this.backgrTree.SpriteTexture, new Vector2(1280 - this.backgrTree.SpriteTexture.Width, 300), Color.White);
+            spriteBatch.Draw(this.backgrTree.SpriteTexture, new Vector2(0, 300), Color.White);
             spriteBatch.DrawString(
                 gameFont,
-                "Press enter or space to START GAME \n" +
-                "W,A,S,D to move character, P for PAUSE, Esc for Exit.",
-                new Vector2(600, 325), // GAME_WIDTH / 2 - 20, GAME_HEIGHT / 2 - 30),
-                Color.CadetBlue);
+                "\n Stay away from the enemies that lurk in the graveyard!" +
+                "\n                  Find the key to open the door. " +
+                "\n          If the game score reaches zero you lose!" +
+                "\n" +
+                "\n           Press enter or space to START GAME" +
+                "\n                W,A,S,D to move the character" +
+                "\n                Use P for PAUSE, Esc for Exit.",
+                new Vector2(350, 325),
+                Color.LightCoral);
             spriteBatch.End();
         }
 

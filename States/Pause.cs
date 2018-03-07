@@ -2,6 +2,7 @@
 {
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
+    using MonoBomber.Utils;
 
     public class Pause
     {
@@ -10,7 +11,7 @@
             this.Draw(spriteBatch, gameFont);
         }
 
-        public void Draw(SpriteBatch spriteBatch, SpriteFont gameFont)
+        private void Draw(SpriteBatch spriteBatch, SpriteFont gameFont)
         {
             spriteBatch.Begin();
             spriteBatch.DrawString(

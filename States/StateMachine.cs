@@ -17,7 +17,6 @@
 
         private Level1 levelOne;
 
-        // private Level2 levelTwo;
         private KeyboardState oldKeyState;
         private MouseState oldMouseState;
 

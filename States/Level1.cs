@@ -6,6 +6,7 @@
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
     using MonoBomber.Enumerables;
+    using MonoBomber.States;
     using MonoBomber.Units;
     using MonoBomber.Utils;
 
@@ -31,12 +32,10 @@
         private Key key;
         private Bomb bomb;
         private SoundManager soundManager;
-
-        // private List<Bomb> bombs;
-        // private int bombsCount;
-        private PowerUpMoreBombs moreBombs;
-
-        // private PowerUpBiggerRange biggerRange;
+        private DrawScore score;
+        private double gameScore = 30;
+        
+        private PowerUpMoreBombs moreBombs;        
         private List<BalloonEnemy> balloonEnemys = new List<BalloonEnemy>();
 
         public Level1(ContentManager content, GraphicsDevice viewport)
@@ -44,16 +43,13 @@
             this.map = new Map(content, 35, 35);
             this.camera = new Camera(viewport.Viewport);
             this.gameFont = content.Load<SpriteFont>("Debug");
-            this.soundManager = new SoundManager(content);
+            this.soundManager = new SoundManager(content);            
         }
 
         public bool GamePause { get; set; }
 
         public void Update(GameTime gameTime, KeyboardState keyState, MouseState mouseState, SpriteBatch spriteBatch, GameState gameState, SpriteFont gameFont)
         {
-            // Respond to user actions in the game.
-            // Update enemies
-            // Handle collisions
             if (this.oldKeyState.IsKeyDown(Keys.OemTilde) && keyState.IsKeyUp(Keys.OemTilde))
             {
                 if (!this.tildePressed)
@@ -71,10 +67,6 @@
                 if (!this.GamePause)
                 {
                     this.GamePause = true;
-                }
-                else
-                {
-                    this.GamePause = false;
                 }
             }
 
@@ -99,18 +91,17 @@
             }
 
             this.player.Update(keyState, mouseState, this.key, spriteBatch, this.map.Walls);
-            if (!this.player.IsAlive)
+            if (this.score.GameScore <= 0)
             {
-                this.player.IsAlive = true;
-            }
+                this.player.IsAlive = false;
+            }            
 
             this.enemy.Update(this.player);
             this.exitDoor.Update(this.player);
             this.key.Update(this.player);
 
             this.moreBombs.Update(this.player);
-
-            // this.biggerRange.Update(this.player);
+            
             foreach (BalloonEnemy balloonEnemy in this.balloonEnemys)
             {
                 balloonEnemy.Update(spriteBatch, this.map.Walls, gameTime, this.player);
@@ -118,7 +109,7 @@
 
             this.map.Update(gameTime);
             this.camera.Update(this.player.SpritePosition, MAP_WIDTH, MAP_HEIGHT);
-
+            
             this.PlayMusic();
         }
 
@@ -144,13 +135,9 @@
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch, ContentManager content)
         {
-            // Draw the background the level
-            // Draw enemies
-            // Draw the player
-            // Draw particle effects, etc
-            // Level one
             if (this.loadOnce)
             {
+                this.score = new DrawScore(spriteBatch, this.gameFont, this.gameScore);
                 this.LoadLevelOne(content);
                 this.loadOnce = false;
             }
@@ -158,11 +145,11 @@
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, this.camera.Transform);
 
             this.background.Draw(spriteBatch);
+            
             this.exitDoor.Draw(spriteBatch, 0.15, 0.15);
             this.key.Draw(spriteBatch, 1, 1);
             this.map.Draw(spriteBatch);
-
-            // Manage debug font
+            
             if (this.tildePressed)
             {
                 this.DebugInformation(spriteBatch);
@@ -171,7 +158,6 @@
             if (this.bomb.Health == true && this.timeSinceLastShot <= 5)
             {
                 this.bomb.Draw(spriteBatch, 0.55, 0.55);
-                //// this.bomb.Health = false;
             }
 
             if (this.timeSinceLastShot > 5)
@@ -183,12 +169,13 @@
             this.enemy.Draw(spriteBatch, 0.13, 0.13);
 
             this.moreBombs.Draw(spriteBatch, 1, 1);
-
-            // this.biggerRange.Draw(spriteBatch, 1, 1);
+            
             foreach (BalloonEnemy balloonEnenemy in this.balloonEnemys)
             {
                 balloonEnenemy.Draw(spriteBatch, 1.1, 1.1);
             }
+
+            this.score.Draw(gameTime, spriteBatch, this.gameFont, this.camera.CamUITopLeft(this.player.SpritePosition, MAP_HEIGHT));
 
             spriteBatch.End();
         }
@@ -209,6 +196,14 @@
             {
                 this.soundManager.MainThemeInstance.Stop();
                 this.soundManager.GameLoseInstance.Play();
+            }
+            else if (this.GamePause)
+            {
+                this.soundManager.MainThemeInstance.Pause();
+            }
+            else if (!this.GamePause)
+            {
+                this.soundManager.MainThemeInstance.Resume();
             }
             else
             {

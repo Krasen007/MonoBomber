@@ -1,10 +1,8 @@
 ﻿namespace MonoBomber.Objects
 {
-    using System;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
     using Microsoft.Xna.Framework.Graphics;
-    using MonoBomber.Utils;
 
     public class GameWin
     {
@@ -17,9 +15,7 @@
         {
             StaticItem gameWinScreen = new StaticItem(Vector2.Zero);
             gameWinScreen.SpriteTexture = content.Load<Texture2D>("gameWin");
-
-            // Draw text and scores
-            // Draw menu for restarting level or going back to main menu
+            
             graphics.GraphicsDevice.Clear(Color.Black);
             spriteBatch.Begin();
             spriteBatch.Draw(gameWinScreen.SpriteTexture, new Vector2(350, 300), Color.White);

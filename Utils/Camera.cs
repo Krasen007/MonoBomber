@@ -23,6 +23,11 @@
             get { return this.transform; }
         }
 
+        public Vector2 CamUITopLeft(Vector2 position, int yOffset)
+        {
+            return new Vector2(this.center.X - (yOffset / 2), this.center.Y - (yOffset / 4));
+        }
+
         public void Update(Vector2 position, int xOffset, int yOffset)
         {
             if (position.X < this.viewport.Width / 2)
