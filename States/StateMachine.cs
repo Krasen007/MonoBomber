@@ -1,12 +1,12 @@
 ﻿namespace MonoBomber.Levels
 {
-    using System;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
     using MonoBomber.Enumerables;
     using MonoBomber.Objects;
+    using MonoBomber.States;
 
     public class StateMachine
     {
@@ -62,13 +62,7 @@
                     this.UpdateGameStart(gameTime, keyState, mouseState, content, graphicsDevice);
                     break;
                 case GameState.PAUSE:
-                    if (this.oldKeyState.IsKeyDown(Keys.P) && keyState.IsKeyUp(Keys.P))
-                    {
-                        GameState = GameState.GameStart;
-                        this.levelOne.GamePause = false;
-                    }
-
-                    this.oldKeyState = keyState;
+                    this.UpdatePause(keyState);
                     break;
                 case GameState.GameOver:
                     this.UpdateGameOver(keyState, mouseState);
@@ -95,6 +89,9 @@
                 case GameState.GameStart:
                     this.DrawGameStart(content, gameTime, graphicsDevice);
                     break;
+                case GameState.PAUSE:
+                    this.DrawPause();
+                    break;                    
                 case GameState.GameOver:
                     this.DrawGameOver(graphics, this.spriteBatch, this.gameFont, content);
                     break;
@@ -201,6 +198,22 @@
             }
 
             this.levelOne.Draw(gameTime, this.spriteBatch, content);
+        }
+
+        private void UpdatePause(KeyboardState keyState)
+        {
+            if (this.oldKeyState.IsKeyDown(Keys.P) && keyState.IsKeyUp(Keys.P))
+            {
+                GameState = GameState.GameStart;
+                this.levelOne.GamePause = false;
+            }
+
+            this.oldKeyState = keyState;
+        }
+
+        private void DrawPause()
+        {
+            Pause pause = new Pause(this.spriteBatch, this.gameFont);         
         }
 
         private void UpdateGameOver(KeyboardState keyState, MouseState mouseState)

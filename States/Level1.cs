@@ -1,4 +1,4 @@
-﻿namespace MonoBomber.Levels
+﻿namespace MonoBomber.Objects
 {
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
@@ -6,14 +6,13 @@
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
     using MonoBomber.Enumerables;
-    using MonoBomber.Objects;
     using MonoBomber.Units;
     using MonoBomber.Utils;
 
-    public class Level2
+    public class Level1
     {
-        private const int MAP_WIDTH = 100;
-        private const int MAP_HEIGHT = 100;
+        private const int MAP_WIDTH = 2560;
+        private const int MAP_HEIGHT = 1440;
         private float timeSinceLastShot = 0f;
 
         private SpriteFont gameFont;
@@ -32,12 +31,16 @@
         private Key key;
         private Bomb bomb;
 
+        // private List<Bomb> bombs;
+        // private int bombsCount;
         private PowerUpMoreBombs moreBombs;
+
+        // private PowerUpBiggerRange biggerRange;
         private List<BalloonEnemy> balloonEnemys = new List<BalloonEnemy>();
 
-        public Level2(ContentManager content, GraphicsDevice viewport)
+        public Level1(ContentManager content, GraphicsDevice viewport)
         {
-            this.map = new Map(content, 15, 15);
+            this.map = new Map(content, 35, 35);
             this.camera = new Camera(viewport.Viewport);
             this.gameFont = content.Load<SpriteFont>("Debug");
         }
@@ -64,8 +67,7 @@
             if (this.oldKeyState.IsKeyDown(Keys.P) && keyState.IsKeyUp(Keys.P))
             {
                 if (!this.GamePause)
-                {
-                    this.GamePaused(spriteBatch);
+                {                    
                     this.GamePause = true;
                 }
                 else
@@ -100,11 +102,13 @@
                 this.player.IsAlive = true;
             }
 
-            // this.enemy.Update(this.player);
+            this.enemy.Update(this.player);
             this.exitDoor.Update(this.player);
             this.key.Update(this.player);
 
-            // this.moreBombs.Update(this.player);
+            this.moreBombs.Update(this.player);
+
+            // this.biggerRange.Update(this.player);
             foreach (BalloonEnemy balloonEnemy in this.balloonEnemys)
             {
                 balloonEnemy.Update(spriteBatch, this.map.Walls, gameTime, this.player);
@@ -173,28 +177,15 @@
 
             this.player.Draw(spriteBatch, 0.90, 0.90);
             this.enemy.Draw(spriteBatch, 0.13, 0.13);
-
+            
             this.moreBombs.Draw(spriteBatch, 1, 1);
 
+            // this.biggerRange.Draw(spriteBatch, 1, 1);
             foreach (BalloonEnemy balloonEnenemy in this.balloonEnemys)
             {
                 balloonEnenemy.Draw(spriteBatch, 1.1, 1.1);
             }
 
-            spriteBatch.End();
-        }
-
-        private void GamePaused(SpriteBatch spriteBatch)
-        {
-            // TODO: Add more stuff maybe
-            ////this.graphics.GraphicsDevice.Clear(Color.Green);
-            spriteBatch.Begin();
-            spriteBatch.DrawString(
-                this.gameFont,
-                "\n Game paused! " +
-                "\n Press P to resume.",
-                new Vector2(this.player.DestinationRectangle.X, this.player.DestinationRectangle.Y), // this.player.SpritePosition.X, this.player.SpritePosition.Y
-                Color.DarkBlue);
             spriteBatch.End();
         }
 
@@ -223,6 +214,8 @@
             Texture2D moreBombsAnim = content.Load<Texture2D>("bombSathel");
             this.moreBombs = new PowerUpMoreBombs(moreBombsAnim, 1, 1, new Vector2(388, 180));
 
+            // Texture2D biggerRangeAnim = content.Load<Texture2D>("dragonLance");
+            // this.biggerRange = new PowerUpBiggerRange(moreBombsAnim, 1, 1, new Vector2(388, 180));
             Texture2D balloonEnemyAnim = content.Load<Texture2D>("HeartStripBalloon");
             this.balloonEnemys.Add(new BalloonEnemy(balloonEnemyAnim, 4, 4, new Vector2(300, 182), new Vector2(2, 0), new Vector2(0, 2))); // SpeedX,Y - this number must be bigger than the speed of the sprite for collision to work
             this.balloonEnemys.Add(new BalloonEnemy(balloonEnemyAnim, 4, 4, new Vector2(500, 462), new Vector2(2, 0), new Vector2(0, 2)));

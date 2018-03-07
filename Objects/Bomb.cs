@@ -1,5 +1,6 @@
 ﻿namespace MonoBomber.Objects
 {
+    using System;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
@@ -16,7 +17,22 @@
            // this.health = true;
         }
 
-        public bool Health { get; set; }
+        public bool Health { get; set; }       
+
+        public void Update(Player player)
+        {
+            this.UpdateAnimation();
+
+            if (player.DestinationRectangle.Intersects(this.DestinationRectangle)) // && player.HasKey)
+            {
+                this.HandlePlayerCollision(player);
+            }
+        }
+
+        private void HandlePlayerCollision(Player player)
+        {
+            return;
+        }
 
         public void UpdateAnimation()
         {

@@ -12,7 +12,7 @@
         {
             this.LoadContent(content);
             this.Draw(spriteBatch, graphics);
-        }             
+        }
 
         public void Draw(SpriteBatch spriteBatch, GraphicsDeviceManager graphics)
         {
