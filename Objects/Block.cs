@@ -1,10 +1,10 @@
-﻿namespace MonoContra.Objects
+﻿namespace MonoBomber.Objects
 {
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
     using Microsoft.Xna.Framework.Graphics;
-    using global::MonoContra.Utilities;
+    using global::MonoBomber.Utilities;
 
     public abstract class Block
     {

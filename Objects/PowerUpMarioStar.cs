@@ -1,9 +1,9 @@
-﻿namespace MonoContra.Objects
+﻿namespace MonoBomber.Objects
 {
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
-    class PowerUpMarioStar : AnimatedSprite
+    public class PowerUpMarioStar : AnimatedSprite
     {
         private const int ANIMATION_SPEED = 20;
         private int animaSpeedIncrement;
@@ -11,6 +11,7 @@
         public PowerUpMarioStar(Texture2D animatedTexture, int rows, int cols, Vector2 spritePos, Vector2 spriteSpdX, Vector2 spriteSpdY) : base(animatedTexture, rows, cols, spritePos, spriteSpdX, spriteSpdY)
         {
         }
+
         public void Update(Player player)
         {
             this.KeyAnimation();

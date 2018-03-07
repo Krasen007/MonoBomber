@@ -1,4 +1,4 @@
-﻿namespace MonoContra.Objects
+﻿namespace MonoBomber.Objects
 {
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;

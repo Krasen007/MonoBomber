@@ -1,9 +1,9 @@
-﻿namespace MonoContra.Objects
+﻿namespace MonoBomber.Objects
 {
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
-    class PowerUpSpeed : AnimatedSprite
+    public class PowerUpSpeed : AnimatedSprite
     {
         private const int ANIMATION_SPEED = 20;
         private int animaSpeedIncrement;
@@ -45,4 +45,3 @@
         }
     }
 }
-

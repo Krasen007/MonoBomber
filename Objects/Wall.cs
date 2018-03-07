@@ -1,11 +1,11 @@
-﻿namespace MonoContra
+﻿namespace MonoBomber
 {
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
     using Microsoft.Xna.Framework.Graphics;
-    using MonoContra.Enumerables;
-    using MonoContra.Objects;
-    using MonoContra.Utilities;
+    using MonoBomber.Enumerables;
+    using MonoBomber.Objects;
+    using MonoBomber.Utilities;
 
     public class Wall : Block
     {

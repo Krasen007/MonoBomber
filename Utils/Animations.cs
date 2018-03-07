@@ -1,4 +1,4 @@
-﻿namespace MonoContra.Utilities
+﻿namespace MonoBomber.Utilities
 {
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;

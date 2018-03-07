@@ -1,9 +1,9 @@
-﻿namespace MonoContra.Objects
+﻿namespace MonoBomber.Objects
 {
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
-    class PowerUpBiggerRange : AnimatedSprite
+    public class PowerUpBiggerRange : AnimatedSprite
     {
         private const int ANIMATION_SPEED = 20;
         private int animaSpeedIncrement;
@@ -11,6 +11,7 @@
         public PowerUpBiggerRange(Texture2D animatedTexture, int rows, int cols, Vector2 spritePos) : base(animatedTexture, rows, cols, spritePos)
         {
         }
+
         public void Update(Player player)
         {
             this.KeyAnimation();
@@ -44,4 +45,3 @@
         }
     }
 }
-

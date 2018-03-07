@@ -1,13 +1,13 @@
-﻿namespace MonoContra.Objects
+﻿namespace MonoBomber.Objects
 {
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
-    using MonoContra.Enumerables;
-    using MonoContra.Units;
-    using MonoContra.Utils;
+    using MonoBomber.Enumerables;
+    using MonoBomber.Units;
+    using MonoBomber.Utils;
 
     public class Level1
     {
@@ -30,10 +30,12 @@
         private Door exitDoor;
         private Key key;
         private Bomb bomb;
-        //private List<Bomb> bombs;
-        //private int bombsCount;
+
+        // private List<Bomb> bombs;
+        // private int bombsCount;
         private PowerUpMoreBombs moreBombs;
-        //private PowerUpBiggerRange biggerRange;
+
+        // private PowerUpBiggerRange biggerRange;
         private List<BalloonEnemy> balloonEnemys = new List<BalloonEnemy>();
 
         public Level1(ContentManager content, GraphicsDevice viewport)
@@ -106,7 +108,8 @@
             this.key.Update(this.player);
 
             this.moreBombs.Update(this.player);
-            //this.biggerRange.Update(this.player);
+
+            // this.biggerRange.Update(this.player);
             foreach (BalloonEnemy balloonEnemy in this.balloonEnemys)
             {
                 balloonEnemy.Update(spriteBatch, this.map.Walls, gameTime, this.player);
@@ -177,7 +180,8 @@
             this.enemy.Draw(spriteBatch, 0.13, 0.13);
             
             this.moreBombs.Draw(spriteBatch, 1, 1);
-            //this.biggerRange.Draw(spriteBatch, 1, 1);
+
+            // this.biggerRange.Draw(spriteBatch, 1, 1);
             foreach (BalloonEnemy balloonEnenemy in this.balloonEnemys)
             {
                 balloonEnenemy.Draw(spriteBatch, 1.1, 1.1);
@@ -225,9 +229,8 @@
             Texture2D moreBombsAnim = content.Load<Texture2D>("bombSathel");
             this.moreBombs = new PowerUpMoreBombs(moreBombsAnim, 1, 1, new Vector2(388, 180));
 
-            //Texture2D biggerRangeAnim = content.Load<Texture2D>("dragonLance");
-            //this.biggerRange = new PowerUpBiggerRange(moreBombsAnim, 1, 1, new Vector2(388, 180));
-
+            // Texture2D biggerRangeAnim = content.Load<Texture2D>("dragonLance");
+            // this.biggerRange = new PowerUpBiggerRange(moreBombsAnim, 1, 1, new Vector2(388, 180));
             Texture2D balloonEnemyAnim = content.Load<Texture2D>("HeartStripBalloon");
             this.balloonEnemys.Add(new BalloonEnemy(balloonEnemyAnim, 4, 4, new Vector2(300, 182), new Vector2(2, 0), new Vector2(0, 2))); // SpeedX,Y - this number must be bigger than the speed of the sprite for collision to work
             this.balloonEnemys.Add(new BalloonEnemy(balloonEnemyAnim, 4, 4, new Vector2(500, 462), new Vector2(2, 0), new Vector2(0, 2)));

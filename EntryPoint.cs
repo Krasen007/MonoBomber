@@ -1,7 +1,7 @@
-﻿namespace MonoContra
+﻿namespace MonoBomber
 {
     using Microsoft.Xna.Framework;
-    using MonoContra.Levels;
+    using MonoBomber.Levels;
 
     public class EntryPoint : Game
     {

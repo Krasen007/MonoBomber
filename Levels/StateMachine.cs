@@ -1,12 +1,12 @@
-﻿namespace MonoContra.Levels
+﻿namespace MonoBomber.Levels
 {
     using System;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
-    using MonoContra.Enumerables;
-    using MonoContra.Objects;
+    using MonoBomber.Enumerables;
+    using MonoBomber.Objects;
 
     public class StateMachine
     {

@@ -1,11 +1,11 @@
-﻿namespace MonoContra.Units
+﻿namespace MonoBomber.Units
 {
     using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using MonoContra.Objects;
-    using MonoContra.Utils;
+    using MonoBomber.Objects;
+    using MonoBomber.Utils;
 
     public class BalloonEnemy : AnimatedSprite
     {

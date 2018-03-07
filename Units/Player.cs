@@ -1,11 +1,11 @@
-﻿namespace MonoContra.Objects
+﻿namespace MonoBomber.Objects
 {
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
-    using MonoContra.Utils;
+    using MonoBomber.Utils;
 
     public class Player : AnimatedSprite
     {

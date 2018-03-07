@@ -1,11 +1,11 @@
-﻿namespace MonoContra.Objects
+﻿namespace MonoBomber.Objects
 {
     using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
     using Microsoft.Xna.Framework.Graphics;
-    using MonoContra.Enumerables;
+    using MonoBomber.Enumerables;
 
     public class Map
     {

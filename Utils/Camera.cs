@@ -1,4 +1,4 @@
-﻿namespace MonoContra.Utils
+﻿namespace MonoBomber.Utils
 {
     using System;
     using System.Collections.Generic;

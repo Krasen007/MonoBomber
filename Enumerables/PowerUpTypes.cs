@@ -1,4 +1,4 @@
-﻿namespace MonoContra.Enumerables
+﻿namespace MonoBomber.Enumerables
 {
     public enum PowerUpTypes
     {
