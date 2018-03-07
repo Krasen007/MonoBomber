@@ -21,7 +21,7 @@
 
         public bool IsBreakable { get; protected set; }
 
-        public bool Health { get; protected set; }
+        public bool Health { get;  set; }
 
         public Vector2 Position { get; set; }
 

@@ -60,6 +60,7 @@
     <Compile Include="Enumerables\GameState.cs" />
     <Compile Include="Enumerables\PowerUpTypes.cs" />
     <Compile Include="Enumerables\WallTypes.cs" />
+    <Compile Include="Objects\Explosion.cs" />
     <Compile Include="States\GameOver.cs" />
     <Compile Include="States\GameWin.cs" />
     <Compile Include="States\Level1.cs" />

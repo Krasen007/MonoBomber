@@ -11,10 +11,10 @@
 
         private int animaSpeedIncrement;
 
-        // private bool health;
+        private bool health;
         public Bomb(Texture2D animatedTexture, int rows, int cols, Vector2 spritePos) : base(animatedTexture, rows, cols, spritePos)
         {
-           // this.health = true;
+            this.health = true;
         }
 
         public bool Health { get; set; }       
