@@ -128,6 +128,7 @@
                 {
                     explosion.Health = false;
                 }
+                explosions.Clear();
             }
             this.PlayMusic();
         }
@@ -203,7 +204,14 @@
                 ////this.bomb.Health = false;
                 foreach (Explosion explosion in explosions)
                 {
-                    explosion.Draw(spriteBatch);
+                    if (explosion.DestroyWalls(map.Walls))
+                    {
+                        explosion.Draw(spriteBatch);
+                    }
+                    else
+                    {
+                        continue;
+                    }
                 }
             }
 

@@ -7,6 +7,8 @@
     using MonoBomber.Enumerables;
     using MonoBomber.Objects;
     using MonoBomber.Utilities;
+    using MonoBomber.Utils;
+
     class Explosion : Block
     {
         private const string EXPLOSION_ANIMATION_KEY = "explosion";
@@ -32,6 +34,29 @@
         {
             Texture2D explosionAnimation = content.Load<Texture2D>("explosion");
             this.Animations.Add(EXPLOSION_ANIMATION_KEY, new Animation(explosionAnimation, 1, 1, 1, 150, 150)); // gameHeight / (wallPerRow * 2)
+        }
+        
+        public bool DestroyWalls(List<Wall> walls)
+        {
+            foreach(Wall wall in walls)
+            {
+                if (wall.WallType == WallTypes.Unbreakable && (CollisionHelper.CollideBottom(this.DestinationRectangle, wall.DestinationRectangle) ||
+                    CollisionHelper.CollideLeft(this.DestinationRectangle, wall.DestinationRectangle) ||
+                    CollisionHelper.CollideRight(this.DestinationRectangle, wall.DestinationRectangle) ||
+                    CollisionHelper.CollideTop(this.DestinationRectangle, wall.DestinationRectangle)))
+                {
+                    this.Health = false;
+                    return false;
+                }
+                else if (wall.WallType == WallTypes.Breakable && (CollisionHelper.CollideBottom(this.DestinationRectangle, wall.DestinationRectangle) ||
+                    CollisionHelper.CollideLeft(this.DestinationRectangle, wall.DestinationRectangle) ||
+                    CollisionHelper.CollideRight(this.DestinationRectangle, wall.DestinationRectangle) ||
+                    CollisionHelper.CollideTop(this.DestinationRectangle, wall.DestinationRectangle)))
+                {
+                    wall.Health = false;
+                }
+            }
+            return true;
         }
     }
 }
