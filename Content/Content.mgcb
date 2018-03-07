@@ -224,3 +224,9 @@
 /processorParam:Quality=Best
 /build:Sounds/gamewin.mp3
 
+#begin Sounds/gamelose.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/gamelose.wav
+
