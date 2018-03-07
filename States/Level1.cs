@@ -122,6 +122,13 @@
             this.map.Update(gameTime);
             this.camera.Update(this.player.SpritePosition, MAP_WIDTH, MAP_HEIGHT);
 
+            if ((int)gameTime.TotalGameTime.Seconds % 2 == 0 && this.bomb.Health == true)
+            {
+                foreach (Explosion explosion in explosions)
+                {
+                    explosion.Health = false;
+                }
+            }
             this.PlayMusic();
         }
 
@@ -175,15 +182,15 @@
             if (this.timeSinceLastShot > 4)
             {
                 Texture2D explosionAnimation = content.Load<Texture2D>("explosion");
-                explosions.Add(new Explosion(content, this.bomb.SpritePosition, true, 8, new Vector2(1f, 1f)));
+                explosions.Add(new Explosion(content, new Vector2(this.bomb.SpritePosition.X + 30, this.bomb.SpritePosition.Y + 30), true, 8, new Vector2(1f, 1f)));
                 int bombAnimationWidth = 70;
                 for (int i = 1; i <= 2; i++)
                 {
-                    explosions.Add(new Explosion(content, new Vector2(this.bomb.SpritePosition.X - bombAnimationWidth * i, this.bomb.SpritePosition.Y), true, 8, new Vector2(1f, 1f)));
-                    explosions.Add(new Explosion(content, new Vector2(this.bomb.SpritePosition.X + bombAnimationWidth * i, this.bomb.SpritePosition.Y), true, 8, new Vector2(1f, 1f)));
+                    explosions.Add(new Explosion(content, new Vector2(this.bomb.SpritePosition.X - bombAnimationWidth * i + 30, this.bomb.SpritePosition.Y + 30) , true, 8, new Vector2(1f, 1f)));
+                    explosions.Add(new Explosion(content, new Vector2(this.bomb.SpritePosition.X + bombAnimationWidth * i + 30, this.bomb.SpritePosition.Y + 30), true, 8, new Vector2(1f, 1f)));
                     
-                    explosions.Add(new Explosion(content, new Vector2(this.bomb.SpritePosition.X, this.bomb.SpritePosition.Y - bombAnimationWidth * i), true, 8, new Vector2(1f, 1f)));
-                    explosions.Add(new Explosion(content, new Vector2(this.bomb.SpritePosition.X, this.bomb.SpritePosition.Y + bombAnimationWidth * i), true, 8, new Vector2(1f, 1f)));
+                    explosions.Add(new Explosion(content, new Vector2(this.bomb.SpritePosition.X + 30, this.bomb.SpritePosition.Y - bombAnimationWidth * i + 30), true, 8, new Vector2(1f, 1f)));
+                    explosions.Add(new Explosion(content, new Vector2(this.bomb.SpritePosition.X + 30, this.bomb.SpritePosition.Y + bombAnimationWidth * i + 30), true, 8, new Vector2(1f, 1f)));
                 }
                 foreach (Explosion explosion in explosions)
                 {
