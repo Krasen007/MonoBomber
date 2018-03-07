@@ -57,7 +57,10 @@
     <Compile Include="Objects\Key.cs" />
     <Compile Include="Objects\Map.cs" />
     <Compile Include="Objects\PowerUp.cs" />
+    <Compile Include="Objects\PowerUpBiggerRange.cs" />
+    <Compile Include="Objects\PowerUpMarioStar.cs" />
     <Compile Include="Objects\PowerUpMoreBombs.cs" />
+    <Compile Include="Objects\PowerUpSpeed.cs" />
     <Compile Include="Units\AnimatedSprite.cs" />
     <Compile Include="Units\BalloonEnemy.cs" />
     <Compile Include="Units\Enemy.cs" />

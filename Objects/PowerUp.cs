@@ -1,44 +1,53 @@
 ﻿namespace MonoContra.Objects
-{
-    using System;
+{  
     using Enumerables;
-    using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Content;
+    using Microsoft.Xna.Framework;    
+    using Microsoft.Xna.Framework.Graphics;
 
-    public class PowerUp : Block
+    public class PowerUp : AnimatedSprite
     {
-        private const string BOMBSATCHEL_ANIMATION_KEY = "bombSathel";
-        private const string SONIC_ANIMATION_KEY = "sonic";
-        private const string DRAGONLANCE_ANIMATION_KEY = "dragonLance";
+        public const string BOMBSATCHEL_ANIMATION_KEY = "bombSathel";
+        public const string SONIC_ANIMATION_KEY = "sonic";
+        public const string DRAGONLANCE_ANIMATION_KEY = "dragonLance";        
+        //private const string MARIOSTAR_ANIMATION_KEY = "marioStar";
 
-        // add mario star 
-        private const string MARIOSTAR_ANIMATION_KEY = "marioStar";
+        protected PowerUpTypes powerUpType;
+        protected const int ANIMATION_SPEED = 20;
+        protected int animaSpeedIncrement;
 
-        private PowerUpTypes powerUpType;
-
-        public PowerUp(ContentManager content, Vector2 position, bool health, PowerUpTypes powerUpType, double velocity, Vector2 scale) : base(content, position, health, velocity, scale)
+        public PowerUp(Texture2D animatedTexture, int rows, int cols, Vector2 spritePos, Vector2 spriteSpdX, Vector2 spriteSpdY) : base(animatedTexture, rows, cols, spritePos, spriteSpdX, spriteSpdY)
         {
-            this.PowerUpType = powerUpType;
-            switch (powerUpType)
-            {
-                // TODO : scale 
-                case PowerUpTypes.BombSatchel:
-                    this.CurrentAnimationKey = BOMBSATCHEL_ANIMATION_KEY;
-                    break;
-                case PowerUpTypes.Sonic:
-                    this.CurrentAnimationKey = SONIC_ANIMATION_KEY;
-                    break;
-                case PowerUpTypes.DragonLance:
-                    this.CurrentAnimationKey = DRAGONLANCE_ANIMATION_KEY;
-                    break;
-                case PowerUpTypes.MarioStrar:
-                    this.CurrentAnimationKey = MARIOSTAR_ANIMATION_KEY;
-                    break;
-            }
+        }
+        public void Update(Player player)
+        {
+            this.KeyAnimation();
 
-            this.CreateAnimations(content);
+            if (player.DestinationRectangle.Intersects(this.DestinationRectangle))
+            {
+                this.HandleCollision(player);
+            }
         }
 
+        public void KeyAnimation()
+        {
+            this.animaSpeedIncrement++;
+
+            if (this.animaSpeedIncrement >= ANIMATION_SPEED)
+            {
+                this.CurrentFrame++;
+                if (this.CurrentFrame >= this.TotalFrames)
+                {
+                    this.CurrentFrame = this.TotalFrames - 1;
+                }
+
+                this.animaSpeedIncrement = 0;
+            }
+        }
+
+        public void HandleCollision(Player player)
+        {
+            this.SpritePosition = new Vector2(-100, -100);
+        }
         public PowerUpTypes PowerUpType
         {
             get
@@ -63,11 +72,6 @@
                         break;
                 }
             }
-        }
-        
-        protected override void CreateAnimations(ContentManager content)
-        {
-            throw new NotImplementedException();
-        }
+        }        
     }
 }

@@ -33,7 +33,7 @@
         //private List<Bomb> bombs;
         //private int bombsCount;
         private PowerUpMoreBombs moreBombs;
-        //private List<PowerUp> powerUps;
+        //private PowerUpBiggerRange biggerRange;
         private List<BalloonEnemy> balloonEnemys = new List<BalloonEnemy>();
 
         public Level1(ContentManager content, GraphicsDevice viewport)
@@ -106,6 +106,7 @@
             this.key.Update(this.player);
 
             this.moreBombs.Update(this.player);
+            //this.biggerRange.Update(this.player);
             foreach (BalloonEnemy balloonEnemy in this.balloonEnemys)
             {
                 balloonEnemy.Update(spriteBatch, this.map.Walls, gameTime, this.player);
@@ -176,7 +177,7 @@
             this.enemy.Draw(spriteBatch, 0.13, 0.13);
             
             this.moreBombs.Draw(spriteBatch, 1, 1);
-
+            //this.biggerRange.Draw(spriteBatch, 1, 1);
             foreach (BalloonEnemy balloonEnenemy in this.balloonEnemys)
             {
                 balloonEnenemy.Draw(spriteBatch, 1.1, 1.1);
@@ -223,6 +224,9 @@
 
             Texture2D moreBombsAnim = content.Load<Texture2D>("bombSathel");
             this.moreBombs = new PowerUpMoreBombs(moreBombsAnim, 1, 1, new Vector2(388, 180));
+
+            //Texture2D biggerRangeAnim = content.Load<Texture2D>("dragonLance");
+            //this.biggerRange = new PowerUpBiggerRange(moreBombsAnim, 1, 1, new Vector2(388, 180));
 
             Texture2D balloonEnemyAnim = content.Load<Texture2D>("HeartStripBalloon");
             this.balloonEnemys.Add(new BalloonEnemy(balloonEnemyAnim, 4, 4, new Vector2(300, 182), new Vector2(2, 0), new Vector2(0, 2))); // SpeedX,Y - this number must be bigger than the speed of the sprite for collision to work
