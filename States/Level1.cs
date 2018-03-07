@@ -111,7 +111,7 @@
                 balloonEnemy.Update(spriteBatch, this.map.Walls, gameTime, this.player);
             }
 
-            if (this.timeSinceLastShot > 4 && this.timeSinceLastShot < 6)
+            if (this.timeSinceLastShot > 4 && this.timeSinceLastShot < 5)
             {
                 foreach (Explosion explosion in explosions)
                 {
@@ -199,7 +199,7 @@
                 }
             }
 
-            if (this.timeSinceLastShot > 4 && this.timeSinceLastShot < 6)
+            if (this.timeSinceLastShot > 4 && this.timeSinceLastShot < 5)
             {
                 ////this.bomb.Health = false;
                 foreach (Explosion explosion in explosions)
@@ -207,10 +207,6 @@
                     if (explosion.DestroyWalls(map.Walls))
                     {
                         explosion.Draw(spriteBatch);
-                    }
-                    else
-                    {
-                        continue;
                     }
                 }
             }

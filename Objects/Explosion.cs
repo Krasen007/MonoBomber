@@ -43,7 +43,8 @@
                 if (wall.WallType == WallTypes.Unbreakable && (CollisionHelper.CollideBottom(this.DestinationRectangle, wall.DestinationRectangle) ||
                     CollisionHelper.CollideLeft(this.DestinationRectangle, wall.DestinationRectangle) ||
                     CollisionHelper.CollideRight(this.DestinationRectangle, wall.DestinationRectangle) ||
-                    CollisionHelper.CollideTop(this.DestinationRectangle, wall.DestinationRectangle)))
+                    CollisionHelper.CollideTop(this.DestinationRectangle, wall.DestinationRectangle) ||
+                    this.DestinationRectangle.Intersects(wall.DestinationRectangle)))
                 {
                     this.Health = false;
                     return false;
@@ -51,7 +52,8 @@
                 else if (wall.WallType == WallTypes.Breakable && (CollisionHelper.CollideBottom(this.DestinationRectangle, wall.DestinationRectangle) ||
                     CollisionHelper.CollideLeft(this.DestinationRectangle, wall.DestinationRectangle) ||
                     CollisionHelper.CollideRight(this.DestinationRectangle, wall.DestinationRectangle) ||
-                    CollisionHelper.CollideTop(this.DestinationRectangle, wall.DestinationRectangle)))
+                    CollisionHelper.CollideTop(this.DestinationRectangle, wall.DestinationRectangle) ||
+                    this.DestinationRectangle.Intersects(wall.DestinationRectangle)))
                 {
                     wall.Health = false;
                 }
