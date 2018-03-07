@@ -92,6 +92,7 @@
     <Compile Include="Utils\Button.cs" />
     <Compile Include="Utils\Camera.cs" />
     <Compile Include="Utils\CollisionHelper.cs" />
+    <Compile Include="Utils\SoundManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">

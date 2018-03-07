@@ -171,13 +171,13 @@
             {
                 if (this.levelOne.NumberOfLives() <= 0)
                 {
-                    // start new game
+                    // Start new game
                     this.levelOne = new Level1(content, graphicsDevice);
                     this.GameState = GameState.GameOver;
                 }
                 else
                 {
-                    // lower lives and continue
+                    // TODO: Lower lives and continue
                     this.levelOne = new Level1(content, graphicsDevice);
                     this.GameState = GameState.GameOver;
                 }
@@ -258,7 +258,7 @@
             {
                 this.GameState = GameState.GameStart;
             }
-
+            
             this.loadOnce = true;
             this.oldKeyState = keyState;
         }

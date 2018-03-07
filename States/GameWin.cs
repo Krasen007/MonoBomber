@@ -1,8 +1,10 @@
 ﻿namespace MonoBomber.Objects
 {
+    using System;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
     using Microsoft.Xna.Framework.Graphics;
+    using MonoBomber.Utils;
 
     public class GameWin
     {
@@ -10,7 +12,7 @@
         {
             this.Draw(spriteBatch, gameFont, content, graphics);
         }
-
+        
         public void Draw(SpriteBatch spriteBatch, SpriteFont gameFont, ContentManager content, GraphicsDeviceManager graphics)
         {
             StaticItem gameWinScreen = new StaticItem(Vector2.Zero);

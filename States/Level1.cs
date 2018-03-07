@@ -30,7 +30,12 @@
         private Door exitDoor;
         private Key key;
         private Bomb bomb;
+<<<<<<< HEAD
         private List<Explosion> explosions = new List<Explosion>();
+=======
+        private SoundManager soundManager;
+
+>>>>>>> a7bc53334711e6d071ee25eb0652209bcb46a569
         // private List<Bomb> bombs;
         // private int bombsCount;
         private PowerUpMoreBombs moreBombs;
@@ -43,6 +48,7 @@
             this.map = new Map(content, 35, 35);
             this.camera = new Camera(viewport.Viewport);
             this.gameFont = content.Load<SpriteFont>("Debug");
+            this.soundManager = new SoundManager(content);
         }
 
         public bool GamePause { get; set; }
@@ -67,7 +73,7 @@
             if (this.oldKeyState.IsKeyDown(Keys.P) && keyState.IsKeyUp(Keys.P))
             {
                 if (!this.GamePause)
-                {                    
+                {
                     this.GamePause = true;
                 }
                 else
@@ -115,6 +121,7 @@
             {
                 balloonEnemy.Update(spriteBatch, this.map.Walls, gameTime, this.player);
             }
+<<<<<<< HEAD
             if (this.timeSinceLastShot > 4  && this.timeSinceLastShot < 6)
             {
                 foreach (Explosion explosion in explosions)
@@ -122,6 +129,13 @@
                      explosion.Update(gameTime);
                 }
             }
+=======
+
+            this.map.Update(gameTime);
+            this.camera.Update(this.player.SpritePosition, MAP_WIDTH, MAP_HEIGHT);
+
+            this.PlayMusic();
+>>>>>>> a7bc53334711e6d071ee25eb0652209bcb46a569
         }
 
         public bool IsPlayerAlive()
@@ -209,7 +223,7 @@
 
             this.player.Draw(spriteBatch, 0.90, 0.90);
             this.enemy.Draw(spriteBatch, 0.13, 0.13);
-            
+
             this.moreBombs.Draw(spriteBatch, 1, 1);
 
             // this.biggerRange.Draw(spriteBatch, 1, 1);
@@ -219,6 +233,29 @@
             }
 
             spriteBatch.End();
+        }
+
+        private void PlayMusic()
+        {
+            if (this.player.IsAlive && this.exitDoor.LevelComplete == false)
+            {
+                this.soundManager.MainThemeInstance.IsLooped = true;
+                this.soundManager.MainThemeInstance.Play();
+            }
+            else if (this.player.IsAlive && this.exitDoor.LevelComplete == true)
+            {
+                this.soundManager.MainThemeInstance.Stop();
+                this.soundManager.GameWinInstance.Play();
+            }
+            else if (!this.player.IsAlive)
+            {
+                this.soundManager.MainThemeInstance.Stop();
+                this.soundManager.GameLoseInstance.Play();
+            }
+            else
+            {
+                this.soundManager.MainThemeInstance.Stop();
+            }
         }
 
         private void LoadLevelOne(ContentManager content)
