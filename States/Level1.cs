@@ -30,7 +30,7 @@
         private Door exitDoor;
         private Key key;
         private Bomb bomb;
-
+        private List<Explosion> explosions = new List<Explosion>();
         // private List<Bomb> bombs;
         // private int bombsCount;
         private PowerUpMoreBombs moreBombs;
@@ -78,7 +78,7 @@
 
             this.oldKeyState = keyState;
 
-            if (this.oldKeyState.IsKeyDown(Keys.Space) && this.bomb.Health == false)
+            if (this.oldKeyState.IsKeyDown(Keys.Space) )
             {
                 this.bomb.SpritePosition = new Vector2(this.player.SpritePosition.X + 15, this.player.SpritePosition.Y + 10);
                 this.timeSinceLastShot = 0;
@@ -101,6 +101,8 @@
             {
                 this.player.IsAlive = true;
             }
+            this.map.Update(gameTime);
+            this.camera.Update(this.player.SpritePosition, MAP_WIDTH, MAP_HEIGHT);
 
             this.enemy.Update(this.player);
             this.exitDoor.Update(this.player);
@@ -113,9 +115,13 @@
             {
                 balloonEnemy.Update(spriteBatch, this.map.Walls, gameTime, this.player);
             }
-
-            this.map.Update(gameTime);
-            this.camera.Update(this.player.SpritePosition, MAP_WIDTH, MAP_HEIGHT);
+            if (this.timeSinceLastShot > 4  && this.timeSinceLastShot < 6)
+            {
+                foreach (Explosion explosion in explosions)
+                {
+                     explosion.Update(gameTime);
+                }
+            }
         }
 
         public bool IsPlayerAlive()
@@ -167,12 +173,38 @@
             if (this.bomb.Health == true && this.timeSinceLastShot <= 5)
             {
                 this.bomb.Draw(spriteBatch, 0.55, 0.55);
-                //// this.bomb.Health = false;
+                
+            }
+            if (this.timeSinceLastShot > 4)
+            {
+                Texture2D explosionAnimation = content.Load<Texture2D>("explosion");
+                explosions.Add(new Explosion(content, this.bomb.SpritePosition, true, 8, new Vector2(1f, 1f)));
+                int bombAnimationWidth = 70;
+                for (int i = 1; i <= 2; i++)
+                {
+                    explosions.Add(new Explosion(content, new Vector2(this.bomb.SpritePosition.X - bombAnimationWidth*i, this.bomb.SpritePosition.Y), true, 8, new Vector2(1f, 1f)));
+                    explosions.Add(new Explosion(content, new Vector2(this.bomb.SpritePosition.X + bombAnimationWidth * i, this.bomb.SpritePosition.Y), true, 8, new Vector2(1f, 1f)));
+
+
+                    explosions.Add(new Explosion(content, new Vector2(this.bomb.SpritePosition.X, this.bomb.SpritePosition.Y - bombAnimationWidth * i), true, 8, new Vector2(1f, 1f)));
+                    explosions.Add(new Explosion(content, new Vector2(this.bomb.SpritePosition.X , this.bomb.SpritePosition.Y + bombAnimationWidth * i), true, 8, new Vector2(1f, 1f)));
+                    
+                }
+                foreach (Explosion explosion in explosions)
+                {
+
+                    explosion.Draw(spriteBatch);
+                }
             }
 
-            if (this.timeSinceLastShot > 5)
+            if (this.timeSinceLastShot > 4 && this.timeSinceLastShot < 6)
             {
-                this.bomb.Health = false;
+                //this.bomb.Health = false;
+                foreach (Explosion explosion in explosions)
+                {
+
+                    explosion.Draw(spriteBatch);
+                }
             }
 
             this.player.Draw(spriteBatch, 0.90, 0.90);
@@ -213,6 +245,8 @@
 
             Texture2D moreBombsAnim = content.Load<Texture2D>("bombSathel");
             this.moreBombs = new PowerUpMoreBombs(moreBombsAnim, 1, 1, new Vector2(388, 180));
+
+
 
             // Texture2D biggerRangeAnim = content.Load<Texture2D>("dragonLance");
             // this.biggerRange = new PowerUpBiggerRange(moreBombsAnim, 1, 1, new Vector2(388, 180));
