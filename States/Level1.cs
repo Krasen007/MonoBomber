@@ -1,7 +1,9 @@
 ﻿namespace MonoBomber.Objects
 {
+    using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Audio;
     using Microsoft.Xna.Framework.Content;
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
@@ -30,6 +32,7 @@
         private Door exitDoor;
         private Key key;
         private Bomb bomb;
+        private SoundManager soundManager;
 
         // private List<Bomb> bombs;
         // private int bombsCount;
@@ -43,6 +46,7 @@
             this.map = new Map(content, 35, 35);
             this.camera = new Camera(viewport.Viewport);
             this.gameFont = content.Load<SpriteFont>("Debug");
+            this.soundManager = new SoundManager(content);
         }
 
         public bool GamePause { get; set; }
@@ -67,7 +71,7 @@
             if (this.oldKeyState.IsKeyDown(Keys.P) && keyState.IsKeyUp(Keys.P))
             {
                 if (!this.GamePause)
-                {                    
+                {
                     this.GamePause = true;
                 }
                 else
@@ -116,6 +120,8 @@
 
             this.map.Update(gameTime);
             this.camera.Update(this.player.SpritePosition, MAP_WIDTH, MAP_HEIGHT);
+
+            this.PlayMusic();
         }
 
         public bool IsPlayerAlive()
@@ -177,7 +183,7 @@
 
             this.player.Draw(spriteBatch, 0.90, 0.90);
             this.enemy.Draw(spriteBatch, 0.13, 0.13);
-            
+
             this.moreBombs.Draw(spriteBatch, 1, 1);
 
             // this.biggerRange.Draw(spriteBatch, 1, 1);
@@ -187,6 +193,24 @@
             }
 
             spriteBatch.End();
+        }
+
+        private void PlayMusic()
+        {
+            if (this.player.IsAlive && this.exitDoor.LevelComplete == false)
+            {
+                this.soundManager.MainThemeInstance.IsLooped = true;
+                this.soundManager.MainThemeInstance.Play();
+            }
+            else if (this.player.IsAlive && this.exitDoor.LevelComplete == true)
+            {
+                this.soundManager.MainThemeInstance.Stop();
+                this.soundManager.GameWinInstance.Play();
+            }
+            else
+            {
+                this.soundManager.MainThemeInstance.Stop();
+            }
         }
 
         private void LoadLevelOne(ContentManager content)

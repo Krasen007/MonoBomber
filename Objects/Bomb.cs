@@ -23,15 +23,11 @@
         {
             this.UpdateAnimation();
 
-            if (player.DestinationRectangle.Intersects(this.DestinationRectangle)) // && player.HasKey)
+            // && player.HasKey)
+            if (player.DestinationRectangle.Intersects(this.DestinationRectangle)) 
             {
                 this.HandlePlayerCollision(player);
             }
-        }
-
-        private void HandlePlayerCollision(Player player)
-        {
-            return;
         }
 
         public void UpdateAnimation()
@@ -48,6 +44,11 @@
 
                 this.animaSpeedIncrement = 0;
             }
+        }
+
+        private void HandlePlayerCollision(Player player)
+        {
+            return;
         }
     }
 }
