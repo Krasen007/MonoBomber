@@ -9,7 +9,7 @@
     using MonoBomber.Utilities;
     using MonoBomber.Utils;
 
-    class Explosion : Block
+    public class Explosion : Block
     {
         private const string EXPLOSION_ANIMATION_KEY = "explosion";
 
@@ -30,17 +30,11 @@
             }
         }
 
-        protected override void CreateAnimations(ContentManager content)
-        {
-            Texture2D explosionAnimation = content.Load<Texture2D>("explosion");
-            this.Animations.Add(EXPLOSION_ANIMATION_KEY, new Animation(explosionAnimation, 1, 1, 1, 150, 150)); // gameHeight / (wallPerRow * 2)
-        }
-        
         public bool DestroyWalls(List<Wall> walls)
         {
             bool result = true;
 
-            for (int i = 0; i <walls.Count; i++)
+            for (int i = 0; i < walls.Count; i++)
             {
                 if (walls[i].WallType == WallTypes.Unbreakable && (CollisionHelper.CollideBottom(this.DestinationRectangle, walls[i].DestinationRectangle) ||
                     CollisionHelper.CollideLeft(this.DestinationRectangle, walls[i].DestinationRectangle) ||
@@ -62,7 +56,14 @@
                     i--;
                 }
             }
+
             return result;
+        }
+
+        protected override void CreateAnimations(ContentManager content)
+        {
+            Texture2D explosionAnimation = content.Load<Texture2D>("explosion");
+            this.Animations.Add(EXPLOSION_ANIMATION_KEY, new Animation(explosionAnimation, 1, 1, 1, 150, 150)); // gameHeight / (wallPerRow * 2)
         }
     }
 }
