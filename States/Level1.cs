@@ -310,6 +310,9 @@
             Texture2D balloonEnemyAnim = content.Load<Texture2D>("HeartStripBalloon");
             this.balloonEnemys.Add(new BalloonEnemy(balloonEnemyAnim, 4, 4, new Vector2(300, 182), new Vector2(2, 0), new Vector2(0, 2))); 
             this.balloonEnemys.Add(new BalloonEnemy(balloonEnemyAnim, 4, 4, new Vector2(500, 462), new Vector2(2, 0), new Vector2(0, 2)));
+            this.balloonEnemys.Add(new BalloonEnemy(balloonEnemyAnim, 4, 4, new Vector2(400, 362), new Vector2(2, 0), new Vector2(0, 2)));
+            this.balloonEnemys.Add(new BalloonEnemy(balloonEnemyAnim, 4, 4, new Vector2(600, 1162), new Vector2(2, 0), new Vector2(0, 2)));
+            this.balloonEnemys.Add(new BalloonEnemy(balloonEnemyAnim, 4, 4, new Vector2(900, 862), new Vector2(2, 0), new Vector2(0, 2)));
         }
 
         private void DebugInformation(SpriteBatch spriteBatch)
