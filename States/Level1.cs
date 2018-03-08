@@ -208,7 +208,6 @@
                 this.bomb.Draw(spriteBatch, 0.55, 0.55);
             }
 
-          
             this.player.Draw(spriteBatch, 0.90, 0.90);
             this.enemy.Draw(spriteBatch, 0.13, 0.13);
 
