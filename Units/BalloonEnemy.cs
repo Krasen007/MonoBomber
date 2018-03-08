@@ -30,6 +30,15 @@
             this.HandleWallCollision(walls);
             this.HandleSidesCollision();
             this.HandlePlayerCollision(player);
+            this.HandleBombCollision();
+        }
+
+        private void HandleBombCollision()
+        {
+            if (!this.IsAlive)
+            {
+                this.SpritePosition = new Vector2(-100, -100);
+            }
         }
 
         private void HandleWallCollision(List<Wall> walls)

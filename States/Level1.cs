@@ -96,7 +96,6 @@
             this.player.Update(keyState, mouseState, this.key, spriteBatch, this.map.Walls);
             if (this.score.GameScore <= 0)
             {
-
                 this.player.IsAlive = false;
             }
 
@@ -111,9 +110,9 @@
                 balloonEnemy.Update(spriteBatch, this.map.Walls, gameTime, this.player);
             }
 
-            if (this.timeSinceLastShot > 4 && this.timeSinceLastShot < 6)
+            if (this.timeSinceLastShot > 4 && this.timeSinceLastShot < 5)
             {
-                foreach (Explosion explosion in explosions)
+                foreach (Explosion explosion in this.explosions)
                 {
                     explosion.Update(gameTime);
                 }
@@ -124,11 +123,14 @@
 
             if ((int)gameTime.TotalGameTime.Seconds % 2 == 0 && this.bomb.Health == true)
             {
-                foreach (Explosion explosion in explosions)
+                foreach (Explosion explosion in this.explosions)
                 {
                     explosion.Health = false;
                 }
+
+                this.explosions.Clear();
             }
+
             this.PlayMusic();
         }
 
@@ -167,6 +169,33 @@
 
             this.exitDoor.Draw(spriteBatch, 0.15, 0.15);
             this.key.Draw(spriteBatch, 1, 1);
+
+            if (this.timeSinceLastShot > 4 && this.timeSinceLastShot <= 5)
+            {
+                if (this.explosions.Count <= 0)
+                {
+                    Texture2D explosionAnimation = content.Load<Texture2D>("explosion");
+                    this.explosions.Add(new Explosion(content, new Vector2(this.bomb.SpritePosition.X + 30, this.bomb.SpritePosition.Y + 30), true, 8, new Vector2(1f, 1f)));
+                    int bombAnimationWidth = 70;
+                    for (int i = 1; i <= 2; i++)
+                    {
+                        this.explosions.Add(new Explosion(content, new Vector2(this.bomb.SpritePosition.X - bombAnimationWidth * i + 30, this.bomb.SpritePosition.Y + 30), true, 8, new Vector2(1f, 1f)));
+                        this.explosions.Add(new Explosion(content, new Vector2(this.bomb.SpritePosition.X + bombAnimationWidth * i + 30, this.bomb.SpritePosition.Y + 30), true, 8, new Vector2(1f, 1f)));
+
+                        this.explosions.Add(new Explosion(content, new Vector2(this.bomb.SpritePosition.X + 30, this.bomb.SpritePosition.Y - bombAnimationWidth * i + 30), true, 8, new Vector2(1f, 1f)));
+                        this.explosions.Add(new Explosion(content, new Vector2(this.bomb.SpritePosition.X + 30, this.bomb.SpritePosition.Y + bombAnimationWidth * i + 30), true, 8, new Vector2(1f, 1f)));
+                    }
+                }
+
+                foreach (Explosion explosion in this.explosions)
+                {
+                    if (explosion.DestroyWalls(this.map.Walls, this.player, this.balloonEnemys))
+                    {
+                        explosion.Draw(spriteBatch);
+                    }
+                }
+            }
+
             this.map.Draw(spriteBatch);
 
             if (this.tildePressed)
@@ -276,9 +305,10 @@
 
             Texture2D moreBombsAnim = content.Load<Texture2D>("bombSathel");
             this.moreBombs = new PowerUpMoreBombs(moreBombsAnim, 1, 1, new Vector2(388, 180));
-            
+
+            // SpeedX,Y - this number must be bigger than the speed of the sprite for collision to work
             Texture2D balloonEnemyAnim = content.Load<Texture2D>("HeartStripBalloon");
-            this.balloonEnemys.Add(new BalloonEnemy(balloonEnemyAnim, 4, 4, new Vector2(300, 182), new Vector2(2, 0), new Vector2(0, 2))); // SpeedX,Y - this number must be bigger than the speed of the sprite for collision to work
+            this.balloonEnemys.Add(new BalloonEnemy(balloonEnemyAnim, 4, 4, new Vector2(300, 182), new Vector2(2, 0), new Vector2(0, 2))); 
             this.balloonEnemys.Add(new BalloonEnemy(balloonEnemyAnim, 4, 4, new Vector2(500, 462), new Vector2(2, 0), new Vector2(0, 2)));
         }
 

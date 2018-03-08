@@ -6,8 +6,11 @@
     using Microsoft.Xna.Framework.Graphics;
     using MonoBomber.Enumerables;
     using MonoBomber.Objects;
+    using MonoBomber.Units;
     using MonoBomber.Utilities;
-    class Explosion : Block
+    using MonoBomber.Utils;
+
+    public class Explosion : Block
     {
         private const string EXPLOSION_ANIMATION_KEY = "explosion";
 
@@ -26,6 +29,51 @@
             {
                 pair.Value.Update(gameTime);
             }
+        }
+
+        public bool DestroyWalls(List<Wall> walls, Player player, List<BalloonEnemy> enemies)
+        {
+            bool result = true;
+
+            for (int i = 0; i < walls.Count; i++)
+            {
+                if (walls[i].WallType == WallTypes.Unbreakable && (
+                    CollisionHelper.CollideBottom(this.DestinationRectangle, walls[i].DestinationRectangle) ||
+                    CollisionHelper.CollideLeft(this.DestinationRectangle, walls[i].DestinationRectangle) ||
+                    CollisionHelper.CollideRight(this.DestinationRectangle, walls[i].DestinationRectangle) || 
+                    CollisionHelper.CollideTop(this.DestinationRectangle, walls[i].DestinationRectangle) || 
+                    this.DestinationRectangle.Intersects(walls[i].DestinationRectangle)))
+                {
+                    this.Health = false;
+                    result = false;
+                }
+                else if (walls[i].WallType == WallTypes.Breakable && (
+                    CollisionHelper.CollideBottom(this.DestinationRectangle, walls[i].DestinationRectangle) ||
+                    CollisionHelper.CollideLeft(this.DestinationRectangle, walls[i].DestinationRectangle) ||
+                    CollisionHelper.CollideRight(this.DestinationRectangle, walls[i].DestinationRectangle) ||
+                    CollisionHelper.CollideTop(this.DestinationRectangle, walls[i].DestinationRectangle) ||
+                    this.DestinationRectangle.Intersects(walls[i].DestinationRectangle)))
+                {
+                    walls[i].Health = false;
+                    walls.Remove(walls[i]);
+                    i--;
+                }
+            }
+
+            if (player.DestinationRectangle.Intersects(this.DestinationRectangle))
+            {
+                player.IsAlive = false;
+            }
+
+            foreach (var enemy in enemies)
+            {
+                if (enemy.DestinationRectangle.Intersects(this.DestinationRectangle))
+                {
+                    enemy.IsAlive = false;
+                }
+            }
+
+            return result;
         }
 
         protected override void CreateAnimations(ContentManager content)

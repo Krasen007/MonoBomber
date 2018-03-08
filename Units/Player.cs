@@ -56,13 +56,7 @@
             {
                 this.SpritePosition = new Vector2(2560 - this.Height, this.SpritePosition.Y);
             }
-        }
-
-        private void DropBomb(SpriteBatch spriteBatch)
-        {
-            // this.bombAnim = bombAnimation.Load<Texture2D>("bombanimation"); // not working
-            // this.Bomb = new Bomb(this.bombAnim, 1, 5, this.SpritePosition); // not working
-        }
+        }        
 
         private void MovePlayer(KeyboardState keyState, MouseState mouseState, SpriteBatch spriteBatch)
         {
@@ -133,10 +127,6 @@
                 this.SpritePosition += this.SpriteSpeedY;
             }
 
-            ////else if (keyState.IsKeyDown(Keys.Space) || keyState.IsKeyDown(Keys.Enter))
-            ////{
-            ////    //this.DropBomb(spriteBatch);
-            ////}
             this.oldKeyState = keyState;
 
             /*             
@@ -162,22 +152,22 @@
         {
             foreach (var wall in walls)
             {
-                if (CollisionHelper.CollideTop(this.DestinationRectangle, wall.DestinationRectangle))
+                if (CollisionHelper.CollideTop(this.DestinationRectangle, wall.DestinationRectangle) && wall.Health == true)
                 {
                     this.CurrentFrame = 0;
                     this.SpritePosition -= this.SpriteSpeedY;
                 }
-                else if (CollisionHelper.CollideBottom(this.DestinationRectangle, wall.DestinationRectangle))
+                else if (CollisionHelper.CollideBottom(this.DestinationRectangle, wall.DestinationRectangle) && wall.Health == true)
                 {
                     this.CurrentFrame = 13;
                     this.SpritePosition += this.SpriteSpeedY;
                 }
-                else if (CollisionHelper.CollideRight(this.DestinationRectangle, wall.DestinationRectangle))
+                else if (CollisionHelper.CollideRight(this.DestinationRectangle, wall.DestinationRectangle) && wall.Health == true)
                 {
                     this.CurrentFrame = 19;
                     this.SpritePosition += this.SpriteSpeedX;
                 }
-                else if (CollisionHelper.CollideLeft(this.DestinationRectangle, wall.DestinationRectangle))
+                else if (CollisionHelper.CollideLeft(this.DestinationRectangle, wall.DestinationRectangle) && wall.Health == true)
                 {
                     this.CurrentFrame = 7;
                     this.SpritePosition -= this.SpriteSpeedX;
